@@ -1,0 +1,40 @@
+server:
+  port: 8000
+
+#数据库连接的全局配置
+#mybatis.configuration.cache-enabled: true
+#mybatis.configuration.local-cache-scope: session
+
+#连接数据库1配置
+#spring.user.datasourceType: com.alibaba.druid.pool.DruidDataSource
+#spring.user.datasource.url: jdbc:mysql://127.0.0.1:3306/pingyougou?serverTimezone=UTC
+#spring.user.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+#spring.user.datasource.username: root
+#spring.user.datasource.password: 123
+#logging.leve.com.yin.databaseproject.dao: debug
+
+
+#连接数据库2配置
+#spring.item.datasourceType: com.alibaba.druid.pool.DruidDataSource
+#spring.item.datasource.url: jdbc:mysql://127.0.0.1:3306/mybatis?serverTimezone=UTC
+#spring.item.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+#spring.item.datasource.username: root
+#spring.item.datasource.password: 123
+#spring:
+#  profiles: user8000
+#server:
+#  port: 8000
+#---
+#spring:
+#  profiles: user8001
+#server:
+#  port: 8001
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.80.35:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: Ctlcuat1
+    password: Hex123@0
+mybatis:
+  type-aliases-package: cn.vincent.pojo
+  mapper-locations: classpath:cn/vincent/dao/*.xml

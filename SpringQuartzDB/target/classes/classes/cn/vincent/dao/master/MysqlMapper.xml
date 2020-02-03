@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vincent.dao.master.MysqlDao">
+
+
+    <select id="queryTodayUnfinished" resultType="java.lang.Integer">
+        select COUNT(1) from tmp_centlec where insert_time &gt; DATE_FORMAT(SYSDATE(), '%Y-%m-%d') and execute_status = 0
+    </select>
+    <delete id="deleteTmpData">
+        delete from ${tmpTableName}
+    </delete>
+
+    <select id="prepareTmp1ToDate" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_0_1(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR})}
+    </select>
+    <select id="prepareTmpToTmp1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_0_2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+
+    <insert id="insertTmpBj" parameterType="java.util.List">
+        insert into tmp_bj (
+            MT_MODEL_DESC,MT_COMM_ADDR,station_id,
+            LINE_ID,SUBURB_ID,MUS_TI,
+            MUS_SGCID,MUS_KEYVISION,MUS_KEYEXPIRY,
+            LASTVENDDATE,LASTVENDFREEDATE,TARIFFNAME,
+            CUSTOMER_ID,MeterStatus)
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+        (
+            #{item.MT_MODEL_DESC,jdbcType=VARCHAR},
+            #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
+            #{item.station_id,jdbcType=VARCHAR},
+            #{item.LINE_ID,jdbcType=VARCHAR},
+            #{item.SUBURB_ID,jdbcType=VARCHAR},
+            #{item.MUS_TI,jdbcType=VARCHAR},
+            #{item.MUS_SGCID,jdbcType=VARCHAR},
+            #{item.MUS_KEYVISION,jdbcType=VARCHAR},
+            #{item.MUS_KEYEXPIRY,jdbcType=VARCHAR},
+            #{item.LASTVENDDATE,jdbcType=VARCHAR},
+            #{item.LASTVENDFREEDATE,jdbcType=VARCHAR},
+            #{item.TARIFFNAME,jdbcType=VARCHAR},
+            #{item.CUSTOMER_ID,jdbcType=VARCHAR},
+            #{item.MeterStatus,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+    <insert id="insertTmpYh" parameterType="java.util.List">
+        insert into tmp_yh (
+        CUSTOMER_ID,customer_name,STATUS,
+        OPENACCOUNT_DATE,ADDRESS,StandNumber,
+        LINKMAN_PHONE,Station_id,US_TI,
+        US_IDNUM,US_EMAIL,US_ZIP,
+        US_SEX,BANKACCOUNT,BUSINESS_REGISTRATION_NUMBER,
+        TARIFFNAME
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+        (
+            #{item.CUSTOMER_ID,jdbcType=VARCHAR},
+            #{item.customer_name,jdbcType=VARCHAR},
+            #{item.STATUS,jdbcType=VARCHAR},
+            #{item.OPENACCOUNT_DATE,jdbcType=VARCHAR},
+            #{item.ADDRESS,jdbcType=VARCHAR},
+            #{item.StandNumber,jdbcType=VARCHAR},
+            #{item.LINKMAN_PHONE,jdbcType=VARCHAR},
+            #{item.Station_id,jdbcType=VARCHAR},
+            #{item.US_TI,jdbcType=VARCHAR},
+            #{item.US_IDNUM,jdbcType=VARCHAR},
+            #{item.US_EMAIL,jdbcType=VARCHAR},
+            #{item.US_ZIP,jdbcType=VARCHAR},
+            #{item.US_SEX,jdbcType=VARCHAR},
+            #{item.BANKACCOUNT,jdbcType=VARCHAR},
+            #{item.BUSINESS_REGISTRATION_NUMBER,jdbcType=VARCHAR},
+            #{item.TARIFFNAME,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+    <insert id="insertTmpZw" parameterType="java.util.List">
+        insert into tmp_zw (
+        DEBTID,CUSTOMER_ID,DEBTNM,
+        Debt_total,Balance,DTYPE,
+        MINPAY,PMONEYPCT,AMOUNTPCT,
+        CREATE_DATE,LASTDATE,DebtType,
+        PAYCTS,AGREE_ID,DebtStatus
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+        (
+            #{item.DEBTID,jdbcType=VARCHAR},
+            #{item.CUSTOMER_ID,jdbcType=VARCHAR},
+            #{item.DEBTNM,jdbcType=VARCHAR},
+            #{item.Debt_total,jdbcType=VARCHAR},
+            #{item.Balance,jdbcType=VARCHAR},
+            #{item.DTYPE,jdbcType=VARCHAR},
+            #{item.MINPAY,jdbcType=VARCHAR},
+            #{item.PMONEYPCT,jdbcType=VARCHAR},
+            #{item.AMOUNTPCT,jdbcType=VARCHAR},
+            #{item.CREATE_DATE,jdbcType=DATETIME},
+            #{item.LASTDATE,jdbcType=VARCHAR},
+            #{item.DebtType,jdbcType=VARCHAR},
+            #{item.PAYCTS,jdbcType=VARCHAR},
+            #{item.AGREE_ID,jdbcType=VARCHAR},
+            #{item.DebtStatus,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+    <insert id="insertTmpLjz" parameterType="java.util.List">
+        insert into tmp_ljz (
+        energy,MT_COMM_ADDR,LASTVENDDATE,ISFREE
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+        (
+            #{item.energy,jdbcType=VARCHAR},
+            #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
+            #{item.LASTVENDDATE,jdbcType=VARCHAR},
+            #{item.ISFREE,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <select id="executeScript1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_1(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript3_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_3_1(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript3_2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_3_2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript3_3" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_3_3(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript4" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_4(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript5_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_5_1(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript5_2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_5_2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript6" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_6(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript7" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_7(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript9" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_8(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+</mapper>

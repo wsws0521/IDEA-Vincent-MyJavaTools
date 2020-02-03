@@ -1,0 +1,4 @@
+1----改货币单位：update uap_mutil_tenancy_set SET item_value = 'RAND' where item_name = 'currencyUnit';
+2----确保费率生效：update vd_e_bill_pkg_ver set status = '05' where status = '03';
+3----更新加密服务地址：update p_third_party set interface_url = 'http://192.168.80.35:8010/EncrptionService/rest/sts' where business_type = '0402';
+4----临时禁用备用盒子的运行vk：update vd_p_vk_run set status = 20 where EBOX_ID <> 3;（其实应该禁用运行加密盒，在选vkNo时过滤运行加密盒状态，程序暂时不支持）

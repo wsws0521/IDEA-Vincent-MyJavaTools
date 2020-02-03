@@ -1,0 +1,11 @@
+package com.vincent.dao;
+
+import com.vincent.pojo.PthirdParty;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface MysqlCumuDao {
+    List<PthirdParty> queryMysqlCumu();
+}

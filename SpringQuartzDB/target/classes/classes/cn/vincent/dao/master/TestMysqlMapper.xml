@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vincent.dao.master.TestMysqlDao">
+
+    <select id="queryMysqlCumu" resultType="cn.vincent.pojo.PthirdParty">
+        select THIRD_PARTY_ID   "id",
+            THIRD_PARTY_NAME    "name",
+            INTERFACE_URL       "url"
+        from p_third_party
+    </select>
+
+    <insert id="insertTmpInsert">
+        insert into tmp_insert values (1, "xiaoming")
+    </insert>
+    <insert id="insertVincent">
+        insert into vincent values (1, "xiaoming")
+    </insert>
+
+    <select id="executeProc" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_test(
+        #{error_code,mode=OUT,jdbcType=INTEGER},
+        #{error_msg,mode=OUT,jdbcType=VARCHAR})}
+    </select>
+
+    <insert id="insertTempInsert" parameterType="java.util.List">
+        insert into tmp_insert (
+        id,name
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+            (
+                #{item.id,jdbcType=INTEGER},
+                #{item.name,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertTmpBjCopy" parameterType="java.util.List">
+        insert into tmp_bj_copy (
+        MT_MODEL_DESC,MT_COMM_ADDR,station_id,
+        LINE_ID,SUBURB_ID,MUS_TI,
+        MUS_SGCID,MUS_KEYVISION,MUS_KEYEXPIRY,
+        LASTVENDDATE,LASTVENDFREEDATE,TARIFFNAME,
+        CUSTOMER_ID,MeterStatus)
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+            (
+            #{item.MT_MODEL_DESC,jdbcType=VARCHAR},
+            #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
+            #{item.station_id,jdbcType=VARCHAR},
+            #{item.LINE_ID,jdbcType=VARCHAR},
+            #{item.SUBURB_ID,jdbcType=VARCHAR},
+            #{item.MUS_TI,jdbcType=VARCHAR},
+            #{item.MUS_SGCID,jdbcType=VARCHAR},
+            #{item.MUS_KEYVISION,jdbcType=VARCHAR},
+            #{item.MUS_KEYEXPIRY,jdbcType=VARCHAR},
+            #{item.LASTVENDDATE,jdbcType=VARCHAR},
+            #{item.LASTVENDFREEDATE,jdbcType=VARCHAR},
+            #{item.TARIFFNAME,jdbcType=VARCHAR},
+            #{item.CUSTOMER_ID,jdbcType=VARCHAR},
+            #{item.MeterStatus,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+</mapper>
