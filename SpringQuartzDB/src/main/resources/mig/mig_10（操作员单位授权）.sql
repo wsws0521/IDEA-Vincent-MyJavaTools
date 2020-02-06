@@ -13,3 +13,19 @@ FROM tmp_user_org a;
 
 
 update uap_sequence set next_val = 2000001 where sequence_name = 'userOrgManageId';
+
+
+
+-------------------------------------tmp_user_org  自动建表语句-----------------------------------------
+CREATE TABLE `tmp_user_org` (
+  `mainkey` varchar(128) NOT NULL,
+  `userNo` varchar(128) DEFAULT NULL,
+  `userId` varchar(128) DEFAULT NULL,
+  `userName` varchar(128) DEFAULT NULL,
+  `id` varchar(128) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `cascade` varchar(128) DEFAULT NULL,
+  `no` varchar(128) DEFAULT NULL,
+  `upTime` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`mainkey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

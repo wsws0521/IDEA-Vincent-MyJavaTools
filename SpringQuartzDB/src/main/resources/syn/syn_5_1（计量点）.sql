@@ -7,8 +7,6 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
 
 	# 0-索引
 	ALTER table a_grid_line ADD INDEX index_a_grid_line_lineno(line_no);
@@ -18,6 +16,9 @@ BEGIN
 	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='tmp_bj' AND index_name='index_bj_customerid') THEN
 		ALTER TABLE tmp_bj ADD INDEX index_bj_customerid(customer_id);
 	END IF;
+
+	# 开启事务
+	START TRANSACTION;
 
 	# 1-插入计量点档案
 	INSERT INTO a_usagepoint
@@ -56,15 +57,17 @@ BEGIN
 	LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name
 	WHERE NOT EXISTS(SELECT f.mp_no FROM a_usagepoint f WHERE f.mp_no = CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr));
 
-	# 删除索引
-	ALTER table a_grid_line DROP INDEX index_a_grid_line_lineno;
-	ALTER table a_grid_transformer DROP INDEX index_a_grid_transformer_tfno;
-	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
-
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
 		COMMIT;
 	END IF;
-	SELECT t_error, msg;
+
+	# 删除索引
+	ALTER table a_grid_line DROP INDEX index_a_grid_line_lineno;
+	ALTER table a_grid_transformer DROP INDEX index_a_grid_transformer_tfno;
+	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
+
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 END;

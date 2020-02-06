@@ -32,14 +32,16 @@ server:
 spring:
   datasource:
     master:
-      url: jdbc:mysql://192.168.80.35:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      # url: jdbc:mysql://192.168.80.35:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://192.168.80.15:3306/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: Ctlcuat1
       password: Hex123@0
       # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.cj.jdbc.Driver
     other:
-      url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb20200113
+      # url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb20200113
+      url: jdbc:sqlserver://192.168.108.11:1433;DatabaseName=hxdb
       username: pns
       password: pnssnp
       #使用druid数据源

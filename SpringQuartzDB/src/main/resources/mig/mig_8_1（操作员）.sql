@@ -83,3 +83,60 @@ BEGIN
 	END IF;
 	SELECT t_error, msg;
 END
+
+------------------------------------sqlserver数据源获取-------------------------------------------
+
+select  cu.USER_ID,
+        cu.USER_ACCOUNT,
+        cu.USER_NAME,
+        cu.user_type,
+        cu.TELEPHONE,
+        cu.MOBILE_TELEPHONE,
+        cu.EMAIL,
+        cu.address,
+        cu.note,
+        cu.CREATE_TIME,
+        cu.CREATE_END,
+        ltrim(rtrim((case when cu.CDUArea IS null then isnull(mr.REGIONNAME,'') else isnull(cu.CDUArea,'') end))) as CDUArea,
+        ltrim(rtrim((case when cu.CDUName IS null then isnull(mc.TE_NAME,'') else isnull(cu.CDUName,'') end))) as CDUName,
+        (case when len(cu.roleName)=0 and cu.user_type=2 and mc.MANAGER IS not null then 'Cashier' else cu.roleName end) roleName,
+        cu.roles
+from (
+    select u.CREATER, u.USER_ID,USER_ACCOUNT,USER_NAME,cr.REGIONNAME as CDUArea,c.TE_NAME as CDUName,
+    (CASE when USER_TYPE=1 AND c.MANAGER IS null THEN 3 else USER_TYPE END) user_type
+    ,TELEPHONE,MOBILE_TELEPHONE,EMAIL,
+    replace(ADDRESS,',','.') as [address],replace(u.note,',','.') as [note],CREATE_TIME,CREATE_END
+     ,(case when USER_TYPE=1 AND c.MANAGER>0 THEN 'CDU' else isnull(stuff((select '|'+ltrim(rtrim(r.ROLE_NAME))
+     from IAUDIT_USER_ROLE ur left join IAUDIT_ROLE r on ur.ROLE_ID=r.ROLE_ID where ur.USER_ID=u.USER_ID and r.ROLE_TYPE=0 for xml path('')),1,1,''),'') end) as roleName
+    ,isnull(stuff((select '|'+r.ROLE_NAME+':'+cast(r.ROLE_TYPE as varchar)
+     from IAUDIT_USER_ROLE ur left join IAUDIT_ROLE r on ur.ROLE_ID=r.ROLE_ID where ur.USER_ID=u.USER_ID for xml path('')),1,1,''),'') as roles
+     from IAUDIT_USER u
+     LEFT JOIN IPARA_CDUSTATION c on c.MANAGER=u.USER_ID --and u.USER_TYPE=1
+     LEFT JOIN IPARA_CDUREGION cr on cr.REGION_ID=c.REGIOINID
+     where u.USER_ID not in (0,42,140)
+     --and create_end>=DATEADD(month,-3,getdate())
+     ) cu
+LEFT JOIN IAUDIT_USER mu on cu.CREATER=mu.USER_ID
+LEFT JOIN IPARA_CDUSTATION mc on mc.MANAGER=mu.USER_ID
+LEFT JOIN IPARA_CDUREGION mr on mr.REGION_ID=mc.REGIOINID
+order by cu.create_TIME desc
+
+-------------------------------------tmp_czy  自动建表语句-----------------------------------------
+CREATE TABLE `tmp_czy` (
+  `USER_ID` varchar(128) NOT NULL,
+  `USER_ACCOUNT` varchar(128) DEFAULT NULL,
+  `USER_NAME` varchar(128) DEFAULT NULL,
+  `user_type` varchar(128) DEFAULT NULL,
+  `TELEPHONE` varchar(128) DEFAULT NULL,
+  `MOBILE_TELEPHONE` varchar(128) DEFAULT NULL,
+  `EMAIL` varchar(128) DEFAULT NULL,
+  `address` varchar(128) DEFAULT NULL,
+  `note` varchar(128) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
+  `CREATE_END` datetime DEFAULT NULL,
+  `CDUArea` varchar(128) DEFAULT NULL,
+  `CDUName` varchar(128) DEFAULT NULL,
+  `roleName` varchar(128) DEFAULT NULL,
+  `roles` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vincent.dao.TestDao">
+
+    <insert id="insertTest1">
+        insert tmp_test1(name, status) values (#{name}, #{status})
+    </insert>
+    <select id="exeProc2" statementType="CALLABLE" parameterType="com.vincent.pojo.ProcParam" resultType="com.vincent.pojo.ProcParam">
+        {CALL tmp_test2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="queryTableSize" resultType="java.lang.Integer">
+        select count(1) from ${tableName}
+    </select>
+</mapper>

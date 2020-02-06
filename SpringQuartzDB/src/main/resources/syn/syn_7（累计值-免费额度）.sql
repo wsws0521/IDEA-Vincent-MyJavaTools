@@ -150,6 +150,8 @@
 	ELSE
 		COMMIT;
 	END IF;
-	SELECT t_error, msg;
+
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 
 END

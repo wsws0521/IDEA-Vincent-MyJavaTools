@@ -15,7 +15,5 @@ public interface SqlserverDao {
 
     List<TmpZw> queryTmpZw();
 
-    String queryMaxLastVendDate();
-
     List<TmpLjz> queryTmpLjz(@Param(value = "lastVendDate") String lastVendDate);
 }

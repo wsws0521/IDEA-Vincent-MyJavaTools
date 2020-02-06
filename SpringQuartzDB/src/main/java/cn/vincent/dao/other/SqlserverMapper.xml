@@ -77,10 +77,6 @@
         where isnull(d.OKFLAG,0)>0
     </select>
 
-    <select id="queryMaxLastVendDate" resultType="java.lang.String">
-        select max(lastvenddate) from tmp_bj1
-    </select>
-
     <select id="queryTmpLjz" resultType="cn.vincent.pojo.TmpLjz">
         SELECT  SUM(OCD_ENERGY) energy,
                 m.MT_COMM_ADDR,

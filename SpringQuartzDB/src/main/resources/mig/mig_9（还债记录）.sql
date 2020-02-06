@@ -143,3 +143,28 @@ BEGIN
 	*/
 
 END
+
+------------------------------------sqlserver数据源获取-------------------------------------------
+
+select * from (
+select cast(od.ORDERSID as varchar) orderid,od.DEBTID, od.USER_ID as CUSTOMER_ID,m.MT_COMM_ADDR,
+od.DE_AMOUNT paymoney,od.DE_BANLANCE as payedBalance,od.DE_DATE paydate,u.USER_ACCOUNT as operator
+, 0 payType
+from ORDER_DEBTS od
+LEFT JOIN IPARA_MTRPOINT m on od.METERID=m.MTRPOINT_ID
+LEFT JOIN ORDER_TRN o on o.ORDERSID=od.ORDERSID
+LEFT JOIN IAUDIT_USER u on u.USER_ID=o.OPERATORID
+where o.DELFLAG = 0 --order by od.USER_ID,od.METERID,od.DE_DATE
+and exists(select * from ipara_debt d where d.debtid=od.debtid)
+union all
+select '' as orderid, d.DEBTID, d.CUSTOMER_ID,m.MT_COMM_ADDR as MT_COMM_ADDR,
+d.CURENTBLC paymoney, 0 payedBalance,d.OPERATE_DATE paydate, u.USER_ACCOUNT as operator
+, 1 payType
+ from IPARA_DEBT d
+ LEFT JOIN IPARA_MTRPOINT m on d.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
+ LEFT JOIN IAUDIT_USER u on u.USER_ID = d.OPERATOR_ID
+ where d.OKFLAG<>0 and d.CURENTBLC<>0
+) t
+order by t.CUSTOMER_ID,t.paydate
+
+-------------------------------------tmp_hzjl  自动建表语句-----------------------------------------

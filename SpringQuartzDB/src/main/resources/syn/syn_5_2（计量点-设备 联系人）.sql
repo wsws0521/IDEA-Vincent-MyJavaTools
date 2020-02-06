@@ -7,9 +7,9 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
+
 	# 开启事务
 	START TRANSACTION;
-
 
 	# 1-插入计量点-设备关系
 	INSERT INTO a_mp_equipment_rela
@@ -35,5 +35,7 @@ BEGIN
 	ELSE
 		COMMIT;
 	END IF;
-	SELECT t_error, msg;
+
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 END;

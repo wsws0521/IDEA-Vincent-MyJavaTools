@@ -85,3 +85,57 @@ BEGIN
 	END IF;
 	SELECT t_error, msg;
 END
+
+------------------------------------sqlserver数据源获取-------------------------------------------
+
+select  mt.MT_MODEL_DESC,
+        ltrim(rtrim(MT_COMM_ADDR)) MT_COMM_ADDR,
+        isnull((case when r.CUSTOMER_ID IS null then m.POWER_SUPPLYER else r.POWER_SUPPLYER end),-1) as station_id,
+        isnull((case when r.CUSTOMER_ID IS null then ol.OBJECT_ID else ol2.OBJECT_ID end),-1) as LINE_ID,
+        isnull((case when r.CUSTOMER_ID IS null then os.OBJECT_ID else os2.OBJECT_ID end),-1) as SUBURB_ID,
+        isnull(MUS_TI,0)as MUS_TI,
+        RIGHT('000000'+CAST(MUS_SGCID as varchar(10)),6)as MUS_SGCID,
+        isnull(MUS_KEYVISION,0)as MUS_KEYVISION,
+        isnull(MUS_KEYEXPIRY,0)as MUS_KEYEXPIRY,
+        isnull(CONVERT(VARCHAR(19), LASTVENDDATE, 120),'') as LASTVENDDATE,
+        isnull(CONVERT(VARCHAR(19), LASTVENDFREEDATE, 120),'') as LASTVENDFREEDATE,
+        isnull(tg.TG_NAME,'') as TARIFFNAME,
+        isnull(cast(r.CUSTOMER_ID as varchar),'') as CUSTOMER_ID,
+        isnull(kms.NAME,'') as MeterStatus
+from IPARA_MTRPOINT m
+left join IKERNEL_MT_TYPE mt on mt.MT_MODEL_ID=m.MT_MODEL_ID
+left join IPARA_RESIDENT r on m.ACTUAL_CUSTOMER_ID=r.CUSTOMER_ID
+left join IPARA_MTRSTATUS ms on ms.MTRPOINT_ID=m.MTRPOINT_ID
+left join IKERNEL_MTRSTATUS kms on kms.ID=ms.STATUS_ID
+left join IPARA_OBJECT ot on ot.OBJECT_ID=r.POWER_SUPPLYER
+left join TARIFF_GROUP tg on tg.TARIFFGROUPID=ot.TARIFFGROUPID
+left join IPARA_OBJECT ol on ol.OBJECT_ID=m.LINE_ID and ol.POWER_SUPPLYER=m.POWER_SUPPLYER
+left join IPARA_OBJECT ol2 on ol2.OBJECT_ID=r.LINE_ID and ol2.POWER_SUPPLYER=r.POWER_SUPPLYER
+left join IPARA_OBJECT os on os.OBJECT_ID=m.SUBURB_ID and os.POWER_SUPPLYER=m.POWER_SUPPLYER
+left join IPARA_OBJECT os2 on os2.OBJECT_ID=r.SUBURB_ID and os2.POWER_SUPPLYER=r.POWER_SUPPLYER
+where m.MTRPOINT_ID<>269586
+
+-------------------------------------tmp_zxb  自动建表语句-----------------------------------------
+
+CREATE TABLE `tmp_bj` (
+  `MT_MODEL_DESC` varchar(128) DEFAULT NULL,
+  `MT_COMM_ADDR` varchar(128) NOT NULL,
+  `station_id` varchar(128) DEFAULT NULL,
+  `LINE_ID` varchar(128) DEFAULT NULL,
+  `SUBURB_ID` varchar(128) DEFAULT NULL,
+  `MUS_TI` varchar(128) DEFAULT NULL,
+  `MUS_SGCID` varchar(128) DEFAULT NULL,
+  `MUS_KEYVISION` varchar(128) DEFAULT NULL,
+  `MUS_KEYEXPIRY` varchar(128) DEFAULT NULL,
+  `LASTVENDDATE` varchar(128) DEFAULT NULL,
+  `LASTVENDFREEDATE` varchar(128) DEFAULT NULL,
+  `TARIFFNAME` varchar(128) DEFAULT NULL,
+  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
+  `MeterStatus` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`MT_COMM_ADDR`),
+  KEY `index_bj_customerid` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+

@@ -2,13 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.vincent.dao.master.MysqlDao">
 
-
-    <select id="queryTodayUnfinished" resultType="java.lang.Integer">
-        select COUNT(1) from tmp_centlec where insert_time &gt; DATE_FORMAT(SYSDATE(), '%Y-%m-%d') and execute_status = 0
+    <select id="queryTmpCentlec" resultType="java.lang.Integer">
+        select COUNT(1) from tmp_centlec where syn_date = #{sysDateString}
     </select>
+    <select id="queryCurStaus" resultType="java.lang.String">
+        select cur_dead_step from tmp_centlec where syn_date = #{sysDateString}
+    </select>
+    <insert id="insertTmpCentlec">
+        insert into tmp_centlec(syn_date, cur_dead_step) values (#{sysDateString}, #{result})
+    </insert>
+    <update id="updateTmpCentlec">
+        update tmp_centlec set cur_dead_step = #{result} where syn_date = #{sysDateString}
+    </update>
+
     <delete id="deleteTmpData">
         delete from ${tmpTableName}
     </delete>
+    <select id="queryTableSize" resultType="java.lang.Integer">
+        select count(1) from ${tableName}
+    </select>
 
     <select id="prepareTmp1ToDate" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_0_1(
@@ -100,7 +112,7 @@
             #{item.MINPAY,jdbcType=VARCHAR},
             #{item.PMONEYPCT,jdbcType=VARCHAR},
             #{item.AMOUNTPCT,jdbcType=VARCHAR},
-            #{item.CREATE_DATE,jdbcType=DATETIME},
+            #{item.CREATE_DATE,jdbcType=TIMESTAMP},
             #{item.LASTDATE,jdbcType=VARCHAR},
             #{item.DebtType,jdbcType=VARCHAR},
             #{item.PAYCTS,jdbcType=VARCHAR},
@@ -109,6 +121,10 @@
         )
         </foreach>
     </insert>
+
+    <select id="queryMaxLastVendDate" resultType="java.lang.String">
+        select max(lastvenddate) from tmp_bj1
+    </select>
     <insert id="insertTmpLjz" parameterType="java.util.List">
         insert into tmp_ljz (
         energy,MT_COMM_ADDR,LASTVENDDATE,ISFREE
@@ -124,11 +140,42 @@
         </foreach>
     </insert>
 
+    <select id="queryTiChangedNum" resultType="java.lang.Integer">
+        select count(1) from tmp_yh t,tmp_yh1 t1
+        where t.customer_id = t1.customer_id
+        and t.us_ti &lt;&gt; t1.us_ti
+    </select>
+    <select id="queryYhWithTariffChanged" resultType="cn.vincent.pojo.TmpYhChangedTariff">
+        SELECT yh.*,yh1.tariffname AS tariffnameold
+        FROM tmp_yh yh INNER JOIN tmp_yh1 yh1
+        ON yh.customer_id = yh1.customer_id AND yh.tariffname &lt;&gt; yh1.tariffname
+    </select>
+    <select id="queryYhWithDwChanged" resultType="cn.vincent.pojo.TmpYhChangedDw">
+        SELECT yh.*,yh1.station_id AS station_idold
+        FROM tmp_yh yh INNER JOIN tmp_yh1 yh1
+        ON yh.customer_id = yh1.customer_id AND yh1.station_id &lt;&gt; yh.station_id
+    </select>
     <select id="executeScript1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_1(
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
+    </select>
+    <select id="queryDwNullNum" resultType="java.lang.Integer">
+        select count(1) from a_consumer cons where cons.org_no is null
+    </select>
+
+    <select id="queryBjWithVkChanged" resultType="cn.vincent.pojo.TmpBjChangedVk">
+        SELECT  bj.*,
+                bj1.mus_sgcid as mus_sgcidold,
+                bj1.mus_keyvision as mus_keyvisionold,
+                bj1.mus_keyexpiry as mus_keyexpiryold
+		FROM tmp_bj bj INNER JOIN tmp_bj1 bj1 ON bj.mt_comm_addr=bj1.mt_comm_addr
+		AND (bj1.mus_sgcid &lt;&gt; bj.mus_sgcid or bj1.mus_keyvision &lt;&gt; bj.mus_keyvision or bj1.mus_keyexpiry &lt;&gt; bj.mus_keyexpiry)
+    </select>
+    <select id="queryBjWithTiChanged" resultType="cn.vincent.pojo.TmpBjChangedTi">
+        SELECT bj.*,bj1.mus_ti AS mus_tiold
+		FROM tmp_bj bj INNER JOIN tmp_bj1 bj1 ON bj.mt_comm_addr=bj1.mt_comm_addr AND bj1.mus_ti &lt;&gt; bj.mus_ti
     </select>
     <select id="executeScript2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_2(
@@ -136,17 +183,43 @@
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
+
+    <select id="queryYhWithStatusChanged" resultType="cn.vincent.pojo.TmpYhChangedStatus">
+        SELECT  yh.*,
+                yh1.status AS statusold,
+		        (SELECT MT_COMM_ADDR FROM tmp_bj bj WHERE bj.customer_id=yh.customer_id) MT_COMM_ADDR,
+		        (SELECT MT_COMM_ADDR FROM tmp_bj bj1 WHERE bj1.customer_id=yh1.customer_id) MT_COMM_ADDRold
+		FROM tmp_yh yh INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh1.status &lt;&gt; yh.status
+    </select>
+    <select id="queryNewYh" resultType="cn.vincent.pojo.TmpYh">
+        SELECT a.*
+        FROM tmp_yh a
+	    WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('yh_',a.customer_id) = cons.CONS_NO)
+    </select>
     <select id="executeScript3_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_3_1(
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
+
+    <select id="queryBjWithCustidChanged" resultType="cn.vincent.pojo.TmpBjChangedCustid">
+        SELECT  bj.*,
+                bj1.customer_id AS customer_idold
+        FROM tmp_bj bj INNER JOIN tmp_bj1 bj1 ON bj1.mt_comm_addr = bj.mt_comm_addr
+			AND bj1.customer_id &lt;&gt; bj.customer_id
+    </select>
     <select id="executeScript3_2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_3_2(
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
+    </select>
+
+    <select id="queryBjDeleted" resultType="cn.vincent.pojo.TmpBj">
+        SELECT bj1.*
+        FROM tmp_bj1 bj1
+	    WHERE NOT EXISTS(SELECT bj.mt_comm_addr FROM tmp_bj bj WHERE bj.mt_comm_addr = bj1.mt_comm_addr)
     </select>
     <select id="executeScript3_3" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_3_3(
@@ -184,7 +257,7 @@
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
-    <select id="executeScript9" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+    <select id="executeScript8" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_8(
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}

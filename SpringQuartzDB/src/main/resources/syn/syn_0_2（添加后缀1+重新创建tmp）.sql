@@ -7,16 +7,14 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
 
 	CREATE TABLE IF NOT EXISTS `tmp_centlec` (
-	  `id` int(11) NOT NULL AUTO_INCREMENT,
-	  `table_name` varchar(64) NOT NULL,
-	  `execute_status` int(11) NOT NULL,
-	  `insert_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	  `remark` varchar(128) DEFAULT NULL,
-	  PRIMARY KEY (`id`)
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`syn_date` varchar(8) NOT NULL,
+		`cur_dead_step` varchar(8) NOT NULL,
+		`remark` varchar(64) DEFAULT NULL,
+		`tv` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 	#1-修改tmp为tmp1
@@ -93,13 +91,10 @@ BEGIN
 	  `MT_COMM_ADDR` varchar(128) NOT NULL,
 	  `LASTVENDDATE` varchar(128) NOT NULL,
 	  `ISFREE` varchar(128) NOT NULL,
+	  `ISUSED` varchar(128) NOT NULL,
 	  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-	IF t_error = 1 THEN
-		ROLLBACK;
-	ELSE
-		COMMIT;
-	END IF;
-	SELECT t_error, msg;
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 END

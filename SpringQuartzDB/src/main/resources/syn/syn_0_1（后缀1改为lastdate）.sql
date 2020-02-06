@@ -7,8 +7,6 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
 
 	if (select COUNT(*) from information_schema.TABLES where table_name='tmp_bj1')>0 then
 		set @newname = (select date_format(str_to_date(max(lastvenddate),'%Y-%m-%d'),'%Y%m%d') from tmp_bj1);
@@ -17,7 +15,6 @@ BEGIN
 		PREPARE stmt FROM @strsql;
 		EXECUTE stmt;
 		deallocate prepare stmt;
-		INSERT INTO tmp_centlec (table_name, execute_status, remark) VALUES (CONCAT('tmp_bj',@newname), 0, 'start');
 
 		#0-修改tmp1为tmp当前日期
 		if (select COUNT(*) from information_schema.TABLES where table_name='tmp_yh1')>0 then
@@ -25,7 +22,6 @@ BEGIN
 			PREPARE stmt FROM @strsql;
 			EXECUTE stmt;
 			deallocate prepare stmt;
-			INSERT INTO tmp_centlec (table_name, execute_status, remark) VALUES (CONCAT('tmp_yh',@newname), 0, 'start');
 		end if;
 
 		if (select COUNT(*) from information_schema.TABLES where table_name='tmp_zw1')>0 then
@@ -33,7 +29,6 @@ BEGIN
 			PREPARE stmt FROM @strsql;
 			EXECUTE stmt;
 			deallocate prepare stmt;
-			INSERT INTO tmp_centlec (table_name, execute_status, remark) VALUES (CONCAT('tmp_zw',@newname), 0, 'start');
 		end if;
 
 		if (select COUNT(*) from information_schema.TABLES where table_name='tmp_ljz1')>0 then
@@ -41,14 +36,9 @@ BEGIN
 			PREPARE stmt FROM @strsql;
 			EXECUTE stmt;
 			deallocate prepare stmt;
-			INSERT INTO tmp_centlec (table_name, execute_status, remark) VALUES (CONCAT('tmp_ljz',@newname), 0, 'start');
 		end if;
 	end if;
 
-	IF t_error = 1 THEN
-		ROLLBACK;
-	ELSE
-		COMMIT;
-	END IF;
-	SELECT t_error, msg;
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 END

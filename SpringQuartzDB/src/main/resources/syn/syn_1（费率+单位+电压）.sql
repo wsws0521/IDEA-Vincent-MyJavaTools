@@ -7,15 +7,6 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
-
-	#0.	表计运行时密钥是否有变化,如果返回结果为0条记录，则无需关心
-	if (select count(*) from tmp_yh t,tmp_yh1 t1
-	where t.customer_id = t1.customer_id
-	and t.us_ti != t1.us_ti)>0 then
-			select 1/0 from dual;
-	end if;
 
 	#1-索引
 	ALTER table vd_e_bill_package ADD INDEX index_vd_e_bill_package_pkgname(pkg_name);
@@ -28,6 +19,8 @@ BEGIN
 		ALTER TABLE tmp_yh1 ADD INDEX index_yh_tariffname(tariffname);
 	END IF;
 
+    # 开启事务
+	START TRANSACTION;
 	# 临时表
 	CREATE TEMPORARY TABLE temp_yh SELECT yh.*,yh1.tariffname AS tariffnameold
 			FROM tmp_yh yh INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh.tariffname!=yh1.tariffname;
@@ -106,19 +99,17 @@ BEGIN
 			where conscurr.org_no = org1.no) tb on cons.cons_no = tb.cons_no
 	set cons.ORG_NO = tb.no;
 
-	# 删除索引
-	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
 	DROP TEMPORARY TABLE IF EXISTS temp_yh;
-
-	#校验是否有管理单位数据遗漏
-	if (select count(*) from a_consumer cons where cons.org_no is null)>0 then
-		select 1/0 from dual;
-	end if;
 
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
 		COMMIT;
 	END IF;
-	SELECT t_error, msg;
+
+	# 删除索引
+	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
+
+	SELECT t_error into error_code;
+	SELECT msg into error_msg;
 END;

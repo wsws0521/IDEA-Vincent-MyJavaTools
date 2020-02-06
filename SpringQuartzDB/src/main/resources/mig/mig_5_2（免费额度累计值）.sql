@@ -70,3 +70,31 @@ BEGIN
 	SELECT t_error, msg;
 
 END
+
+
+------------------------------------sqlserver数据源获取-------------------------------------------
+SELECT SUM(OCD_ENERGY) energy,
+        m.MT_COMM_ADDR,
+        convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,
+        o.ISFREE,
+        '0' as ISUSED
+FROM ORDER_trn o
+inner join IPARA_MTRPOINT m on o.METERID=m.MTRPOINT_ID
+inner join IPARA_RESIDENT r on r.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
+where   m.ACTUAL_CUSTOMER_ID is not null
+        and isnull(o.DELFLAG,0)=0
+        and DATEDIFF(MONTH,o.OD_DATE,GETDATE())=0
+group by m.MT_COMM_ADDR,o.ISFREE
+
+-------------------------------------tmp_ljz  自动建表语句-----------------------------------------
+
+CREATE TABLE `tmp_ljz` (
+	  `energy` varchar(128) DEFAULT NULL,
+	  `MT_COMM_ADDR` varchar(128) NOT NULL,
+	  `LASTVENDDATE` varchar(128) NOT NULL,
+	  `ISFREE` varchar(128) NOT NULL,
+	  `ISUSED` varchar(128) NOT NULL,
+	  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
