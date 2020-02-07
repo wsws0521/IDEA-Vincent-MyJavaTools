@@ -4,10 +4,11 @@ package cn.vincent.service;
 import cn.vincent.dao.master.MysqlDao;
 import cn.vincent.dao.other.SqlserverDao;
 import cn.vincent.pojo.*;
-import cn.vincent.utils.MyUtils;
+import cn.vincent.utils.MyDateUtils;
 import cn.vincent.utils.StepConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -27,6 +28,10 @@ public class DbServiceImpl implements DbService {
     MysqlDao mysqlDao;
     @Resource
     SqlserverDao sqlserverDao;
+    @Autowired
+    SynCumuService synCumuService;
+    @Autowired
+    SynLjzService synLjzService;
 
     @Override
     public void generalCall(){
@@ -70,7 +75,7 @@ public class DbServiceImpl implements DbService {
         }
     }
     private String getCurStep(){
-        SYS_DATE_STR = MyUtils.getSysDate();
+        SYS_DATE_STR = MyDateUtils.getSysDate();
         int existNum = mysqlDao.queryTmpCentlec(SYS_DATE_STR);
         if(existNum == 1){
             String result = mysqlDao.queryCurStaus(SYS_DATE_STR);
@@ -208,10 +213,10 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_4);
         if(updateNum == 1){
             mysqlDao.deleteTmpData("tmp_ljz");
-            String lastVendDate = mysqlDao.queryMaxLastVendDate();
-            logger.info("[免费额度累计值]截取开始时间：" + lastVendDate);
-            List<TmpLjz> tmpljz = sqlserverDao.queryTmpLjz(lastVendDate);
-            logger.info("取到最新的[免费额度]记录个数：" + tmpljz.size());
+            String cumuDate = MyDateUtils.getSysDateYestoday();
+            logger.info("取" + cumuDate + "当天的累计值");
+            List<TmpLjz> tmpljz = sqlserverDao.queryTmpLjzYestoday(cumuDate);
+            logger.info("取到老库指定日期的[累计值]记录个数：" + tmpljz.size());
             int insNum = 0;
             int listSize = tmpljz.size();
             List<TmpLjz> part = new ArrayList<TmpLjz>(LIMIT);
@@ -226,7 +231,7 @@ public class DbServiceImpl implements DbService {
             if(insNum != listSize)
                 throw new RuntimeException("免费累计值记录：取到的与插入的不相等");
             int ljz1size = mysqlDao.queryTableSize("tmp_ljz1");
-            logger.info("上次同步的[用户免费累计值]个数（tmp_ljz1）：" + ljz1size);
+            logger.info("上次同步的[累计值]个数（tmp_ljz1）：" + ljz1size);
             logger.info("理论上本次将新增[用户免费累计值]个数：" + tmpljz.size());
             tmpljz.clear();
         }else{
@@ -481,18 +486,16 @@ public class DbServiceImpl implements DbService {
     }
 
     /**
-     * 执行<脚本7：累计值-数据融合.txt>：添加免费额度累计值
+     * 执行<程序7：累计值-往新库融合.txt>：往新库
      */
     @Override
     public void startFromScript7() {
-        logger.info("007：执行<脚本7：累计值-数据融合.txt>：添加免费额度累计值");
+        logger.info("007：执行<程序7：累计值-往新库融合.txt>：往新库");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_007);
         if(updateNum == 1){
             // --------------------同步
-//            ProcessParam processParam = new ProcessParam();
-//            mysqlDao.startFromScript7(processParam);
-//            if(processParam.getError_code() != 0)
-//                throw new RuntimeException(processParam.getError_msg());
+            List<TmpLjzWithIdOld> tmpLjzList = mysqlDao.queryTmpLjzWithIdOld();
+            synCumuService.synLjzIntoVdCcumuValue(tmpLjzList);
             logger.info("--------------------------------------------" + StepConstant.STEP_007 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -501,18 +504,18 @@ public class DbServiceImpl implements DbService {
     }
 
     /**
-     * 执行<脚本8：step迁移>：方案待定
+     * 执行<程序8：累计值-往老库融合.txt>：往老库
      */
     @Override
     public void startFromScript8() {
-        logger.info("008: to be continue");
+        logger.info("008: 执行<程序8：累计值-往老库融合.txt>：往老库");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_008);
         if(updateNum == 1){
-            logger.info("执行<脚本8：step迁移>：方案待定");
-//        ProcessParam processParam = new ProcessParam();
-//        mysqlDao.startFromScript8(processParam);
-//        if(processParam.getError_code() != 0)
-//            throw new RuntimeException(processParam.getError_msg());
+            String cumuDate = MyDateUtils.getSysDateYestoday();
+            logger.info("取" + cumuDate + "当天的累计值");
+            List<TmpLjz> tmpljzList = mysqlDao.queryTmpLjzYestoday(cumuDate);
+            logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
+            synLjzService.synVdCcumuValueIntoLjz(tmpljzList);
             logger.info("--------------------------------------------" + StepConstant.STEP_008 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");

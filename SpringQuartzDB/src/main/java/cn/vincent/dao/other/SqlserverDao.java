@@ -15,5 +15,14 @@ public interface SqlserverDao {
 
     List<TmpZw> queryTmpZw();
 
-    List<TmpLjz> queryTmpLjz(@Param(value = "lastVendDate") String lastVendDate);
+    List<TmpLjz> queryTmpLjzYestoday(@Param(value = "cumuDate") String cumuDate);
+
+    void deleteTmpData(@Param(value = "tmpTableName") String tmpTableName);
+
+    int insertTmpLjz(List<TmpLjz> part);
+
+    int updateIparaMtrPoint0();
+    int updateTmpLjz0();
+    int updateIparaMtrPoint1();
+    int updateTmpLjz1();
 }

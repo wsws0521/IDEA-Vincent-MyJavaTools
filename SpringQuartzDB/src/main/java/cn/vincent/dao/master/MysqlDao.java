@@ -3,6 +3,7 @@ package cn.vincent.dao.master;
 import cn.vincent.pojo.*;
 import org.apache.ibatis.annotations.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper
@@ -64,9 +65,30 @@ public interface MysqlDao {
 
     void executeScript6(ProcessParam processParam);
 
+    List<TmpLjzWithIdOld> queryTmpLjzWithIdOld();
     void executeScript7(ProcessParam processParam);
 
+    int queryExistCumu(
+            @Param(value = "cumuObj") String cumuObj,
+            @Param(value = "cumuObjId") String cumuObjId,
+            @Param(value = "cumuDate") String cumuDate);
+    int insertFbeVdCcumuValue(
+            @Param(value = "consId") String consId,
+            @Param(value = "cumuValue") BigDecimal cumuValue,
+            @Param(value = "cumuDate") String cumuDate);
+    int insertStepVdCcumuValue(
+            @Param(value = "meterId") String meterId,
+            @Param(value = "cumuValue") BigDecimal cumuValue,
+            @Param(value = "cumuDate") String cumuDate);
+    int updateFbeVdCcumuValue(
+            @Param(value = "consId") String consId,
+            @Param(value = "cumuValue") BigDecimal cumuValue,
+            @Param(value = "cumuDate") String cumuDate);
+    int updateStepVdCcumuValue(
+            @Param(value = "meterId") String meterId,
+            @Param(value = "cumuValueOffset") BigDecimal cumuValueOffset,
+            @Param(value = "cumuDate") String cumuDate);
 
+    List<TmpLjz> queryTmpLjzYestoday(@Param(value = "cumuDate") String cumuDate);
 
-//    void startFromScript8();
 }

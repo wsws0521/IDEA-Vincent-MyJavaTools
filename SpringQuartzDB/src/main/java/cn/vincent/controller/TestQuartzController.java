@@ -3,7 +3,7 @@ package cn.vincent.controller;
 import cn.vincent.quartz.job.TestJob;
 import cn.vincent.quartz.manager.SchedulerManager;
 import cn.vincent.service.DbService;
-import cn.vincent.utils.MyUtils;
+import cn.vincent.utils.MyDateUtils;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +22,9 @@ public class TestQuartzController {
     @GetMapping("/{id}")
     public String returnStringId(@PathVariable String id){
         System.out.println("sout:" + id);
-        logger.info("当前时间是：" + MyUtils.getSysDateTime());
+        logger.info("当前时间是：" + MyDateUtils.getSysDateTime());
         logger.info("Request:" + id);
-        logger.debug("当前时间是：" + MyUtils.getSysDateTime());
+        logger.debug("当前时间是：" + MyDateUtils.getSysDateTime());
         logger.debug("Request:" + id);
         dbService.generalCall();
         return "Request:" + id;

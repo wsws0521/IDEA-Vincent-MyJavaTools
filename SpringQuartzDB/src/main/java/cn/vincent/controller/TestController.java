@@ -3,7 +3,7 @@ package cn.vincent.controller;
 import cn.vincent.pojo.ProcessParam;
 import cn.vincent.service.TestDbService;
 
-import cn.vincent.utils.MyUtils;
+import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +23,9 @@ public class TestController {
     @GetMapping("/{id}")
     public String returnStringId(@PathVariable String id){
         System.out.println("sout:" + id);
-        logger.info("当前时间是：" + MyUtils.getSysDateTime());
+        logger.info("当前时间是：" + MyDateUtils.getSysDateTime());
         logger.info("Request:" + id);
-        logger.debug("当前时间是：" + MyUtils.getSysDateTime());
+        logger.debug("当前时间是：" + MyDateUtils.getSysDateTime());
         logger.debug("Request:" + id);
         return "Request:" + id;
 //                + "mysql.pthidparty" + testDbService.queryMysqlPthirdParty().size() + "\n"

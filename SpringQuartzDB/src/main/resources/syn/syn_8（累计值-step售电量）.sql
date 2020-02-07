@@ -75,3 +75,72 @@ BEGIN
 	SELECT msg into error_msg;
 
 END
+
+
+
+------------------------------------sqlserver数据源获取-------------------------------------------
+--该数据源为每天数据，脚本中的时间为想获取的增量数据的时间，每只表当天最多两条记录，1条为正常购电量，另一条为免费购电量
+--如果漏导入某天数据，可以补导入，只要修改时间即可
+--如果一天内多次导入数据，也允许，但是融合逻辑处理的时候需要关注ISUSED，该字段在融合成功后修改成1
+
+SELECT  SUM(OCD_ENERGY) energy,
+        m.MT_COMM_ADDR,
+        convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,
+        o.ISFREE,'0' AS ISUSED
+FROM ORDER_trn o
+inner join IPARA_MTRPOINT m on o.METERID=m.MTRPOINT_ID
+inner join IPARA_RESIDENT r on r.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
+where m.ACTUAL_CUSTOMER_ID is not null
+        and isnull(o.DELFLAG,0)=0
+        and DATEDIFF(DAY,o.OD_DATE,'2020-02-06')=0
+group by m.MT_COMM_ADDR,o.ISFREE
+
+-------------------------------------sqlserver创建tmp_ljz-----------------------------------------
+CREATE TABLE [dbo].[tmp_ljz](
+	[id] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[energy] [numeric](18, 2) NOT NULL,
+	[MT_COMM_ADDR] [varchar](15) NOT NULL,
+	[LASTVENDDATE] [varchar](19) NOT NULL,
+	[ISFREE] [int] NOT NULL,
+	[ISUSED] [int] NULL,
+ CONSTRAINT [PK_tmp_ljz] PRIMARY KEY CLUSTERED
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON)
+)
+
+GO
+
+ALTER TABLE [tmp_ljz] ADD  CONSTRAINT [DF_tmp_ljz_ISUSED]  DEFAULT ((0)) FOR [ISUSED]
+GO
+
+-------------------------------------sqlserver创建存储过程-----------------------------------------
+
+UPDATE m set m.LASTVENDDATE=
+(case when m.LASTVENDDATE IS null then ljz.lastvenddate
+ when m.LASTVENDDATE>ljz.lastvenddate then m.LASTVENDDATE
+ else ljz.lastvenddate end),
+ m.CUR_MONTH_UNITS=ISNULL(m.CUR_MONTH_UNITS,0)+ljz.energy
+from IPARA_MTRPOINT m inner join
+(select sum(energy) as energy,mt_comm_addr,CONVERT(datetime, max(lastvenddate), 120) as lastvenddate
+ from tmp_ljz where ISUSED=0 and ISFREE=0
+and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+group by mt_comm_addr
+) ljz on m.MT_COMM_ADDR=ljz.mt_comm_addr;
+
+update tmp_ljz set isused=1 where ISUSED=0 and ISFREE=0
+and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0;
+
+UPDATE m set m.LASTVENDFREEDATE=
+(case when m.LASTVENDFREEDATE IS null then ljz.lastvenddate
+ when m.LASTVENDFREEDATE>ljz.lastvenddate then m.LASTVENDFREEDATE
+ else ljz.lastvenddate end)
+from IPARA_MTRPOINT m inner join
+(select sum(energy) as energy,mt_comm_addr,CONVERT(datetime, max(lastvenddate), 120) as lastvenddate
+ from tmp_ljz where ISUSED=0 and ISFREE=1
+and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+group by mt_comm_addr
+) ljz on m.MT_COMM_ADDR=ljz.mt_comm_addr;
+
+update tmp_ljz set isused=1 where ISUSED=0 and ISFREE=1
+and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0;

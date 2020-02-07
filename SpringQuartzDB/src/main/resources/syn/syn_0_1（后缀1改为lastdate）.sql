@@ -32,6 +32,7 @@ BEGIN
 		end if;
 
 		if (select COUNT(*) from information_schema.TABLES where table_name='tmp_ljz1')>0 then
+		    SET @newname = (select date_format(str_to_date(max(lastvenddate),'%Y-%m-%d'),'%Y%m%d%H%i%s') from tmp_ljz1);
 			SET @strsql = CONCAT('ALTER TABLE tmp_ljz1 RENAME TO tmp_ljz',@newname);
 			PREPARE stmt FROM @strsql;
 			EXECUTE stmt;

@@ -127,7 +127,7 @@
     </select>
     <insert id="insertTmpLjz" parameterType="java.util.List">
         insert into tmp_ljz (
-        energy,MT_COMM_ADDR,LASTVENDDATE,ISFREE
+        energy,MT_COMM_ADDR,LASTVENDDATE,ISFREE, ISUSED
         )
         values
         <foreach collection="list" item="item" index="index" separator =",">
@@ -135,7 +135,8 @@
             #{item.energy,jdbcType=VARCHAR},
             #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
             #{item.LASTVENDDATE,jdbcType=VARCHAR},
-            #{item.ISFREE,jdbcType=VARCHAR}
+            #{item.ISFREE,jdbcType=VARCHAR},
+            #{item.ISUSED,jdbcType=VARCHAR}
         )
         </foreach>
     </insert>
@@ -251,16 +252,66 @@
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
+
+    <select id="queryTmpLjzWithIdOld" resultType="cn.vincent.pojo.TmpLjzWithIdOld">
+        select a.*, b.METER_ID "meterId", d.CONS_ID "consId",
+			aa.energy "energy_old", aa.mt_comm_addr "MT_COMM_ADDR_old",
+			aa.LASTVENDDATE "LASTVENDDATE_old", aa.ISFREE "ISFREE_old",
+			aa.ISUSED "ISUSED_old"
+        from tmp_ljz a
+        INNER JOIN A_EQUIP_METER b on a.mt_comm_addr  = b.assetno
+        INNER JOIN a_mp_equipment_rela c on b.METER_ID = c.EQUIPMENTID and c.EQUIPMENTTYPE = '02'
+        INNER JOIN a_usagepoint d on c.MP_ID = d.MP_ID
+        LEFT JOIN tmp_ljz1 aa on a.mt_comm_addr = aa.mt_comm_addr and a.isfree = aa.isfree and TO_DAYS(a.lastvenddate) = TO_DAYS(aa.lastvenddate)
+        where a.ISUSED = 0
+    </select>
     <select id="executeScript7" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_7(
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
-    <select id="executeScript8" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
-        {CALL syn_8(
-            #{error_code,mode=OUT,jdbcType=INTEGER},
-            #{error_msg,mode=OUT,jdbcType=VARCHAR}
-        )}
+
+
+    <select id="queryExistCumu" resultType="java.lang.Integer">
+        select count(1) from vd_c_cumu_value
+        where cumu_obj = #{cumuObj} and cumu_obj_id = #{cumuObjId}
+        and #{cumuDate} <![CDATA[ >= ]]> start_time and #{cumuDate} <![CDATA[ <= ]]> end_time
+    </select>
+    <insert id="insertFbeVdCcumuValue">
+        INSERT INTO vd_c_cumu_value
+            (lessee_id, cumu_id, rule_id, cumu_obj, cumu_obj_id, cumu_item, start_time, end_time, cumu_value, value_unit)
+        VALUES
+            (2, AMI_GET_SEQUENCE('SEQ_VD_C_CUMU_VALUE'), NULL, '01', #{consId}, '0101',
+            DATE_ADD(#{cumuDate}, INTERVAL -DAY(#{cumuDate}) + 1 DAY), LAST_DAY(#{cumuDate}),
+            #{cumuValue}, 'KWH')
+    </insert>
+    <insert id="insertStepVdCcumuValue">
+        INSERT INTO VD_C_CUMU_VALUE
+            (LESSEE_ID,	CUMU_ID, RULE_ID, CUMU_OBJ,	CUMU_OBJ_ID, CUMU_ITEM,	START_TIME,	END_TIME, CUMU_VALUE, VALUE_UNIT)
+        VALUES
+            (2, AMI_GET_SEQUENCE('SEQ_VD_C_CUMU_VALUE'), NULL, '03', #{meterId}, '0301',
+            DATE_ADD(#{cumuDate}, INTERVAL -DAY(#{cumuDate}) + 1 DAY), LAST_DAY(#{cumuDate}),
+            #{cumuValue}, 'KWH')
+    </insert>
+    <update id="updateFbeVdCcumuValue">
+        UPDATE vd_c_cumu_value SET cumu_value = #{cumuValue}
+        WHERE cumu_obj = '01' AND cumu_item = '0101' AND cumu_obj_id = #{consId}
+        and #{cumuDate} <![CDATA[ >= ]]> start_time and #{cumuDate} <![CDATA[ <= ]]> end_time
+    </update>
+    <update id="updateStepVdCcumuValue">
+        UPDATE VD_C_CUMU_VALUE SET CUMU_VALUE = CUMU_VALUE + #{cumuValueOffset}
+        WHERE CUMU_OBJ = '03' AND CUMU_ITEM = '0301' AND CUMU_OBJ_ID = #{meterId}
+        and #{cumuDate} <![CDATA[ >= ]]> start_time and #{cumuDate} <![CDATA[ <= ]]> end_time
+    </update>
+
+    <select id="queryTmpLjzYestoday" resultType="cn.vincent.pojo.TmpLjz">
+        select 	t.RECHARGE_AMOUNT as "energy",
+				t.meter_no as "MT_COMM_ADDR",
+				t.CREATE_TIME as "LASTVENDDATE",
+				(case when t.TOKEN_TYPE = '0101' then 0 else 1 end) as "ISFREE",
+				'0' as "ISUSED"
+        from vd_p_token t
+        where  t.TOKEN_TYPE in ('0101', '0103') and TO_DAYS(t.CREATE_TIME) = TO_DAYS(#{cumuDate})
     </select>
 </mapper>

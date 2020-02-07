@@ -77,18 +77,71 @@
         where isnull(d.OKFLAG,0)>0
     </select>
 
-    <select id="queryTmpLjz" resultType="cn.vincent.pojo.TmpLjz">
+    <select id="queryTmpLjzYestoday" resultType="cn.vincent.pojo.TmpLjz">
         SELECT  SUM(OCD_ENERGY) energy,
                 m.MT_COMM_ADDR,
-                CONVERT(varchar(10),DATEADD(mm, DATEDIFF(mm, 0,o.OD_DATE), 0),120) as LASTVENDDATE,
-                ISFREE
-        FROM ORDER_trn o inner join IPARA_MTRPOINT m on o.METERID=m.MTRPOINT_ID
+                convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,
+                o.ISFREE,'0' AS ISUSED
+        FROM ORDER_trn o
+        inner join IPARA_MTRPOINT m on o.METERID=m.MTRPOINT_ID
         inner join IPARA_RESIDENT r on r.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
         where m.ACTUAL_CUSTOMER_ID is not null
-              and isnull(o.DELFLAG,0)=0 and o.isfree=1
-              and OD_DATE>CONVERT(datetime,#{lastVendDate},120)
-        group by m.MT_COMM_ADDR,ISFREE,DATEADD(mm, DATEDIFF(mm, 0,o.OD_DATE), 0)
-        order by m.MT_COMM_ADDR,DATEADD(mm, DATEDIFF(mm, 0,o.OD_DATE), 0),ISFREE
+                and isnull(o.DELFLAG,0)=0
+                and DATEDIFF(DAY,o.OD_DATE,#{cumuDate})=0
+        group by m.MT_COMM_ADDR,o.ISFREE
     </select>
 
+
+    <delete id="deleteTmpData">
+        delete from ${tmpTableName}
+    </delete>
+    <insert id="insertTmpLjz" parameterType="java.util.List">
+        insert into tmp_ljz (energy,MT_COMM_ADDR,LASTVENDDATE,ISFREE, ISUSED)
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+            (
+                #{item.energy,jdbcType=VARCHAR},
+                #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
+                #{item.LASTVENDDATE,jdbcType=VARCHAR},
+                #{item.ISFREE,jdbcType=VARCHAR},
+                #{item.ISUSED,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateIparaMtrPoint0">
+        UPDATE m set
+            m.LASTVENDDATE=
+                (case when m.LASTVENDDATE IS null then ljz.lastvenddate
+                 when m.LASTVENDDATE>ljz.lastvenddate then m.LASTVENDDATE
+                 else ljz.lastvenddate end),
+            m.CUR_MONTH_UNITS=ISNULL(m.CUR_MONTH_UNITS,0)+ljz.energy
+        from IPARA_MTRPOINT m
+        inner join
+            (select sum(energy) as energy,mt_comm_addr,CONVERT(datetime, max(lastvenddate), 120) as lastvenddate
+             from tmp_ljz
+             where ISUSED=0 and ISFREE=0 and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+             group by mt_comm_addr) ljz
+        on m.MT_COMM_ADDR=ljz.mt_comm_addr
+    </update>
+    <update id="updateTmpLjz0">
+        update tmp_ljz set isused=1
+        where ISUSED=0 and ISFREE=0 and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+    </update>
+    <update id="updateIparaMtrPoint1">
+        UPDATE m set m.LASTVENDFREEDATE=
+            (case when m.LASTVENDFREEDATE IS null then ljz.lastvenddate
+             when m.LASTVENDFREEDATE>ljz.lastvenddate then m.LASTVENDFREEDATE
+             else ljz.lastvenddate end)
+        from IPARA_MTRPOINT m
+        inner join
+            (select sum(energy) as energy,mt_comm_addr,CONVERT(datetime, max(lastvenddate), 120) as lastvenddate
+             from tmp_ljz where ISUSED=0 and ISFREE=1
+            and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+            group by mt_comm_addr) ljz
+        on m.MT_COMM_ADDR=ljz.mt_comm_addr
+    </update>
+    <update id="updateTmpLjz1">
+        update tmp_ljz set isused=1
+        where ISUSED=0 and ISFREE=1 and DATEDIFF(MONTH,CONVERT(datetime, lastvenddate, 120),GETDATE())=0
+    </update>
 </mapper>
