@@ -3,10 +3,13 @@
 <mapper namespace="cn.vincent.dao.master.MysqlSynDao">
     
     <select id="queryExistsIndex" resultType="java.lang.Integer">
-        SELECT count(1)FROM information_schema.statistics WHERE table_name = #{tableName} AND index_name = #{indexName}
+        SELECT count(1) FROM information_schema.statistics WHERE table_name = #{tableName} AND index_name = #{indexName}
     </select>
-    <select id="addIndex">
+    <update id="addIndex">
         ALTER TABLE ${tableName} ADD INDEX ${indexName}(${columnName})
-    </select>
+    </update>
+    <update id="deleteIndex">
+        ALTER table ${tableName} DROP INDEX ${indexName}
+    </update>
 
 </mapper>

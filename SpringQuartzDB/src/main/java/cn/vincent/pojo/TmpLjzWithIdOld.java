@@ -6,8 +6,8 @@ public class TmpLjzWithIdOld extends TmpLjz {
     String energy_old;
     String MT_COMM_ADDR_old;
     String LASTVENDDATE_old;
-    int ISFREE_old;
-    int ISUSED_old;
+    Integer ISFREE_old;
+    Integer ISUSED_old;
 
     public String getConsId() {
         return consId;
@@ -49,19 +49,19 @@ public class TmpLjzWithIdOld extends TmpLjz {
         this.LASTVENDDATE_old = LASTVENDDATE_old;
     }
 
-    public int getISFREE_old() {
+    public Integer getISFREE_old() {
         return ISFREE_old;
     }
 
-    public void setISFREE_old(int ISFREE_old) {
+    public void setISFREE_old(Integer ISFREE_old) {
         this.ISFREE_old = ISFREE_old;
     }
 
-    public int getISUSED_old() {
+    public Integer getISUSED_old() {
         return ISUSED_old;
     }
 
-    public void setISUSED_old(int ISUSED_old) {
+    public void setISUSED_old(Integer ISUSED_old) {
         this.ISUSED_old = ISUSED_old;
     }
 }

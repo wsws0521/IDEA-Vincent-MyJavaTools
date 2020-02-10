@@ -32,6 +32,8 @@ public class DbServiceImpl implements DbService {
     SynCumuService synCumuService;
     @Autowired
     SynLjzService synLjzService;
+    @Autowired
+    SynService synService;
 
     @Override
     public void generalCall(){
@@ -494,8 +496,11 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_007);
         if(updateNum == 1){
             // --------------------同步
-            List<TmpLjzWithIdOld> tmpLjzList = mysqlDao.queryTmpLjzWithIdOld();
-            synCumuService.synLjzIntoVdCcumuValue(tmpLjzList);
+            synService.addIndexWithCheck("tmp_ljz","index_ljz_meterId","meterId");
+            synService.addIndexWithCheck("tmp_ljz","index_ljz_consId","consId");
+            synService.addIndex("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid", "cumu_obj_id");
+            synCumuService.synLjzIntoVdCcumuValue();
+            synService.deleteIndex("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid");
             logger.info("--------------------------------------------" + StepConstant.STEP_007 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");

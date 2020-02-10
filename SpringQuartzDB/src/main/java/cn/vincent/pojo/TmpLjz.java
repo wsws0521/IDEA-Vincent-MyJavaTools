@@ -4,8 +4,8 @@ public class TmpLjz {
     String energy;
     String MT_COMM_ADDR;
     String LASTVENDDATE;
-    int ISFREE;
-    int ISUSED;
+    Integer ISFREE;
+    Integer ISUSED;
 
     public String getEnergy() {
         return energy;
@@ -31,19 +31,19 @@ public class TmpLjz {
         this.LASTVENDDATE = LASTVENDDATE;
     }
 
-    public int getISFREE() {
+    public Integer getISFREE() {
         return ISFREE;
     }
 
-    public void setISFREE(int ISFREE) {
+    public void setISFREE(Integer ISFREE) {
         this.ISFREE = ISFREE;
     }
 
-    public int getISUSED() {
+    public Integer getISUSED() {
         return ISUSED;
     }
 
-    public void setISUSED(int ISUSED) {
+    public void setISUSED(Integer ISUSED) {
         this.ISUSED = ISUSED;
     }
 }

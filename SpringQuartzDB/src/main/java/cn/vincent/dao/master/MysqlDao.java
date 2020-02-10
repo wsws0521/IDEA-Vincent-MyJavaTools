@@ -18,9 +18,9 @@ public interface MysqlDao {
     int queryTableSize(@Param(value = "tableName") String tableName);
 
     // 执行脚本0.1将 tmp_bj1, tmp_yh1, tmp_zw1, tmp_ljz1 的后缀1改为年月日
-    void prepareTmp1ToDate(ProcessParam processParam);
+    ProcessParam prepareTmp1ToDate(ProcessParam processParam);
     // 执行脚本0.2将 tmp_bj, tmp_yh, tmp_zw, tmp_ljz 后缀全部+1，再重新创建这几个空表
-    void prepareTmpToTmp1(ProcessParam processParam);
+    ProcessParam prepareTmpToTmp1(ProcessParam processParam);
 
 
     // 批量插入最新表计档案数据
@@ -40,55 +40,69 @@ public interface MysqlDao {
     int queryTiChangedNum();
     List<TmpYhChangedTariff> queryYhWithTariffChanged();
     List<TmpYhChangedDw> queryYhWithDwChanged();
-    void executeScript1(ProcessParam processParam);
+    ProcessParam executeScript1(ProcessParam processParam);
     int queryDwNullNum();
 
     List<TmpBjChangedVk> queryBjWithVkChanged();
     List<TmpBjChangedTi> queryBjWithTiChanged();
-    void executeScript2(ProcessParam processParam);
+    ProcessParam executeScript2(ProcessParam processParam);
 
     List<TmpYhChangedStatus> queryYhWithStatusChanged();
     List<TmpYh> queryNewYh();
-    void executeScript3_1(ProcessParam processParam);
+    ProcessParam executeScript3_1(ProcessParam processParam);
 
     List<TmpBjChangedCustid> queryBjWithCustidChanged();
-    void executeScript3_2(ProcessParam processParam);
+    ProcessParam executeScript3_2(ProcessParam processParam);
 
     List<TmpBj> queryBjDeleted();
-    void executeScript3_3(ProcessParam processParam);
+    ProcessParam executeScript3_3(ProcessParam processParam);
 
-    void executeScript4(ProcessParam processParam);
+    ProcessParam executeScript4(ProcessParam processParam);
 
-    void executeScript5_1(ProcessParam processParam);
+    ProcessParam executeScript5_1(ProcessParam processParam);
 
-    void executeScript5_2(ProcessParam processParam);
+    ProcessParam executeScript5_2(ProcessParam processParam);
 
-    void executeScript6(ProcessParam processParam);
+    ProcessParam executeScript6(ProcessParam processParam);
 
-    List<TmpLjzWithIdOld> queryTmpLjzWithIdOld();
-    void executeScript7(ProcessParam processParam);
+    int updateTmpWithNewIds();
+    int updateTmpWithOldTmp();
+    int updateEnergyByOldRows();
+    // 插入阶梯累计
+    int insertStepBatch();
+    int updateUsedInsertStep();
+    // 更新阶梯累计
+    int updateStepBatch();
+    int updateUsedUpdateStep();
+    // 插入免费额度累计
+    int insertFbeBatch();
+    int updateUsedInsertFbe();
+    // 更新免费额度累计(应该无数据)
+    int updateFbeBatch();
+    int updateUsedUpdateFbe();
 
-    int queryExistCumu(
-            @Param(value = "cumuObj") String cumuObj,
-            @Param(value = "cumuObjId") String cumuObjId,
-            @Param(value = "cumuDate") String cumuDate);
-    int insertFbeVdCcumuValue(
-            @Param(value = "consId") String consId,
-            @Param(value = "cumuValue") BigDecimal cumuValue,
-            @Param(value = "cumuDate") String cumuDate);
-    int insertStepVdCcumuValue(
-            @Param(value = "meterId") String meterId,
-            @Param(value = "cumuValue") BigDecimal cumuValue,
-            @Param(value = "cumuDate") String cumuDate);
-    int updateFbeVdCcumuValue(
-            @Param(value = "consId") String consId,
-            @Param(value = "cumuValue") BigDecimal cumuValue,
-            @Param(value = "cumuDate") String cumuDate);
-    int updateStepVdCcumuValue(
-            @Param(value = "meterId") String meterId,
-            @Param(value = "cumuValueOffset") BigDecimal cumuValueOffset,
-            @Param(value = "cumuDate") String cumuDate);
 
+//    int queryExistCumu(
+//            @Param(value = "cumuObj") String cumuObj,
+//            @Param(value = "cumuObjId") String cumuObjId,
+//            @Param(value = "cumuDate") String cumuDate);
+//    int insertFbeVdCcumuValue(
+//            @Param(value = "consId") String consId,
+//            @Param(value = "cumuValue") BigDecimal cumuValue,
+//            @Param(value = "cumuDate") String cumuDate);
+//    int insertStepVdCcumuValue(
+//            @Param(value = "meterId") String meterId,
+//            @Param(value = "cumuValue") BigDecimal cumuValue,
+//            @Param(value = "cumuDate") String cumuDate);
+//    int updateFbeVdCcumuValue(
+//            @Param(value = "consId") String consId,
+//            @Param(value = "cumuValue") BigDecimal cumuValue,
+//            @Param(value = "cumuDate") String cumuDate);
+//    int updateStepVdCcumuValue(
+//            @Param(value = "meterId") String meterId,
+//            @Param(value = "cumuValueOffset") BigDecimal cumuValueOffset,
+//            @Param(value = "cumuDate") String cumuDate);
+//
     List<TmpLjz> queryTmpLjzYestoday(@Param(value = "cumuDate") String cumuDate);
 
 }
