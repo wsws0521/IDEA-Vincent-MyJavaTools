@@ -8,15 +8,6 @@ BEGIN
 		set t_error = 1;
 	end;
 
-	CREATE TABLE IF NOT EXISTS `tmp_centlec` (
-		`id` int(11) NOT NULL AUTO_INCREMENT,
-		`syn_date` varchar(8) NOT NULL,
-		`cur_dead_step` varchar(8) NOT NULL,
-		`remark` varchar(64) DEFAULT NULL,
-		`tv` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		PRIMARY KEY (`id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 	#1-修改tmp为tmp1
 	ALTER TABLE tmp_yh RENAME TO tmp_yh1;
 	ALTER TABLE tmp_bj RENAME TO tmp_bj1;

@@ -1,8 +1,6 @@
 package cn.vincent.service;
 
 import cn.vincent.dao.master.MysqlDao;
-import cn.vincent.pojo.TmpLjzWithIdOld;
-import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -10,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.List;
+
 @Service
-public class SynCumuServiceImpl implements SynCumuService {
-    private static final Logger logger = LoggerFactory.getLogger(SynCumuServiceImpl.class);
+public class LjzSynMySqlServiceImpl implements LjzSynMySqlService {
+    private static final Logger logger = LoggerFactory.getLogger(LjzSynMySqlServiceImpl.class);
     @Resource
     MysqlDao mysqlDao;
 
@@ -28,25 +26,25 @@ public class SynCumuServiceImpl implements SynCumuService {
         int updateEnergyByOldRows = mysqlDao.updateEnergyByOldRows();
         logger.info(updateEnergyByOldRows + "条累计值与老的tmp_ljz1未使用记录合并");
         // 批量插入·阶梯·累计值
-        int insertStepBatch = mysqlDao.insertStepBatch();
-        logger.info("批量插入-阶梯累计值-数量：" + insertStepBatch);
         int updateUsedInsertStep = mysqlDao.updateUsedInsertStep();
         logger.info("tmp_ljz-[Step批量插入]数据置为已使用：" + updateUsedInsertStep);
+        int insertStepBatch = mysqlDao.insertStepBatch();
+        logger.info("批量插入-阶梯累计值-数量：" + insertStepBatch);
         // 批量更新·阶梯·累计值
-        int updateStepBatch = mysqlDao.updateStepBatch();
-        logger.info("批量更新-阶梯累计值-数量：" + updateStepBatch);
         int updateUsedUpdateStep = mysqlDao.updateUsedUpdateStep();
         logger.info("tmp_ljz-[Step批量更新]数据置为已使用：" + updateUsedUpdateStep);
+        int updateStepBatch = mysqlDao.updateStepBatch();
+        logger.info("批量更新-阶梯累计值-数量：" + updateStepBatch);
         // 批量插入·免费额度·累计值
-        int insertFbeBatch = mysqlDao.insertFbeBatch();
-        logger.info("批量插入-免费额度累计值-数量：" + insertFbeBatch);
         int updateUsedInsertFbe = mysqlDao.updateUsedInsertFbe();
         logger.info("tmp_ljz-[FBE批量插入]数据置为已使用：" + updateUsedInsertFbe);
+        int insertFbeBatch = mysqlDao.insertFbeBatch();
+        logger.info("批量插入-免费额度累计值-数量：" + insertFbeBatch);
         // 批量更新·免费额度·累计值
-        int updateFbeBatch = mysqlDao.updateFbeBatch();
-        logger.info("批量更新-免费额度累计值-数量（理应为0）：" + updateFbeBatch);
         int updateUsedUpdateFbe = mysqlDao.updateUsedUpdateFbe();
         logger.info("tmp_ljz-[FBE批量更新]数据置为已使用：" + updateUsedUpdateFbe);
+        int updateFbeBatch = mysqlDao.updateFbeBatch();
+        logger.info("批量更新-免费额度累计值-数量（理应为0）：" + updateFbeBatch);
 
 
 //        List<TmpLjzWithIdOld> insertStep = mysqlDao.queryInsertStep();

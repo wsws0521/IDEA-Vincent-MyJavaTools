@@ -99,8 +99,8 @@ group by m.MT_COMM_ADDR,o.ISFREE
 CREATE TABLE [dbo].[tmp_ljz](
 	[id] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
 	[energy] [numeric](18, 2) NOT NULL,
-	[MT_COMM_ADDR] [varchar](15) NOT NULL,
-	[LASTVENDDATE] [varchar](19) NOT NULL,
+	[MT_COMM_ADDR] [varchar](15) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[LASTVENDDATE] [varchar](19) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[ISFREE] [int] NOT NULL,
 	[ISUSED] [int] NULL,
  CONSTRAINT [PK_tmp_ljz] PRIMARY KEY CLUSTERED

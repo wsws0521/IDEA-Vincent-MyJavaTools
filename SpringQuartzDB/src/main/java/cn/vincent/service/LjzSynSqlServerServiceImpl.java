@@ -11,8 +11,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-public class SynLjzServiceImpl implements SynLjzService {
-    private static final Logger logger = LoggerFactory.getLogger(SynLjzServiceImpl.class);
+public class LjzSynSqlServerServiceImpl implements LjzSynSqlServerService {
+    private static final Logger logger = LoggerFactory.getLogger(LjzSynSqlServerServiceImpl.class);
     private static final int LIMIT = 300;
 
     @Resource
@@ -21,7 +21,7 @@ public class SynLjzServiceImpl implements SynLjzService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void synVdCcumuValueIntoLjz(List<TmpLjz> tmpljzList) {
-        // 默认表已建好
+        // 默认tmp_ljz表已建好
         // 清空tmp_ljz数据
         sqlserverDao.deleteTmpData("tmp_ljz");
         int insNum = 0;

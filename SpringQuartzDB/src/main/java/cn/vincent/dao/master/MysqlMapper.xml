@@ -274,6 +274,13 @@
         UPDATE tmp_ljz SET energy = ROUND(energy - energy_old, 2), energy_old = 0 WHERE MT_COMM_ADDR_old IS NOT NULL AND ISUSED_old = 1
     </update>
     <!--插入阶梯-->
+    <update id="updateUsedInsertStep">
+        update tmp_ljz a set a.ISUSED = 1
+        where a.ISFREE = 0 and a.ISUSED = 0 and
+        NOT EXISTS (select 1 from vd_c_cumu_value b
+        where b.cumu_obj = '03' and b.cumu_obj_id = a.meterId
+        and a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time and a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
+    </update>
     <insert id="insertStepBatch">
         INSERT INTO VD_C_CUMU_VALUE
             (LESSEE_ID,	CUMU_ID, RULE_ID, CUMU_OBJ,	CUMU_OBJ_ID, CUMU_ITEM,	START_TIME,	END_TIME, CUMU_VALUE, VALUE_UNIT)
@@ -282,32 +289,32 @@
             DATE_ADD(DATE_FORMAT(a.LASTVENDDATE, '%Y-%m-%d'), INTERVAL -DAY(a.LASTVENDDATE) + 1 DAY), LAST_DAY(a.LASTVENDDATE),
             a.energy, 'KWH'
         FROM tmp_ljz a
-        where a.ISFREE = 0 and a.ISUSED = 0 and
+        where a.ISFREE = 0 and a.ISUSED = 1 and
         NOT EXISTS (select 1 from vd_c_cumu_value b
         where b.cumu_obj = '03' and b.cumu_obj_id = a.meterId
         and a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time and a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
     </insert>
-    <update id="updateUsedInsertStep">
-        update tmp_ljz a set a.ISUSED = 1
-        where a.ISFREE = 0 and a.ISUSED = 0 and
-        NOT EXISTS (select 1 from vd_c_cumu_value b
-        where b.cumu_obj = '03' and b.cumu_obj_id = a.meterId
-        and a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time and a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
-    </update>
     <!--更新阶梯-->
-    <update id="updateStepBatch">
-        UPDATE vd_c_cumu_value cumu
-        INNER JOIN tmp_ljz ljz ON cumu.cumu_obj = '03' AND ljz.meterId = cumu.cumu_obj_id AND ljz.isfree = 0 AND ljz.isused = 0
-            AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
-        SET cumu.cumu_value = ROUND(cumu.cumu_value + ljz.energy, 2)
-    </update>
     <update id="updateUsedUpdateStep">
         UPDATE tmp_ljz ljz
         INNER JOIN vd_c_cumu_value cumu  ON cumu.cumu_obj = '03' AND ljz.meterId = cumu.cumu_obj_id AND ljz.isfree = 0 AND ljz.isused = 0
             AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
         SET ljz.isused = 1
     </update>
+    <update id="updateStepBatch">
+        UPDATE vd_c_cumu_value cumu
+        INNER JOIN tmp_ljz ljz ON cumu.cumu_obj = '03' AND ljz.meterId = cumu.cumu_obj_id AND ljz.isfree = 0 AND ljz.isused = 1
+            AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
+        SET cumu.cumu_value = ROUND(cumu.cumu_value + ljz.energy, 2)
+    </update>
     <!--插入FBE-->
+    <update id="updateUsedInsertFbe">
+        UPDATE tmp_ljz a SET a.ISUSED = 1
+        WHERE a.ISFREE = 1 AND a.ISUSED = 0 AND
+        NOT EXISTS (SELECT 1 FROM vd_c_cumu_value b
+        WHERE b.cumu_obj = '01' AND b.cumu_obj_id = a.consId
+        AND a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time AND a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
+    </update>
     <insert id="insertFbeBatch">
         INSERT INTO vd_c_cumu_value
             (lessee_id, cumu_id, rule_id, cumu_obj, cumu_obj_id, cumu_item, start_time, end_time, cumu_value, value_unit)
@@ -316,30 +323,23 @@
             DATE_ADD(DATE_FORMAT(a.LASTVENDDATE, '%Y-%m-%d'), INTERVAL -DAY(a.LASTVENDDATE) + 1 DAY), LAST_DAY(a.LASTVENDDATE),
             a.energy, 'KWH'
         FROM tmp_ljz a
-        WHERE a.ISFREE = 1 AND a.ISUSED = 0 AND
+        WHERE a.ISFREE = 1 AND a.ISUSED = 1 AND
         NOT EXISTS (SELECT 1 FROM vd_c_cumu_value b
         WHERE b.cumu_obj = '01' AND b.cumu_obj_id = a.consId
         AND a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time AND a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
     </insert>
-    <update id="updateUsedInsertFbe">
-        UPDATE tmp_ljz a SET a.ISUSED = 1
-        WHERE a.ISFREE = 1 AND a.ISUSED = 0 AND
-        NOT EXISTS (SELECT 1 FROM vd_c_cumu_value b
-        WHERE b.cumu_obj = '01' AND b.cumu_obj_id = a.consId
-        AND a.LASTVENDDATE <![CDATA[ >= ]]>  b.start_time AND a.LASTVENDDATE <![CDATA[ <= ]]> b.end_time)
-    </update>
     <!--更新FBE-->
-    <update id="updateFbeBatch">
-        UPDATE vd_c_cumu_value cumu
-        INNER JOIN tmp_ljz ljz ON cumu.cumu_obj = '01' AND ljz.consId = cumu.cumu_obj_id AND ljz.isfree = 1 AND ljz.isused = 0
-            AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
-        SET cumu.cumu_value = ljz.energy
-    </update>
     <update id="updateUsedUpdateFbe">
         UPDATE tmp_ljz ljz
         INNER JOIN vd_c_cumu_value cumu ON cumu.cumu_obj = '01' AND ljz.consId = cumu.cumu_obj_id AND ljz.isfree = 1 AND ljz.isused = 0
             AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
         SET ljz.isused = 1
+    </update>
+    <update id="updateFbeBatch">
+        UPDATE vd_c_cumu_value cumu
+        INNER JOIN tmp_ljz ljz ON cumu.cumu_obj = '01' AND ljz.consId = cumu.cumu_obj_id AND ljz.isfree = 1 AND ljz.isused = 1
+            AND ljz.LASTVENDDATE <![CDATA[ >= ]]>  cumu.start_time AND ljz.LASTVENDDATE <![CDATA[ <= ]]> cumu.end_time
+        SET cumu.cumu_value = ljz.energy
     </update>
 
 

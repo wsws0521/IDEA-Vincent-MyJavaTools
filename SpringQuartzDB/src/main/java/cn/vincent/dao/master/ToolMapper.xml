@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vincent.dao.master.ToolDao">
+
+    <select id="queryTableExist" resultType="java.lang.Integer">
+        select COUNT(1) FROM information_schema.`TABLES` where TABLE_NAME = #{tableName}
+    </select>
+    <update id="updateCreateTmpCentlec">
+        CREATE TABLE `tmp_centlec` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `syn_date` varchar(8) NOT NULL,
+            `cur_dead_step` varchar(8) NOT NULL,
+            `remark` varchar(64) DEFAULT NULL,
+            `tv` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    </update>
+    <select id="queryTableNameList" resultType="java.lang.String">
+        SELECT TABLE_NAME FROM information_schema.`TABLES` WHERE TABLE_NAME LIKE CONCAT(#{tableBaseName},'2020%')
+    </select>
+    <update id="updateDropTableByName">
+        DROP TABLE IF EXISTS ${tableName}
+    </update>
+
+</mapper>

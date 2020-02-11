@@ -1,0 +1,1 @@
+OUT `error_code` integer,OUT `error_msg` text

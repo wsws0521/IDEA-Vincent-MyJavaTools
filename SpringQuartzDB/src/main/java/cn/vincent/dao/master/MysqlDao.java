@@ -69,17 +69,17 @@ public interface MysqlDao {
     int updateTmpWithOldTmp();
     int updateEnergyByOldRows();
     // 插入阶梯累计
-    int insertStepBatch();
     int updateUsedInsertStep();
+    int insertStepBatch();
     // 更新阶梯累计
-    int updateStepBatch();
     int updateUsedUpdateStep();
+    int updateStepBatch();
     // 插入免费额度累计
-    int insertFbeBatch();
     int updateUsedInsertFbe();
+    int insertFbeBatch();
     // 更新免费额度累计(应该无数据)
-    int updateFbeBatch();
     int updateUsedUpdateFbe();
+    int updateFbeBatch();
 
 
 //    int queryExistCumu(

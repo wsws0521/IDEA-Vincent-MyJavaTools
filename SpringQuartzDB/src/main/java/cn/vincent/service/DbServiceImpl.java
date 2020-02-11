@@ -23,17 +23,20 @@ public class DbServiceImpl implements DbService {
     private static final int LIMIT = 300;
     private static String SYS_DATE_STR = "";
     private static String CUR_STEP = "";
+    private static boolean FIRST_RUN = false;
 
     @Resource
     MysqlDao mysqlDao;
     @Resource
     SqlserverDao sqlserverDao;
     @Autowired
-    SynCumuService synCumuService;
+    LjzSynMySqlService ljzSynMySqlService;
     @Autowired
-    SynLjzService synLjzService;
+    LjzSynSqlServerService ljzSynSqlServerService;
     @Autowired
     SynService synService;
+    @Autowired
+    ToolService toolService;
 
     @Override
     public void generalCall(){
@@ -78,6 +81,9 @@ public class DbServiceImpl implements DbService {
     }
     private String getCurStep(){
         SYS_DATE_STR = MyDateUtils.getSysDate();
+        FIRST_RUN = toolService.ifTableNotExist("tmp_centlec");
+        if(FIRST_RUN)
+            toolService.createTmpCentlec();
         int existNum = mysqlDao.queryTmpCentlec(SYS_DATE_STR);
         if(existNum == 1){
             String result = mysqlDao.queryCurStaus(SYS_DATE_STR);
@@ -99,10 +105,12 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_0);
         if(updateNum == 1){
             ProcessParam processParam = new ProcessParam();
-            logger.info("执行归档脚本0.1将 tmp_bj1, tmp_yh1, tmp_zw1, tmp_ljz1 的后缀1改为年月日");
-            mysqlDao.prepareTmp1ToDate(processParam);
-            if(processParam.getError_code() != 0)
-                throw new RuntimeException(processParam.getError_msg());
+            if(!FIRST_RUN){
+                logger.info("执行归档脚本0.1将 tmp_bj1, tmp_yh1, tmp_zw1, tmp_ljz1 的后缀1改为年月日");
+                mysqlDao.prepareTmp1ToDate(processParam);
+                if(processParam.getError_code() != 0)
+                    throw new RuntimeException(processParam.getError_msg());
+            }
             logger.info("执行归档脚本0.2将 tmp_bj, tmp_yh, tmp_zw, tmp_ljz 后缀全部+1，再重新创建这几个空表");
             mysqlDao.prepareTmpToTmp1(processParam);
             if(processParam.getError_code() != 0)
@@ -499,7 +507,7 @@ public class DbServiceImpl implements DbService {
             synService.addIndexWithCheck("tmp_ljz","index_ljz_meterId","meterId");
             synService.addIndexWithCheck("tmp_ljz","index_ljz_consId","consId");
             synService.addIndex("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid", "cumu_obj_id");
-            synCumuService.synLjzIntoVdCcumuValue();
+            ljzSynMySqlService.synLjzIntoVdCcumuValue();
             synService.deleteIndex("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid");
             logger.info("--------------------------------------------" + StepConstant.STEP_007 + "同步完成");
         }else{
@@ -520,7 +528,8 @@ public class DbServiceImpl implements DbService {
             logger.info("取" + cumuDate + "当天的累计值");
             List<TmpLjz> tmpljzList = mysqlDao.queryTmpLjzYestoday(cumuDate);
             logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
-            synLjzService.synVdCcumuValueIntoLjz(tmpljzList);
+            if(tmpljzList.size() > 0)
+                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
             logger.info("--------------------------------------------" + StepConstant.STEP_008 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -534,6 +543,7 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_009);
         if(updateNum == 1){
             int terminatNum =  mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_999);
+            toolService.truncateTmpTables();
             logger.info("本次同步过程正常结束，将tmp_centlec表的执行状态置为999，共更新：" + terminatNum);
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");

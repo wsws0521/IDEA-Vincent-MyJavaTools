@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * 往老库同步
  */
-public interface SynLjzService {
+public interface LjzSynSqlServerService {
     void synVdCcumuValueIntoLjz(List<TmpLjz> tmpljzList);
 }
