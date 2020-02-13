@@ -6,6 +6,7 @@ import cn.vincent.service.TestDbService;
 import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,18 @@ import javax.annotation.Resource;
 @RequestMapping("/test")
 public class TestController {
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-    @Resource
+    @Autowired
     TestDbService testDbService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/hello")
+    public String hello(){
+        return "Test: Hello Centlec !";
+    }
+    @GetMapping("/dbsize")
+    public int dbsize(){
+        return testDbService.queryMysqlPthirdParty().size();
+    }
+    @GetMapping("/path/{id}")
     public String returnStringId(@PathVariable String id){
         System.out.println("sout:" + id);
         logger.info("当前时间是：" + MyDateUtils.getSysDateTime());

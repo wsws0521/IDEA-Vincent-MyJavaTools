@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.vincent.dao.master.TestMysqlDao">
 
-    <select id="queryMysqlCumu" resultType="cn.vincent.pojo.PthirdParty">
+    <select id="queryMysqlPthirdParty" resultType="cn.vincent.pojo.PthirdParty">
         select THIRD_PARTY_ID   "id",
             THIRD_PARTY_NAME    "name",
             INTERFACE_URL       "url"

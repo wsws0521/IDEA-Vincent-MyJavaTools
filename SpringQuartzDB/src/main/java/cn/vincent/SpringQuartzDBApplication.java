@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages={"cn.vincent.*"})
 @EnableConfigurationProperties
 @EnableScheduling
-@MapperScan("cn.vincent.dao.*")
+//@MapperScan({"cn.vincent.dao.master","cn.vincent.dao.other"})
 public class SpringQuartzDBApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringQuartzDBApplication.class);

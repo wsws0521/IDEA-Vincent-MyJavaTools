@@ -4,11 +4,9 @@ import cn.vincent.pojo.ProcessParam;
 import cn.vincent.pojo.PthirdParty;
 import cn.vincent.pojo.TmpBj;
 import cn.vincent.pojo.TmpInsert;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface TestMysqlDao {
     //    @Select("select * from p_third_party")
 //    @Results({
@@ -17,7 +15,7 @@ public interface TestMysqlDao {
 //            @Result(property = "url", column = "INTERFACE_URL")
 //    })
 //    List<PthirdParty> queryMysqlCumu();
-    List<PthirdParty> queryMysqlCumu();
+    List<PthirdParty> queryMysqlPthirdParty();
 
 
     int insertTmpInsert();

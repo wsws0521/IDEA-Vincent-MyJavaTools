@@ -14,8 +14,8 @@ import java.util.List;
  * 将存储过程转移至Service，使得过程更容易追踪
  */
 @Service
-public class SynServiceImpl implements SynService {
-    private static final Logger logger = LoggerFactory.getLogger(SynServiceImpl.class);
+public class IndexServiceImpl implements IndexService {
+    private static final Logger logger = LoggerFactory.getLogger(IndexServiceImpl.class);
     @Resource
     MysqlSynDao mysqlSynDao;
 
@@ -25,8 +25,7 @@ public class SynServiceImpl implements SynService {
         int indexNum = mysqlSynDao.queryExistsIndex(tableName, indexName);
         logger.info(tableName + "存在" + indexNum + "条名为：" + indexName + "的索引");
         if(indexNum == 0){
-            logger.info("为" + tableName + "插入索引" + indexName);
-            mysqlSynDao.addIndex(tableName, indexName, column);
+            addIndex(tableName, indexName, column);
         }
     }
 
@@ -34,6 +33,15 @@ public class SynServiceImpl implements SynService {
     public void addIndex(String tableName, String indexName, String column) {
         logger.info("为" + tableName + "插入索引" + indexName);
         mysqlSynDao.addIndex(tableName, indexName, column);
+    }
+
+    @Override
+    public void deleteIndexWithCheck(String tableName, String indexName) {
+        int indexNum = mysqlSynDao.queryExistsIndex(tableName, indexName);
+        logger.info(tableName + "存在" + indexNum + "条名为：" + indexName + "的索引");
+        if(indexNum > 0){
+            deleteIndex(tableName, indexName);
+        }
     }
 
     @Override

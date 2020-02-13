@@ -11,15 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/prod")
-public class TestQuartzController {
-    private static final Logger logger = LoggerFactory.getLogger(TestQuartzController.class);
+@RequestMapping("/quartz")
+public class QuartzController {
+    private static final Logger logger = LoggerFactory.getLogger(QuartzController.class);
     @Autowired
     public SchedulerManager myScheduler;
     @Autowired
     DbService dbService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/hello")
+    public String hello(){
+        return "Quartz: Hello Centlec !";
+    }
+
+    @GetMapping("/path/{id}")
     public String returnStringId(@PathVariable String id){
         System.out.println("sout:" + id);
         logger.info("当前时间是：" + MyDateUtils.getSysDateTime());

@@ -19,7 +19,7 @@ public interface DbService {
     void startFromImportTmpBj();
     void startFromImportTmpYh();
     void startFromImportTmpZw();
-    void startFromImportTmpLjz();
+//    void startFromImportTmpLjz(); // 后面单独处理
 
     /**
      * 执行<脚本1：运行时秘钥.txt>：费率方案、电压等级、管理单位

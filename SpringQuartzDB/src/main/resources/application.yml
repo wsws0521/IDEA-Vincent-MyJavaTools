@@ -33,8 +33,8 @@ spring:
   datasource:
     master:
       # url: jdbc:mysql://192.168.80.35:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      # url: jdbc:mysql://192.168.80.15:3306/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      url: jdbc:mysql://192.168.80.36:3306/ctlctest?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://192.168.80.15:3306/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      url: jdbc:mysql://192.168.80.36:3306/ctlctest?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: Ctlcuat1
       password: Hex123@0
       # 使用druid数据源
@@ -53,3 +53,6 @@ spring:
 mybatis:
   type-aliases-package: cn.vincent.pojo
   mapper-locations: classpath:cn/vincent/dao/**/*.xml
+# 将文件名改为log4j2-spring.xml，则此处省略配置且一样配置生效，但是启动log4j2还是会报找不到配置文件，可能是bug
+#logging:
+#  config: classpath:log4j2.xml

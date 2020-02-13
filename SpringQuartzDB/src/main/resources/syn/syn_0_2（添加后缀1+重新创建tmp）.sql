@@ -12,7 +12,7 @@ BEGIN
 	ALTER TABLE tmp_yh RENAME TO tmp_yh1;
 	ALTER TABLE tmp_bj RENAME TO tmp_bj1;
 	ALTER TABLE tmp_zw RENAME TO tmp_zw1;
-	ALTER TABLE tmp_ljz RENAME TO tmp_ljz1;
+-- 	ALTER TABLE tmp_ljz RENAME TO tmp_ljz1;
 
 
 	CREATE TABLE IF NOT EXISTS `tmp_bj` (
@@ -77,21 +77,21 @@ BEGIN
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-	CREATE TABLE IF NOT EXISTS `tmp_ljz` (
-	  `energy` varchar(128) DEFAULT NULL,
-	  `MT_COMM_ADDR` varchar(128) NOT NULL,
-	  `LASTVENDDATE` varchar(128) NOT NULL,
-	  `ISFREE` varchar(128) NOT NULL,
-	  `ISUSED` varchar(128) NOT NULL,
-	  `meterId` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `consId` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `ISFREE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-      `ISUSED_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-	  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- 	CREATE TABLE IF NOT EXISTS `tmp_ljz` (
+-- 	  `energy` varchar(128) DEFAULT NULL,
+-- 	  `MT_COMM_ADDR` varchar(128) NOT NULL,
+-- 	  `LASTVENDDATE` varchar(128) NOT NULL,
+-- 	  `ISFREE` varchar(128) NOT NULL,
+-- 	  `ISUSED` varchar(128) NOT NULL,
+-- 	  `meterId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `consId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `ISFREE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+--       `ISUSED_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+-- 	  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
+-- 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 	SELECT t_error into error_code;
 	SELECT msg into error_msg;

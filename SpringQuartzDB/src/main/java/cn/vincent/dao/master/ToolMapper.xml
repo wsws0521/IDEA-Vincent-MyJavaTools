@@ -5,6 +5,11 @@
     <select id="queryTableExist" resultType="java.lang.Integer">
         select COUNT(1) FROM information_schema.`TABLES` where TABLE_NAME = #{tableName}
     </select>
+
+    <select id="queryTableSize" resultType="java.lang.Integer">
+        select count(1) from ${tableName}
+    </select>
+
     <update id="updateCreateTmpCentlec">
         CREATE TABLE `tmp_centlec` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -21,5 +26,27 @@
     <update id="updateDropTableByName">
         DROP TABLE IF EXISTS ${tableName}
     </update>
-
+    <update id="updateAlterTableByName">
+        ALTER TABLE ${oldName} RENAME TO ${newName}
+    </update>
+    <update id="updateCreateTmpLjz">
+        CREATE TABLE `tmp_ljz` (
+          `energy` varchar(128) DEFAULT NULL,
+          `MT_COMM_ADDR` varchar(128) NOT NULL,
+          `LASTVENDDATE` varchar(128) NOT NULL,
+          `ISFREE` varchar(128) NOT NULL,
+          `ISUSED` varchar(128) NOT NULL,
+          `meterId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `consId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `ISFREE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          `ISUSED_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+          PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    </update>
+    <select id="queryMaxLastVendDateFromLjz1" resultType="java.lang.String">
+        select max(lastvenddate) from tmp_ljz1
+    </select>
 </mapper>

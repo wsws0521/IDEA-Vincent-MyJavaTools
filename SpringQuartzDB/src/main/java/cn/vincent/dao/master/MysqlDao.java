@@ -1,12 +1,10 @@
 package cn.vincent.dao.master;
 
 import cn.vincent.pojo.*;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-@Mapper
 public interface MysqlDao {
 
     int queryTmpCentlec(@Param(value = "sysDateString") String sysDateString);
@@ -15,7 +13,7 @@ public interface MysqlDao {
     int updateTmpCentlec(@Param(value = "sysDateString") String sysDateString, @Param(value = "result") String result);
 
     void deleteTmpData(@Param(value = "tmpTableName") String tmpTableName);
-    int queryTableSize(@Param(value = "tableName") String tableName);
+
 
     // 执行脚本0.1将 tmp_bj1, tmp_yh1, tmp_zw1, tmp_ljz1 的后缀1改为年月日
     ProcessParam prepareTmp1ToDate(ProcessParam processParam);

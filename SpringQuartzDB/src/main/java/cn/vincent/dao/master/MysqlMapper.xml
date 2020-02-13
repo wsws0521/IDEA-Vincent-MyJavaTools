@@ -18,9 +18,6 @@
     <delete id="deleteTmpData">
         delete from ${tmpTableName}
     </delete>
-    <select id="queryTableSize" resultType="java.lang.Integer">
-        select count(1) from ${tableName}
-    </select>
 
     <select id="prepareTmp1ToDate" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_0_1(
@@ -123,7 +120,7 @@
     </insert>
 
     <select id="queryMaxLastVendDate" resultType="java.lang.String">
-        select max(lastvenddate) from tmp_bj1
+        select max(lastvenddate) from tmp_ljz
     </select>
     <insert id="insertTmpLjz" parameterType="java.util.List">
         insert into tmp_ljz (

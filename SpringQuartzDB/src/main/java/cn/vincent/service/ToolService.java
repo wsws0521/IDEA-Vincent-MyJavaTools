@@ -7,6 +7,7 @@ public interface ToolService {
      * @return
      */
     boolean ifTableNotExist(String tableName);
+    boolean ifTableExist(String tableName);
 
     /**
      * 创建tmp_centlec用于并轨期间数据同步，并轨结束需要手动删除改表
@@ -17,4 +18,15 @@ public interface ToolService {
      * 同步过程中，时间后缀的tmp表越来越多，定期清除
      */
     void truncateTmpTables();
+
+    /**
+     * 0.2同步脚本出错时，手动执行回滚操作
+     */
+    void resetTmpFromTmp1();
+
+    /**
+     * 获取tmp_ljz1日期后缀的新表名（日期为表内lastvenddate）
+     * @return
+     */
+    String getTmpLjz1DateName();
 }

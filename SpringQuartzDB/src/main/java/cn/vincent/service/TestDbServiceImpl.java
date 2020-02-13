@@ -19,7 +19,7 @@ public class TestDbServiceImpl implements TestDbService {
 
     @Override
     public List<PthirdParty> queryMysqlPthirdParty() {
-        return testMysqlDao.queryMysqlCumu();
+        return testMysqlDao.queryMysqlPthirdParty();
     }
 
     @Override

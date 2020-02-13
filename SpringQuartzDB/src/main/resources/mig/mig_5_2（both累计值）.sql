@@ -100,15 +100,21 @@ where   m.ACTUAL_CUSTOMER_ID is not null
 group by m.MT_COMM_ADDR,o.ISFREE
 
 -------------------------------------tmp_ljz  自动建表语句-----------------------------------------
-
-
 CREATE TABLE `tmp_ljz` (
-	  `energy` varchar(128) DEFAULT NULL,
-	  `MT_COMM_ADDR` varchar(128) NOT NULL,
-	  `LASTVENDDATE` varchar(128) NOT NULL,
-	  `ISFREE` varchar(128) NOT NULL,
-	  `ISUSED` varchar(128) NOT NULL,
-	  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `energy` varchar(128) DEFAULT NULL,
+  `MT_COMM_ADDR` varchar(128) NOT NULL,
+  `LASTVENDDATE` varchar(128) NOT NULL,
+  `ISFREE` varchar(128) NOT NULL,
+  `ISUSED` varchar(128) NOT NULL,
+  `meterId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `consId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `ISFREE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `ISUSED_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 

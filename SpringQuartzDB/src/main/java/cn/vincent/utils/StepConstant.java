@@ -5,7 +5,6 @@ public class StepConstant {
     public static final String STEP_000_1 = "000_1";
     public static final String STEP_000_2 = "000_2";
     public static final String STEP_000_3 = "000_3";
-    public static final String STEP_000_4 = "000_4";
     public static final String STEP_001 = "001";
     public static final String STEP_002 = "002";
     public static final String STEP_003_1 = "003_1";

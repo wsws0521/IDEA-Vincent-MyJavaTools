@@ -15,7 +15,7 @@ public interface SqlserverDao {
 
     List<TmpZw> queryTmpZw();
 
-    List<TmpLjz> queryTmpLjzYestoday(@Param(value = "cumuDate") String cumuDate);
+    List<TmpLjz> queryTmpLjzByDateStr(@Param(value = "cumuDate") String cumuDate);
 
     void deleteTmpData(@Param(value = "tmpTableName") String tmpTableName);
 

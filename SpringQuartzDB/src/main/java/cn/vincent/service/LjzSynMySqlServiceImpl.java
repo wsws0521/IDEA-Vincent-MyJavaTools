@@ -25,26 +25,29 @@ public class LjzSynMySqlServiceImpl implements LjzSynMySqlService {
         logger.info(updateOldRows + "条累计值关联到老的tmp_ljz1");
         int updateEnergyByOldRows = mysqlDao.updateEnergyByOldRows();
         logger.info(updateEnergyByOldRows + "条累计值与老的tmp_ljz1未使用记录合并");
-        // 批量插入·阶梯·累计值
-        int updateUsedInsertStep = mysqlDao.updateUsedInsertStep();
-        logger.info("tmp_ljz-[Step批量插入]数据置为已使用：" + updateUsedInsertStep);
-        int insertStepBatch = mysqlDao.insertStepBatch();
-        logger.info("批量插入-阶梯累计值-数量：" + insertStepBatch);
-        // 批量更新·阶梯·累计值
+
+        // 购电阶梯·批量更新·累计值（必须先更新再插入，否则二者干扰）
         int updateUsedUpdateStep = mysqlDao.updateUsedUpdateStep();
         logger.info("tmp_ljz-[Step批量更新]数据置为已使用：" + updateUsedUpdateStep);
         int updateStepBatch = mysqlDao.updateStepBatch();
         logger.info("批量更新-阶梯累计值-数量：" + updateStepBatch);
-        // 批量插入·免费额度·累计值
-        int updateUsedInsertFbe = mysqlDao.updateUsedInsertFbe();
-        logger.info("tmp_ljz-[FBE批量插入]数据置为已使用：" + updateUsedInsertFbe);
-        int insertFbeBatch = mysqlDao.insertFbeBatch();
-        logger.info("批量插入-免费额度累计值-数量：" + insertFbeBatch);
-        // 批量更新·免费额度·累计值
+        // 购电阶梯·批量插入·累计值
+        int updateUsedInsertStep = mysqlDao.updateUsedInsertStep();
+        logger.info("tmp_ljz-[Step批量插入]数据置为已使用：" + updateUsedInsertStep);
+        int insertStepBatch = mysqlDao.insertStepBatch();
+        logger.info("批量插入-阶梯累计值-数量：" + insertStepBatch);
+
+        // 免费额度·批量更新·累计值（必须先更新再插入，否则二者干扰）
         int updateUsedUpdateFbe = mysqlDao.updateUsedUpdateFbe();
         logger.info("tmp_ljz-[FBE批量更新]数据置为已使用：" + updateUsedUpdateFbe);
         int updateFbeBatch = mysqlDao.updateFbeBatch();
         logger.info("批量更新-免费额度累计值-数量（理应为0）：" + updateFbeBatch);
+        // 免费额度·批量插入·累计值
+        int updateUsedInsertFbe = mysqlDao.updateUsedInsertFbe();
+        logger.info("tmp_ljz-[FBE批量插入]数据置为已使用：" + updateUsedInsertFbe);
+        int insertFbeBatch = mysqlDao.insertFbeBatch();
+        logger.info("批量插入-免费额度累计值-数量：" + insertFbeBatch);
+
 
 
 //        List<TmpLjzWithIdOld> insertStep = mysqlDao.queryInsertStep();
