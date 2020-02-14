@@ -1,4 +1,4 @@
-package com.vincent;
+package tool.vincent;
 
 public class LuhnCheck {
 

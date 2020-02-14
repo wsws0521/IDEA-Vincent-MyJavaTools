@@ -22,8 +22,8 @@ public class LjzSynSqlServerServiceImpl implements LjzSynSqlServerService {
     @Transactional(rollbackFor = Exception.class)
     public void synVdCcumuValueIntoLjz(List<TmpLjz> tmpljzList) {
         // 默认tmp_ljz表已建好
-        // 清空tmp_ljz数据
-        sqlserverDao.deleteTmpData("tmp_ljz");
+        // 老库的tmp_ljz数据无需清空，一直保持增长
+//        sqlserverDao.deleteTmpData("tmp_ljz");
         int insNum = 0;
         int listSize = tmpljzList.size();
         List<TmpLjz> part = new ArrayList<TmpLjz>(LIMIT);

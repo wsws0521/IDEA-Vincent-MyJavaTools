@@ -1,4 +1,4 @@
-package com.vincent;
+package tool.vincent;
 
 import java.util.HashMap;
 import java.util.Map;

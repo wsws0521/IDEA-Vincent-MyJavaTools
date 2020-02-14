@@ -79,7 +79,7 @@ public class DbServiceImpl implements DbService {
         }else if(StepConstant.STEP_999.equals(CUR_STEP)){
             logger.info("999：当日自动同步已完成，没有步骤需要执行！");
         }else{
-
+            logger.warn("未知的tmp_centlec状态，请人工检查！");
         }
     }
     private String getCurStep(){
