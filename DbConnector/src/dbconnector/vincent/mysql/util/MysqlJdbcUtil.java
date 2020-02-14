@@ -1,4 +1,4 @@
-package com.vincent.mysql.util;
+package dbconnector.vincent.mysql.util;
 
 import java.sql.*;
 

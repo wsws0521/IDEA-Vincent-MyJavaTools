@@ -1,6 +1,6 @@
-package com.vincent.mysql.dao;
+package dbconnector.vincent.mysql.dao;
 
-import com.vincent.mysql.util.MysqlJdbcUtil;
+import dbconnector.vincent.mysql.util.MysqlJdbcUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
