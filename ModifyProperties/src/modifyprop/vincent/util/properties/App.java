@@ -1,4 +1,4 @@
-package com.vincent.util.properties;
+package modifyprop.vincent.util.properties;
 
 import java.io.*;
 import java.util.Properties;

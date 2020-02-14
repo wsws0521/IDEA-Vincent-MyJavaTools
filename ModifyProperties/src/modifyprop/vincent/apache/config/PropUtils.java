@@ -1,4 +1,4 @@
-package com.vincent.apache.config;
+package modifyprop.vincent.apache.config;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -7,7 +7,7 @@ import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import java.io.*;
 
 public class PropUtils {
-    private static PropUtils _instance = null;
+    /*private static PropUtils _instance = null;
     private static PropertiesConfiguration config = new PropertiesConfiguration();
     private static PropertiesConfigurationLayout layout = new PropertiesConfigurationLayout();
     private static final String CONFIG_FILE = "D:\\Program Files\\JetBrains\\IdeaProjects\\MyJavaTools\\ModifyProperties\\res\\uap.properties";
@@ -38,7 +38,7 @@ public class PropUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 //<!-- https://mvnrepository.com/artifact/commons-configuration/commons-configuration -->
