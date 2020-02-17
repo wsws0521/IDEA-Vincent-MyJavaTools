@@ -28,25 +28,25 @@ public class LjzSynMySqlServiceImpl implements LjzSynMySqlService {
 
         // 购电阶梯·批量更新·累计值（必须先更新再插入，否则二者干扰）
         int updateUsedUpdateStep = mysqlDao.updateUsedUpdateStep();
-        logger.info("tmp_ljz-[Step批量更新]数据置为已使用：" + updateUsedUpdateStep);
+        logger.info("[Step批量-更新]-[tmp_ljz]-置为已使用记录数：" + updateUsedUpdateStep);
         int updateStepBatch = mysqlDao.updateStepBatch();
-        logger.info("批量更新-阶梯累计值-数量：" + updateStepBatch);
+        logger.info("[Step批量-更新]-[vd_c_cumu_value]-记录数：" + updateStepBatch);
         // 购电阶梯·批量插入·累计值
         int updateUsedInsertStep = mysqlDao.updateUsedInsertStep();
-        logger.info("tmp_ljz-[Step批量插入]数据置为已使用：" + updateUsedInsertStep);
+        logger.info("[Step批量-插入]-[tmp_ljz]-置为已使用记录数：" + updateUsedInsertStep);
         int insertStepBatch = mysqlDao.insertStepBatch();
-        logger.info("批量插入-阶梯累计值-数量：" + insertStepBatch);
+        logger.info("[Step批量-插入]-[vd_c_cumu_value]-记录数：" + insertStepBatch);
 
         // 免费额度·批量更新·累计值（必须先更新再插入，否则二者干扰）
         int updateUsedUpdateFbe = mysqlDao.updateUsedUpdateFbe();
-        logger.info("tmp_ljz-[FBE批量更新]数据置为已使用：" + updateUsedUpdateFbe);
+        logger.info("[FBE批量-更新]-[tmp_ljz]-置为已使用记录数：" + updateUsedUpdateFbe);
         int updateFbeBatch = mysqlDao.updateFbeBatch();
-        logger.info("批量更新-免费额度累计值-数量（理应为0）：" + updateFbeBatch);
+        logger.info("[FBE批量-更新]-[vd_c_cumu_value]-记录数：（理应为0）：" + updateFbeBatch);
         // 免费额度·批量插入·累计值
         int updateUsedInsertFbe = mysqlDao.updateUsedInsertFbe();
-        logger.info("tmp_ljz-[FBE批量插入]数据置为已使用：" + updateUsedInsertFbe);
+        logger.info("[FBE批量-插入]-[tmp_ljz]-置为已使用记录数：" + updateUsedInsertFbe);
         int insertFbeBatch = mysqlDao.insertFbeBatch();
-        logger.info("批量插入-免费额度累计值-数量：" + insertFbeBatch);
+        logger.info("[FBE批量-插入]-[vd_c_cumu_value]-记录数：" + insertFbeBatch);
 
 
 

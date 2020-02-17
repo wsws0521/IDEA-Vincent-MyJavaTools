@@ -19,8 +19,8 @@ public class ScheduledJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        logger.info("开始执行同步任务...............");
-//        dbService.generalCall();
-        logger.info("执行同步任务完成---------------");
+        logger.info("........................开始执行同步任务........................");
+        dbService.generalCall();
+        logger.info("------------------------执行同步任务完成------------------------");
     }
 }

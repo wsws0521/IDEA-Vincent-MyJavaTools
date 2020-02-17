@@ -29,12 +29,8 @@ public class QuartzController {
         System.out.println("sout:" + id);
         logger.info("当前时间是：" + MyDateUtils.getSysDateTime());
         logger.info("Request:" + id);
-        logger.debug("当前时间是：" + MyDateUtils.getSysDateTime());
-        logger.debug("Request:" + id);
         dbService.generalCall();
-        return "Request:" + id;
-//                + "mysql.pthidparty" + testDbService.queryMysqlPthirdParty().size() + "\n"
-//                + "sqlserver.tariffgroup" + testDbService.querySqlserverTariffGroup().size();
+        return "手动请求同步执行成功！详情参阅日志...";
     }
 
 

@@ -104,7 +104,7 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public void startFromPrepareTmp() {
-        logger.info("000.0：归档-改表名");
+        logger.info("000.0：开始执行：归档-改表名......");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_0);
         if(updateNum == 1){
             ProcessParam processParam = new ProcessParam();
@@ -120,6 +120,7 @@ public class DbServiceImpl implements DbService {
             mysqlDao.prepareTmpToTmp1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
+            logger.info("--------------------------------------------" + StepConstant.STEP_000_0 + "归档完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
@@ -128,7 +129,7 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public void startFromImportTmpBj() {
-        logger.info("000.1：获取最新表计档案 tmp_bj");
+        logger.info("000.1：开始执行：获取最新表计档案 tmp_bj......");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_1);
         if(updateNum == 1){
             mysqlDao.deleteTmpData("tmp_bj");
@@ -152,6 +153,7 @@ public class DbServiceImpl implements DbService {
             int differ = tmpbj.size() - bj1size;
             logger.info("理论上本次将新增[表计档案]个数：" + differ);
             tmpbj.clear();
+            logger.info("--------------------------------------------" + StepConstant.STEP_000_1 + "获取tmp_bj完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
@@ -160,7 +162,7 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public void startFromImportTmpYh() {
-        logger.info("000.2：获取最新用户档案 tmp_yh");
+        logger.info("000.2：开始执行：获取最新用户档案 tmp_yh......");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_2);
         if(updateNum == 1){
             mysqlDao.deleteTmpData("tmp_yh");
@@ -184,6 +186,7 @@ public class DbServiceImpl implements DbService {
             int differ = tmpyh.size() - yh1size;
             logger.info("理论上本次将新增[用户档案]个数：" + differ);
             tmpyh.clear();
+            logger.info("--------------------------------------------" + StepConstant.STEP_000_2 + "获取tmp_yh完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
@@ -192,7 +195,7 @@ public class DbServiceImpl implements DbService {
 
     @Override
     public void startFromImportTmpZw() {
-        logger.info("000.3：获取最新债务档案 tmp_zw");
+        logger.info("000.3：开始执行：获取最新债务档案 tmp_zw......");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_000_3);
         if(updateNum == 1){
             mysqlDao.deleteTmpData("tmp_zw");
@@ -216,6 +219,7 @@ public class DbServiceImpl implements DbService {
             int differ = tmpzw.size() - zw1size;
             logger.info("理论上本次将新增[债务]个数（债务主要是更新余额）：" + differ);
             tmpzw.clear();
+            logger.info("--------------------------------------------" + StepConstant.STEP_000_3 + "获取tmp_zw完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
@@ -299,24 +303,24 @@ public class DbServiceImpl implements DbService {
         if(updateNum == 1){
             // --------------------用户状态
             List<TmpYhChangedStatus> yhWithStatusChanged = mysqlDao.queryYhWithStatusChanged();
-            logger.info("以下用户变更了状态：" + yhWithStatusChanged);
+            logger.info("变更了状态的用户：" + yhWithStatusChanged);
             for(TmpYhChangedStatus yhs : yhWithStatusChanged){
                 logger.info(yhs.getCUSTOMER_ID() + "的状态准备从" + yhs.getStatusold() + "变为" + yhs.getSTATUS());
             }
             // --------------------新用户
             List<TmpYh> newYh = mysqlDao.queryNewYh();
             for(TmpYh yh : newYh){
-                logger.info("准备新开用户id-name：" + yh.getCUSTOMER_ID() + "-" + yh.getCustomer_name());
+                logger.info("准备新开用户 oldId-name：" + yh.getCUSTOMER_ID() + "-" + yh.getCustomer_name());
             }
             // --------------------当前a_consumer数量
-            logger.info("同步前用户数：" + toolDao.queryTableSize("a_consumer"));
+            logger.info("同步前[a_consumer]数量：" + toolDao.queryTableSize("a_consumer"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript3_1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_consumer数量
-            logger.info("同步后用户数：" + toolDao.queryTableSize("a_consumer"));
+            logger.info("同步后[a_consumer]数量：" + toolDao.queryTableSize("a_consumer"));
             logger.info("--------------------------------------------" + StepConstant.STEP_003_1 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -383,14 +387,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_004);
         if(updateNum == 1){
             // --------------------当前a_equip_meter数量
-            logger.info("同步前a_equip_meter数量：" + toolDao.queryTableSize("a_equip_meter"));
+            logger.info("同步前[a_equip_meter]数量：" + toolDao.queryTableSize("a_equip_meter"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript4(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_equip_meter数量
-            logger.info("同步后a_equip_meter数量：" + toolDao.queryTableSize("a_equip_meter"));
+            logger.info("同步后[a_equip_meter]数量：" + toolDao.queryTableSize("a_equip_meter"));
             logger.info("--------------------------------------------" + StepConstant.STEP_004 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -407,14 +411,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_005_1);
         if(updateNum == 1){
             // --------------------当前a_usagepoint数量
-            logger.info("当前a_usagepoint数量：" + toolDao.queryTableSize("a_usagepoint"));
+            logger.info("同步前[a_usagepoint]数量：" + toolDao.queryTableSize("a_usagepoint"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript5_1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_usagepoint数量
-            logger.info("同步后a_usagepoint数量：" + toolDao.queryTableSize("a_usagepoint"));
+            logger.info("同步后[a_usagepoint]数量：" + toolDao.queryTableSize("a_usagepoint"));
             logger.info("--------------------------------------------" + StepConstant.STEP_005_1 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -431,14 +435,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_005_2);
         if(updateNum == 1){
             // --------------------当前a_mp_equipment_rela数量
-            logger.info("当前a_mp_equipment_rela数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
+            logger.info("同步前[a_mp_equipment_rela]数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript5_2(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_mp_equipment_rela数量
-            logger.info("同步后a_mp_equipment_rela数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
+            logger.info("同步后[a_mp_equipment_rela]数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
             logger.info("--------------------------------------------" + StepConstant.STEP_005_2 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -503,9 +507,9 @@ public class DbServiceImpl implements DbService {
     private void importTmpLjzByDateStr(String cumuDateStr) {
         logger.info("清空tmp_ljz");
         mysqlDao.deleteTmpData("tmp_ljz");
-        logger.info("取" + cumuDateStr + "当天的累计值");
+        logger.info("取[" + cumuDateStr + "]当天的累计值");
         List<TmpLjz> tmpljz = sqlserverDao.queryTmpLjzByDateStr(cumuDateStr);
-        logger.info("取到老库指定日期的[累计值]记录个数：" + tmpljz.size());
+        logger.info("取到老库[" + cumuDateStr + "]的[累计值]记录数：" + tmpljz.size());
         int insNum = 0;
         int listSize = tmpljz.size();
         List<TmpLjz> part = new ArrayList<TmpLjz>(LIMIT);
@@ -519,8 +523,8 @@ public class DbServiceImpl implements DbService {
         logger.info("插入到[tmp_ljz]记录数：" + insNum);
         if(insNum != listSize)
             throw new RuntimeException("免费累计值记录：取到的与插入的不相等");
-        int ljz1size = toolDao.queryTableSize("tmp_ljz1");
-        logger.info("上次同步的[累计值]个数（tmp_ljz1）：" + ljz1size);
+//        int ljz1size = toolDao.queryTableSize("tmp_ljz1");
+//        logger.info("上次同步的[累计值]个数（tmp_ljz1）：" + ljz1size);
         logger.info("本次同步的[累计值]个数（tmp_ljz）：" + tmpljz.size());
         tmpljz.clear();
     }
