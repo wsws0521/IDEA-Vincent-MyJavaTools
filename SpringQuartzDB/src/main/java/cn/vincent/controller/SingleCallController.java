@@ -21,10 +21,15 @@ public class SingleCallController {
         return "Singal Call: Hello Centlec !";
     }
 
-    @GetMapping("/cumu/{cumuDate}")
-    public String returnStringId(@PathVariable String cumuDate){
-        singleCallService.callSynCumu();
-        return cumuDate;
+    @GetMapping("/cumu/mysql")
+    public String cumuMysql(){
+        int isToday = singleCallService.callSynCumu2Mysql();
+        return "is today : " + isToday;
     }
 
+    @GetMapping("/ljz/sqlserver")
+    public String ljzSqlServer(){
+        int num = singleCallService.callSynLjz2Sqlserver();
+        return num + "OK";
+    }
 }

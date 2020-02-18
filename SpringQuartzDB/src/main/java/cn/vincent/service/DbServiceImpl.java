@@ -2,7 +2,7 @@ package cn.vincent.service;
 
 
 import cn.vincent.dao.master.MysqlDao;
-import cn.vincent.dao.master.ToolDao;
+import cn.vincent.dao.master.MysqlToolDao;
 import cn.vincent.dao.other.SqlserverDao;
 import cn.vincent.pojo.*;
 import cn.vincent.utils.MyDateUtils;
@@ -29,7 +29,7 @@ public class DbServiceImpl implements DbService {
     @Resource
     MysqlDao mysqlDao;
     @Resource
-    ToolDao toolDao;
+    MysqlToolDao mysqlToolDao;
     @Resource
     SqlserverDao sqlserverDao;
     @Autowired
@@ -83,7 +83,7 @@ public class DbServiceImpl implements DbService {
         }
     }
     private String getCurStep(){
-        SYS_DATE_STR = MyDateUtils.getSysDate();
+        SYS_DATE_STR = MyDateUtils.getSysDateShort();
         FIRST_RUN = toolService.ifTableNotExist("tmp_centlec");
         if(FIRST_RUN)
             toolService.createTmpCentlec();
@@ -148,7 +148,7 @@ public class DbServiceImpl implements DbService {
             logger.info("插入到[tmp_bj]记录数：" + insNum);
             if(insNum != listSize)
                 throw new RuntimeException("表计档案：取到的与插入的不相等");
-            int bj1size = toolDao.queryTableSize("tmp_bj1");
+            int bj1size = mysqlToolDao.queryTableSize("tmp_bj1");
             logger.info("上次同步的[表计档案]个数（tmp_bj1）：" + bj1size);
             int differ = tmpbj.size() - bj1size;
             logger.info("理论上本次将新增[表计档案]个数：" + differ);
@@ -181,7 +181,7 @@ public class DbServiceImpl implements DbService {
             logger.info("插入到[tmp_yh]记录数：" + insNum);
             if(insNum != listSize)
                 throw new RuntimeException("用户档案：取到的与插入的不相等");
-            int yh1size = toolDao.queryTableSize("tmp_yh1");
+            int yh1size = mysqlToolDao.queryTableSize("tmp_yh1");
             logger.info("上次同步的[用户档案]个数（tmp_yh1）：" + yh1size);
             int differ = tmpyh.size() - yh1size;
             logger.info("理论上本次将新增[用户档案]个数：" + differ);
@@ -214,7 +214,7 @@ public class DbServiceImpl implements DbService {
             logger.info("插入到[tmp_zw]记录数：" + insNum);
             if(insNum != listSize)
                 throw new RuntimeException("债务记录：取到的与插入的不相等");
-            int zw1size = toolDao.queryTableSize("tmp_zw1");
+            int zw1size = mysqlToolDao.queryTableSize("tmp_zw1");
             logger.info("上次同步的[债务个数（tmp_zw1）]：" + zw1size);
             int differ = tmpzw.size() - zw1size;
             logger.info("理论上本次将新增[债务]个数（债务主要是更新余额）：" + differ);
@@ -313,14 +313,14 @@ public class DbServiceImpl implements DbService {
                 logger.info("准备新开用户 oldId-name：" + yh.getCUSTOMER_ID() + "-" + yh.getCustomer_name());
             }
             // --------------------当前a_consumer数量
-            logger.info("同步前[a_consumer]数量：" + toolDao.queryTableSize("a_consumer"));
+            logger.info("同步前[a_consumer]数量：" + mysqlToolDao.queryTableSize("a_consumer"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript3_1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_consumer数量
-            logger.info("同步后[a_consumer]数量：" + toolDao.queryTableSize("a_consumer"));
+            logger.info("同步后[a_consumer]数量：" + mysqlToolDao.queryTableSize("a_consumer"));
             logger.info("--------------------------------------------" + StepConstant.STEP_003_1 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -387,14 +387,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_004);
         if(updateNum == 1){
             // --------------------当前a_equip_meter数量
-            logger.info("同步前[a_equip_meter]数量：" + toolDao.queryTableSize("a_equip_meter"));
+            logger.info("同步前[a_equip_meter]数量：" + mysqlToolDao.queryTableSize("a_equip_meter"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript4(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_equip_meter数量
-            logger.info("同步后[a_equip_meter]数量：" + toolDao.queryTableSize("a_equip_meter"));
+            logger.info("同步后[a_equip_meter]数量：" + mysqlToolDao.queryTableSize("a_equip_meter"));
             logger.info("--------------------------------------------" + StepConstant.STEP_004 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -411,14 +411,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_005_1);
         if(updateNum == 1){
             // --------------------当前a_usagepoint数量
-            logger.info("同步前[a_usagepoint]数量：" + toolDao.queryTableSize("a_usagepoint"));
+            logger.info("同步前[a_usagepoint]数量：" + mysqlToolDao.queryTableSize("a_usagepoint"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript5_1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_usagepoint数量
-            logger.info("同步后[a_usagepoint]数量：" + toolDao.queryTableSize("a_usagepoint"));
+            logger.info("同步后[a_usagepoint]数量：" + mysqlToolDao.queryTableSize("a_usagepoint"));
             logger.info("--------------------------------------------" + StepConstant.STEP_005_1 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -435,14 +435,14 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_005_2);
         if(updateNum == 1){
             // --------------------当前a_mp_equipment_rela数量
-            logger.info("同步前[a_mp_equipment_rela]数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
+            logger.info("同步前[a_mp_equipment_rela]数量：" + mysqlToolDao.queryTableSize("a_mp_equipment_rela"));
             // --------------------同步
             ProcessParam processParam = new ProcessParam();
             mysqlDao.executeScript5_2(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());
             // --------------------同步后a_mp_equipment_rela数量
-            logger.info("同步后[a_mp_equipment_rela]数量：" + toolDao.queryTableSize("a_mp_equipment_rela"));
+            logger.info("同步后[a_mp_equipment_rela]数量：" + mysqlToolDao.queryTableSize("a_mp_equipment_rela"));
             logger.info("--------------------------------------------" + StepConstant.STEP_005_2 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
@@ -480,16 +480,16 @@ public class DbServiceImpl implements DbService {
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_007);
         if(updateNum == 1){
             indexService.addIndexWithCheck("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid", "cumu_obj_id");
-            List<String> duringDateStrList = MyDateUtils.getDuringDateStrList(mysqlDao.queryMaxLastVendDate());
+            List<String> duringDateStrList = MyDateUtils.getDuringDateStrListOpen(mysqlDao.queryMaxLastVendDate());
             for(String targetSynDateStr : duringDateStrList){
                 // 将现有的tmp_ljz1归档为日期后缀（日期为表内lastvenddate）
                 String nameWithDate = toolService.getTmpLjz1DateName();
                 if(nameWithDate != null)
-                    toolDao.updateAlterTableByName("tmp_ljz1", "tmp_ljz" + nameWithDate);
+                    mysqlToolDao.updateAlterTableByName("tmp_ljz1", "tmp_ljz" + nameWithDate);
                 // 将现有的tmp_ljz改名为tmp_ljz1
-                toolDao.updateAlterTableByName("tmp_ljz", "tmp_ljz1");
+                mysqlToolDao.updateAlterTableByName("tmp_ljz", "tmp_ljz1");
                 // 重新创建新的tmp_ljz
-                toolDao.updateCreateTmpLjz();
+                mysqlToolDao.updateCreateTmpLjz();
                 indexService.addIndexWithCheck("tmp_ljz","index_ljz_meterId","meterId");
                 indexService.addIndexWithCheck("tmp_ljz","index_ljz_consId","consId");
                 // 导入tmp_ljz
@@ -523,7 +523,7 @@ public class DbServiceImpl implements DbService {
         logger.info("插入到[tmp_ljz]记录数：" + insNum);
         if(insNum != listSize)
             throw new RuntimeException("免费累计值记录：取到的与插入的不相等");
-//        int ljz1size = toolDao.queryTableSize("tmp_ljz1");
+//        int ljz1size = mysqlToolDao.queryTableSize("tmp_ljz1");
 //        logger.info("上次同步的[累计值]个数（tmp_ljz1）：" + ljz1size);
         logger.info("本次同步的[累计值]个数（tmp_ljz）：" + tmpljz.size());
         tmpljz.clear();
@@ -539,7 +539,7 @@ public class DbServiceImpl implements DbService {
         if(updateNum == 1){
             String cumuDate = MyDateUtils.getSysDateYesterday();
             logger.info("取" + cumuDate + "当天的累计值");
-            List<TmpLjz> tmpljzList = mysqlDao.queryTmpLjzYestoday(cumuDate);
+            List<TmpLjz> tmpljzList = mysqlDao.queryVdPtokenAsLjz(cumuDate);
             logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
             if(tmpljzList.size() > 0)
                 logger.info("执行往新库同步..............暂时不动");

@@ -4,5 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public interface SingleCallService {
-    void callSynCumu();
+    int callSynCumu2Mysql();
+
+    int callSynLjz2Sqlserver();
 }

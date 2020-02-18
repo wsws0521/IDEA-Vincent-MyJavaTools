@@ -120,7 +120,7 @@
     </insert>
 
     <select id="queryMaxLastVendDate" resultType="java.lang.String">
-        select max(lastvenddate) from tmp_ljz
+        select DATE_FORMAT(max(lastvenddate), '%Y-%m-%d') from tmp_ljz
     </select>
     <insert id="insertTmpLjz" parameterType="java.util.List">
         insert into tmp_ljz (
@@ -405,7 +405,7 @@
         and #{cumuDate} <![CDATA[ >= ]]> start_time and #{cumuDate} <![CDATA[ <= ]]> end_time
     </update>
 -->
-    <select id="queryTmpLjzYestoday" resultType="cn.vincent.pojo.TmpLjz">
+    <select id="queryVdPtokenAsLjz" resultType="cn.vincent.pojo.TmpLjz">
         select 	t.RECHARGE_AMOUNT as "energy",
 				t.meter_no as "MT_COMM_ADDR",
 				t.CREATE_TIME as "LASTVENDDATE",

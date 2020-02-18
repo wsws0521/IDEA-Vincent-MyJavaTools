@@ -13,8 +13,11 @@ public class MyDateUtils {
     public static String getSysDateTime(){
         return SDF_DATETIME.format(new Date());
     }
-    public static String getSysDate(){
+    public static String getSysDateShort(){
         return SDF_DATE_SHORT.format(new Date());
+    }
+    public static String getSysDateCumu(){
+        return SDF_DATE_CUMU.format(new Date());
     }
     public static String getSysDateYesterday(){
         Date now = new Date();
@@ -23,7 +26,13 @@ public class MyDateUtils {
         calendar.add(calendar.DATE, -1);
         return SDF_DATE_CUMU.format(calendar.getTime());
     }
-    public static List<String> getDuringDateStrList(String maxVendDateStr){
+
+    /**
+     * 获取指定日期与当前日期中间的日期字符串，开区间（每天只自动同步一次累计值的情况）
+     * @param maxVendDateStr    tmp_ljz1表中的日期字符串
+     * @return
+     */
+    public static List<String> getDuringDateStrListOpen(String maxVendDateStr){
         List<String> result = new ArrayList<String>();
         try {
             Date startDate = SDF_DATE_CUMU.parse(maxVendDateStr);
@@ -33,6 +42,34 @@ public class MyDateUtils {
             calendar.add(calendar.DATE, -1);
             String yesterdayStr = SDF_DATE_CUMU.format(calendar.getTime());
             Date endDate = SDF_DATE_CUMU.parse(yesterdayStr);
+
+            Calendar calBegin = Calendar.getInstance();
+            calBegin.setTime(startDate);
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.setTime(endDate);
+            while (endDate.after(calBegin.getTime())) {
+                // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+                calBegin.add(Calendar.DAY_OF_MONTH, 1);
+                result.add(SDF_DATE_CUMU.format(calBegin.getTime()));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    /**
+     * 获取指定日期与当前日期中间的日期字符串，闭区间（多次手动同步当日累计值的情况）
+     * @param maxVendDateStr    tmp_ljz1表中的日期字符串
+     * @return
+     */
+    public static List<String> getDuringDateStrListClose(String maxVendDateStr){
+        List<String> result = new ArrayList<String>();
+        try {
+            Date startDate = SDF_DATE_CUMU.parse(maxVendDateStr);
+            result.add(SDF_DATE_CUMU.format(startDate));
+            // 截止日期去除时分秒，只保留年月日
+            String today = SDF_DATE_CUMU.format(new Date());
+            Date endDate = SDF_DATE_CUMU.parse(today);
 
             Calendar calBegin = Calendar.getInstance();
             calBegin.setTime(startDate);

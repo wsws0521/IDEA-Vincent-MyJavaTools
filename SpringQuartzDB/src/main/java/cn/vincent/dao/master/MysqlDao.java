@@ -101,6 +101,6 @@ public interface MysqlDao {
 //            @Param(value = "cumuValueOffset") BigDecimal cumuValueOffset,
 //            @Param(value = "cumuDate") String cumuDate);
 //
-    List<TmpLjz> queryTmpLjzYestoday(@Param(value = "cumuDate") String cumuDate);
+    List<TmpLjz> queryVdPtokenAsLjz(@Param(value = "cumuDate") String cumuDate);
 
 }

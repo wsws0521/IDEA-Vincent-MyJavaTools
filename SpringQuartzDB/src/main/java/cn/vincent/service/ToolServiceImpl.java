@@ -1,6 +1,6 @@
 package cn.vincent.service;
 
-import cn.vincent.dao.master.ToolDao;
+import cn.vincent.dao.master.MysqlToolDao;
 import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,32 +13,32 @@ import java.util.List;
 public class ToolServiceImpl implements ToolService {
     private static final Logger logger = LoggerFactory.getLogger(ToolServiceImpl.class);
     @Resource
-    ToolDao toolDao;
+    MysqlToolDao mysqlToolDao;
 
     @Override
     public boolean ifTableNotExist(String tableName) {
-        return toolDao.queryTableExist(tableName) == 0;
+        return mysqlToolDao.queryTableExist(tableName) == 0;
     }
 
     @Override
     public boolean ifTableExist(String tableName) {
-        return toolDao.queryTableExist(tableName) > 0;
+        return mysqlToolDao.queryTableExist(tableName) > 0;
     }
 
     @Override
     public void createTmpCentlec() {
-        toolDao.updateCreateTmpCentlec();
+        mysqlToolDao.updateCreateTmpCentlec();
     }
 
     @Override
     public void truncateTmpTables() {
-        List<String> tmpBjList = toolDao.queryTableNameList("tmp_bj");
+        List<String> tmpBjList = mysqlToolDao.queryTableNameList("tmp_bj");
         dropByRemainNum(tmpBjList, 1);
-        List<String> tmpYhList = toolDao.queryTableNameList("tmp_yh");
+        List<String> tmpYhList = mysqlToolDao.queryTableNameList("tmp_yh");
         dropByRemainNum(tmpYhList, 1);
-        List<String> tmpZwList = toolDao.queryTableNameList("tmp_zw");
+        List<String> tmpZwList = mysqlToolDao.queryTableNameList("tmp_zw");
         dropByRemainNum(tmpZwList, 1);
-        List<String> tmpLjzList = toolDao.queryTableNameList("tmp_ljz");
+        List<String> tmpLjzList = mysqlToolDao.queryTableNameList("tmp_ljz");
         dropByRemainNum(tmpLjzList, 1);
 
     }
@@ -46,7 +46,7 @@ public class ToolServiceImpl implements ToolService {
     private void dropByRemainNum(List<String> tmpNameList, int remainNum){
         if(tmpNameList.size() > remainNum){
             for (int i = 0; i < tmpNameList.size() - remainNum; i++) {
-                toolDao.updateDropTableByName(tmpNameList.get(i));
+                mysqlToolDao.updateDropTableByName(tmpNameList.get(i));
                 logger.info(tmpNameList.get(i) + "被删除了...");
             }
         }
@@ -66,9 +66,9 @@ public class ToolServiceImpl implements ToolService {
 
 
     private void doResetTmpFromTmp1(String baseTableName){
-        if(ifTableExist(baseTableName) && toolDao.queryTableSize(baseTableName) == 0){
-            toolDao.updateDropTableByName(baseTableName);
-            toolDao.updateAlterTableByName(baseTableName + "1", baseTableName);
+        if(ifTableExist(baseTableName) && mysqlToolDao.queryTableSize(baseTableName) == 0){
+            mysqlToolDao.updateDropTableByName(baseTableName);
+            mysqlToolDao.updateAlterTableByName(baseTableName + "1", baseTableName);
         }
     }
 
@@ -80,7 +80,7 @@ public class ToolServiceImpl implements ToolService {
     @Override
     public String getTmpLjz1DateName() {
         if(ifTableExist("tmp_ljz1")){
-            String maxLastVendDate = toolDao.queryMaxLastVendDateFromLjz1();
+            String maxLastVendDate = mysqlToolDao.queryMaxLastVendDateFromLjz1();
             if(maxLastVendDate == null || "".equals(maxLastVendDate))
                 return null;
             else

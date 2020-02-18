@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ToolDao {
+public interface MysqlToolDao {
     int queryTableExist(@Param(value = "tableName") String tableName);
     int queryTableSize(@Param(value = "tableName") String tableName);
     void updateCreateTmpCentlec();
@@ -15,4 +15,6 @@ public interface ToolDao {
     void updateCreateTmpLjz();
 
     String queryMaxLastVendDateFromLjz1();
+
+    int queryTmpLjzIsToday();
 }
