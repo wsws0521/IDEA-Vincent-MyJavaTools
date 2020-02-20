@@ -30,6 +30,8 @@ server:
 #server:
 #  port: 8001
 spring:
+  jackson:
+    time-zone: GMT+5
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.80.36:3306/ctlctest?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
@@ -37,4 +39,4 @@ spring:
     password: Hex123@0
 mybatis:
   type-aliases-package: com.vincent.pojo
-#  mapper-locations: classpath:com/vincent/dao/*.xml
+  mapper-locations: classpath:com/vincent/dao/*.xml

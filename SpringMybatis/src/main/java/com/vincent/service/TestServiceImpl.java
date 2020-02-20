@@ -2,6 +2,7 @@ package com.vincent.service;
 
 import com.vincent.dao.TestDao;
 import com.vincent.pojo.ProcParam;
+import com.vincent.pojo.TmpTestTariffDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,11 @@ public class TestServiceImpl implements TestService {
         BigDecimal bd = new BigDecimal(ss);
         System.out.println("tmp_test 插入后记录数：" + testDao.queryTableSize("tmp_test1"));
         return i;
+    }
+
+    @Override
+    public void insertTmpTestTariffDate(TmpTestTariffDate tmpTestTariffDate) {
+        int i = testDao.insertTmpTestTariffDate(tmpTestTariffDate);
     }
 }
 /*      《测试表》

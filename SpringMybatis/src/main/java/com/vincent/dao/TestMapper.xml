@@ -14,4 +14,8 @@
     <select id="queryTableSize" resultType="java.lang.Integer">
         select count(1) from ${tableName}
     </select>
+    <insert id="insertTmpTestTariffDate" parameterType="com.vincent.pojo.TmpTestTariffDate">
+        insert into tmp_test_tariffdate (ACTIVE_SINCE)
+        values (#{activeSince})
+    </insert>
 </mapper>

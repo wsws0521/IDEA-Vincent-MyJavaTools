@@ -48,6 +48,35 @@ spring:
       #使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # 连接池配置，应用到上面所有数据源(spring boot默认会优先使用的连接池是tomcat连接池)
+    tomcat:
+      # 初始化池子大小、最小、最大
+      initial-size: 5
+      min-idle: 10
+      max-active: 50
+      # 获取连接等待超时的时间30s
+      max-wait: 30000
+      # 间隔30min去检测需要驱逐/关闭的空闲连接
+      time-between-eviction-runs-millis: 1800000
+      # 一个连接在池中最小的生存时间：30min
+      min-evictable-idle-time-millis: 1800000
+      # 验证连接是否有效
+      validation-query: SELECT 1
+      # 允许连接被空闲连接回收器检测：即检测失败会被从池中移除
+      test-while-idle: true
+      # 是否从池中取出连接前进行检测，如果检测失败则从池中移除该连接，并尝试取出另一个（为了效率，可以设为默认false）
+      test-on-borrow: true
+      # 是否在归还到池中之前进行检测
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+#      poolPreparedStatements: true
+#      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+#      filters: stat,wall,log4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+#      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000;druid.stat.logSlowSql=true
+      # 合并多个DruidDataSource的监控数据
+#      useGlobalDataSourceStat: true
   application:
     name: SpringQuartzDB
 mybatis:

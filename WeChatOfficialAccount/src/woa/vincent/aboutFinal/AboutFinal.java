@@ -1,4 +1,4 @@
-package woa.vincent.aboutfinal;
+package woa.vincent.aboutFinal;
 
 /**
  * 左边邮件该java-->Open in Terminal-->javac AboutFinal.java-->生成class文件
