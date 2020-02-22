@@ -1,0 +1,12 @@
+server:
+  port: 20001
+  servlet:
+    path: /smd
+
+spring:
+  mybatis:
+    typeAliasPackage: com.jmu.ccjoin.entity
+    mapper:
+      jmuv3: classpath:mybatis/mysql/jmuv3/*.xml
+      ccjoinSettlement: classpath:mybatis/mysql/ccjoinSettlement/*.xml
+      jmuMp: classpath:mybatis/mysql/jmuMp/*.xml

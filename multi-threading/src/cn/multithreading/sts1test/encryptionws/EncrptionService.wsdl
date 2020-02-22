@@ -1,0 +1,1870 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EncryptionEngineService" targetNamespace="http://tempuri.org/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" version="1.0">
+
+  <xs:element name="BoxAuthorize" type="tns:BoxAuthorize"/>
+
+  <xs:element name="BoxAuthorizeResponse" type="tns:BoxAuthorizeResponse"/>
+
+  <xs:element name="BoxCommunicationTestSTS6" type="tns:BoxCommunicationTestSTS6"/>
+
+  <xs:element name="BoxCommunicationTestSTS6Response" type="tns:BoxCommunicationTestSTS6Response"/>
+
+  <xs:element name="DeleteKeySTS6" type="tns:DeleteKeySTS6"/>
+
+  <xs:element name="DeleteKeySTS6Response" type="tns:DeleteKeySTS6Response"/>
+
+  <xs:element name="DeleteKmcSTS6" type="tns:DeleteKmcSTS6"/>
+
+  <xs:element name="DeleteKmcSTS6Response" type="tns:DeleteKmcSTS6Response"/>
+
+  <xs:element name="GetBoxInfoSTS6" type="tns:GetBoxInfoSTS6"/>
+
+  <xs:element name="GetBoxInfoSTS6Response" type="tns:GetBoxInfoSTS6Response"/>
+
+  <xs:element name="GetBoxKeysInfoSTS6" type="tns:GetBoxKeysInfoSTS6"/>
+
+  <xs:element name="GetBoxKeysInfoSTS6Response" type="tns:GetBoxKeysInfoSTS6Response"/>
+
+  <xs:element name="GetBoxKmcDetailInfoSTS6" type="tns:GetBoxKmcDetailInfoSTS6"/>
+
+  <xs:element name="GetBoxKmcDetailInfoSTS6Response" type="tns:GetBoxKmcDetailInfoSTS6Response"/>
+
+  <xs:element name="GetBoxKmcInfoSTS6" type="tns:GetBoxKmcInfoSTS6"/>
+
+  <xs:element name="GetBoxKmcInfoSTS6Response" type="tns:GetBoxKmcInfoSTS6Response"/>
+
+  <xs:element name="GetLoadKey" type="tns:GetLoadKey"/>
+
+  <xs:element name="GetLoadKeyResponse" type="tns:GetLoadKeyResponse"/>
+
+  <xs:element name="GetLogInfoSTS6" type="tns:GetLogInfoSTS6"/>
+
+  <xs:element name="GetLogInfoSTS6Response" type="tns:GetLogInfoSTS6Response"/>
+
+  <xs:element name="GetRtcAndWinsizeSTS6" type="tns:GetRtcAndWinsizeSTS6"/>
+
+  <xs:element name="GetRtcAndWinsizeSTS6Response" type="tns:GetRtcAndWinsizeSTS6Response"/>
+
+  <xs:element name="GetVendingTimes" type="tns:GetVendingTimes"/>
+
+  <xs:element name="GetVendingTimesResponse" type="tns:GetVendingTimesResponse"/>
+
+  <xs:element name="HelloWorld" type="tns:HelloWorld"/>
+
+  <xs:element name="HelloWorldResponse" type="tns:HelloWorldResponse"/>
+
+  <xs:element name="KmcApply" type="tns:KmcApply"/>
+
+  <xs:element name="KmcApplyResponse" type="tns:KmcApplyResponse"/>
+
+  <xs:element name="KmcLoadKF" type="tns:KmcLoadKF"/>
+
+  <xs:element name="KmcLoadKFResponse" type="tns:KmcLoadKFResponse"/>
+
+  <xs:element name="KmcLoadKR" type="tns:KmcLoadKR"/>
+
+  <xs:element name="KmcLoadKRResponse" type="tns:KmcLoadKRResponse"/>
+
+  <xs:element name="KmcLoadVK" type="tns:KmcLoadVK"/>
+
+  <xs:element name="KmcLoadVKResponse" type="tns:KmcLoadVKResponse"/>
+
+  <xs:element name="LoadKey" type="tns:LoadKey"/>
+
+  <xs:element name="LoadKeyResponse" type="tns:LoadKeyResponse"/>
+
+  <xs:element name="MakeDefaultKeyToken" type="tns:MakeDefaultKeyToken"/>
+
+  <xs:element name="MakeDefaultKeyTokenResponse" type="tns:MakeDefaultKeyTokenResponse"/>
+
+  <xs:element name="MakeKeyToken" type="tns:MakeKeyToken"/>
+
+  <xs:element name="MakeKeyTokenResponse" type="tns:MakeKeyTokenResponse"/>
+
+  <xs:element name="MakeKeyTokenSTS6" type="tns:MakeKeyTokenSTS6"/>
+
+  <xs:element name="MakeKeyTokenSTS6ForM" type="tns:MakeKeyTokenSTS6ForM"/>
+
+  <xs:element name="MakeKeyTokenSTS6ForMResponse" type="tns:MakeKeyTokenSTS6ForMResponse"/>
+
+  <xs:element name="MakeKeyTokenSTS6Response" type="tns:MakeKeyTokenSTS6Response"/>
+
+  <xs:element name="MakeKeyTokenSTS6WithTime" type="tns:MakeKeyTokenSTS6WithTime"/>
+
+  <xs:element name="MakeKeyTokenSTS6WithTimeResponse" type="tns:MakeKeyTokenSTS6WithTimeResponse"/>
+
+  <xs:element name="MakeManagementToken" type="tns:MakeManagementToken"/>
+
+  <xs:element name="MakeManagementTokenResponse" type="tns:MakeManagementTokenResponse"/>
+
+  <xs:element name="MakeManagementTokenSTS6" type="tns:MakeManagementTokenSTS6"/>
+
+  <xs:element name="MakeManagementTokenSTS6ForM" type="tns:MakeManagementTokenSTS6ForM"/>
+
+  <xs:element name="MakeManagementTokenSTS6ForMResponse" type="tns:MakeManagementTokenSTS6ForMResponse"/>
+
+  <xs:element name="MakeManagementTokenSTS6Response" type="tns:MakeManagementTokenSTS6Response"/>
+
+  <xs:element name="MakeManagementTokenSTS6WithTime" type="tns:MakeManagementTokenSTS6WithTime"/>
+
+  <xs:element name="MakeManagementTokenSTS6WithTimeResponse" type="tns:MakeManagementTokenSTS6WithTimeResponse"/>
+
+  <xs:element name="MakeToken" type="tns:MakeToken"/>
+
+  <xs:element name="MakeTokenResponse" type="tns:MakeTokenResponse"/>
+
+  <xs:element name="MakeTokenSTS6" type="tns:MakeTokenSTS6"/>
+
+  <xs:element name="MakeTokenSTS6Response" type="tns:MakeTokenSTS6Response"/>
+
+  <xs:element name="MakeTokenSTS6WithTime" type="tns:MakeTokenSTS6WithTime"/>
+
+  <xs:element name="MakeTokenSTS6WithTimeResponse" type="tns:MakeTokenSTS6WithTimeResponse"/>
+
+  <xs:element name="ManufactoryKeyToken" type="tns:ManufactoryKeyToken"/>
+
+  <xs:element name="ManufactoryKeyTokenResponse" type="tns:ManufactoryKeyTokenResponse"/>
+
+  <xs:element name="ManufactoryKeyTokenSTS6" type="tns:ManufactoryKeyTokenSTS6"/>
+
+  <xs:element name="ManufactoryKeyTokenSTS6Response" type="tns:ManufactoryKeyTokenSTS6Response"/>
+
+  <xs:element name="VerifyEncryptedToken" type="tns:VerifyEncryptedToken"/>
+
+  <xs:element name="VerifyEncryptedTokenResponse" type="tns:VerifyEncryptedTokenResponse"/>
+
+  <xs:element name="VerifyEncryptedTokenSTS6" type="tns:VerifyEncryptedTokenSTS6"/>
+
+  <xs:element name="VerifyEncryptedTokenSTS6ForM" type="tns:VerifyEncryptedTokenSTS6ForM"/>
+
+  <xs:element name="VerifyEncryptedTokenSTS6ForMResponse" type="tns:VerifyEncryptedTokenSTS6ForMResponse"/>
+
+  <xs:element name="VerifyEncryptedTokenSTS6Response" type="tns:VerifyEncryptedTokenSTS6Response"/>
+
+  <xs:element name="counterIncrement" type="tns:counterIncrement"/>
+
+  <xs:element name="counterIncrementResponse" type="tns:counterIncrementResponse"/>
+
+  <xs:element name="generateDITKSTS6" type="tns:generateDITKSTS6"/>
+
+  <xs:element name="generateDITKSTS6Response" type="tns:generateDITKSTS6Response"/>
+
+  <xs:element name="queryDITKSTS6" type="tns:queryDITKSTS6"/>
+
+  <xs:element name="queryDITKSTS6Response" type="tns:queryDITKSTS6Response"/>
+
+  <xs:element name="resetDevice" type="tns:resetDevice"/>
+
+  <xs:element name="resetDeviceResponse" type="tns:resetDeviceResponse"/>
+
+  <xs:element name="setDITKSTS6" type="tns:setDITKSTS6"/>
+
+  <xs:element name="setDITKSTS6Response" type="tns:setDITKSTS6Response"/>
+
+  <xs:element name="vkLoadRequest" type="tns:vkLoadRequest"/>
+
+  <xs:element name="vkLoadRequestResponse" type="tns:vkLoadRequestResponse"/>
+
+  <xs:complexType name="GetBoxKeysInfoSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxKeysInfoSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetBoxKeysInfoSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="keyInfo" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxKmcDetailInfoSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="kekSlotId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxKmcDetailInfoSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetBoxKmcDetailInfoSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="vks" type="xs:string"/>
+      <xs:element minOccurs="0" name="kekSlotStatus" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6ForM">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode_current" type="xs:int"/>
+      <xs:element name="supplyGroupCode_new" type="xs:int"/>
+      <xs:element name="tarrifIndex_current" type="xs:int"/>
+      <xs:element name="tarrifIndex_new" type="xs:int"/>
+      <xs:element name="keyVersion_current" type="xs:int"/>
+      <xs:element name="keyVersion_new" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine_current" type="xs:string"/>
+      <xs:element minOccurs="0" name="timeBaseLine_new" type="xs:string"/>
+      <xs:element minOccurs="0" name="tct" type="xs:string"/>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+      <xs:element minOccurs="0" name="keyChangeNums" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6ForMResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="keyVersionR" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyExpiredR" type="xs:int"/>
+      <xs:element minOccurs="0" name="EAR" type="xs:string"/>
+      <xs:element minOccurs="0" name="tctR" type="xs:string"/>
+      <xs:element minOccurs="0" name="timeBaseLineR" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element name="managementFunction" type="xs:int"/>
+      <xs:element name="command" type="xs:int"/>
+      <xs:element minOccurs="0" name="Control" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6Response">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeManagementTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedTokenSTS6ForM">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element minOccurs="0" name="token" type="xs:string"/>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedTokenSTS6ForMResponse">
+    <xs:sequence>
+      <xs:element name="VerifyEncryptedTokenResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="tokenClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenSubClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenId" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vkLoadRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vkLoadRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="VkLoadRequestResult" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetRtcAndWinsizeSTS6">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetRtcAndWinsizeSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetRtcAndWinsizeSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="rtcTime" type="xs:string"/>
+      <xs:element minOccurs="0" name="winSize" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6ForM">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="managementFunction" type="xs:int"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element name="command" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+      <xs:element minOccurs="0" name="tct" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6ForMResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeManagementTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="keyVersionR" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyExpiredR" type="xs:int"/>
+      <xs:element minOccurs="0" name="EAR" type="xs:string"/>
+      <xs:element minOccurs="0" name="tctR" type="xs:string"/>
+      <xs:element minOccurs="0" name="timeBaseLineR" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeTokenSTS6WithTime">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element name="creditFunction" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+      <xs:element minOccurs="0" name="tokenTime" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeTokenSTS6WithTimeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeTokenSTS6">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element name="creditFunction" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeTokenSTS6Response">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element name="creditFunction" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeTokenResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="queryDITKSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="queryDITKSTS6Response">
+    <xs:sequence>
+      <xs:element name="queryDITKSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="keyCheckValue" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="generateDITKSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+      <xs:element name="NumComps" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="generateDITKSTS6Response">
+    <xs:sequence>
+      <xs:element name="generateDITKSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="keyCheckValue" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ManufactoryKeyToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ManufactoryKeyTokenResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ManufactoryKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetLogInfoSTS6">
+    <xs:sequence>
+      <xs:element name="position" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetLogInfoSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetLogInfoSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="timeStamp" type="xs:string"/>
+      <xs:element minOccurs="0" name="eventType" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="resetDevice">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="resetDeviceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ResetDeviceResult" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDITKSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+      <xs:element name="NumComps" type="xs:int"/>
+      <xs:element minOccurs="0" name="KeyCheckValue" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDITKSTS6Response">
+    <xs:sequence>
+      <xs:element name="setDITKSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="keyCheckValueR" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadVK">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="vkInfo" type="xs:string"/>
+      <xs:element minOccurs="0" name="kmcId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadVKResponse">
+    <xs:sequence>
+      <xs:element name="KmcLoadVKResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="fhjg" type="xs:string"/>
+      <xs:element minOccurs="0" name="cxml" type="xs:string"/>
+      <xs:element minOccurs="0" name="oldZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="newZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeDefaultKeyToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeDefaultKeyTokenResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeDefaultKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedTokenSTS6">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element minOccurs="0" name="token" type="xs:string"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedTokenSTS6Response">
+    <xs:sequence>
+      <xs:element name="VerifyEncryptedTokenResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="tokenClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenSubClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenId" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LoadKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LoadKeyResponse">
+    <xs:sequence>
+      <xs:element name="LoadKeyResult" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BoxAuthorize">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="context" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BoxAuthorizeResponse">
+    <xs:sequence>
+      <xs:element name="BoxAuthorizeResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sdcssx" type="xs:string"/>
+      <xs:element minOccurs="0" name="gqrq" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxKmcInfoSTS6">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxKmcInfoSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetBoxKmcInfoSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="kmcs" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeleteKeySTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeleteKeySTS6Response">
+    <xs:sequence>
+      <xs:element name="DeleteKeySTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetVendingTimes">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetVendingTimesResponse">
+    <xs:sequence>
+      <xs:element name="GetVendingTimesResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sysdcs" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6WithTime">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element name="managementFunction" type="xs:int"/>
+      <xs:element name="command" type="xs:int"/>
+      <xs:element minOccurs="0" name="Control" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister" type="xs:string"/>
+      <xs:element minOccurs="0" name="tokenTime" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenSTS6WithTimeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeManagementTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcApply">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gyxx" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcApplyResponse">
+    <xs:sequence>
+      <xs:element name="KmcApplyResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="fhjg" type="xs:string"/>
+      <xs:element minOccurs="0" name="kmcId" type="xs:string"/>
+      <xs:element minOccurs="0" name="cxml" type="xs:string"/>
+      <xs:element minOccurs="0" name="newZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BoxCommunicationTestSTS6">
+    <xs:sequence>
+      <xs:element name="delay" type="xs:int"/>
+      <xs:element minOccurs="0" name="echoData" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BoxCommunicationTestSTS6Response">
+    <xs:sequence>
+      <xs:element name="BoxCommunicationTestSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="testResult" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6WithTime">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode_current" type="xs:int"/>
+      <xs:element name="supplyGroupCode_new" type="xs:int"/>
+      <xs:element name="tarrifIndex_current" type="xs:int"/>
+      <xs:element name="tarrifIndex_new" type="xs:int"/>
+      <xs:element name="keyVersion_current" type="xs:int"/>
+      <xs:element name="keyExpired_current" type="xs:int"/>
+      <xs:element name="keyVersion_new" type="xs:int"/>
+      <xs:element name="keyExpired_new" type="xs:int"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister_current" type="xs:string"/>
+      <xs:element minOccurs="0" name="keyRegister_new" type="xs:string"/>
+      <xs:element minOccurs="0" name="tokenTime" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6WithTimeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadKR">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="krContext" type="xs:string"/>
+      <xs:element minOccurs="0" name="kmcId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadKRResponse">
+    <xs:sequence>
+      <xs:element name="KmcLoadKRResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="fhjg" type="xs:string"/>
+      <xs:element minOccurs="0" name="cxml" type="xs:string"/>
+      <xs:element minOccurs="0" name="oldZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="newZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ManufactoryKeyTokenSTS6">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element minOccurs="0" name="timeBaseLine" type="xs:string"/>
+      <xs:element minOccurs="0" name="EA" type="xs:string"/>
+      <xs:element minOccurs="0" name="numTokens" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ManufactoryKeyTokenSTS6Response">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ManufactoryKeyTokenSTS6Result" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="keyVersionR" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyExpiredR" type="xs:int"/>
+      <xs:element minOccurs="0" name="EAR" type="xs:string"/>
+      <xs:element minOccurs="0" name="timeBaseLineR" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element minOccurs="0" name="token" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VerifyEncryptedTokenResponse">
+    <xs:sequence>
+      <xs:element name="VerifyEncryptedTokenResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+      <xs:element minOccurs="0" name="tokenClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenSubClass" type="xs:byte"/>
+      <xs:element minOccurs="0" name="tokenId" type="xs:int"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeleteKmcSTS6">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="kekSlotId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeleteKmcSTS6Response">
+    <xs:sequence>
+      <xs:element name="DeleteKmcSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode" type="xs:int"/>
+      <xs:element name="tarrifIndex" type="xs:int"/>
+      <xs:element name="keyVersion" type="xs:int"/>
+      <xs:element name="keyExpired" type="xs:int"/>
+      <xs:element name="managementFunction" type="xs:int"/>
+      <xs:element minOccurs="0" name="transferAmount" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeManagementTokenResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeManagementTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode_current" type="xs:int"/>
+      <xs:element name="supplyGroupCode_new" type="xs:int"/>
+      <xs:element name="tarrifIndex_current" type="xs:int"/>
+      <xs:element name="tarrifIndex_new" type="xs:int"/>
+      <xs:element name="keyVersion_current" type="xs:int"/>
+      <xs:element name="keyExpired_current" type="xs:int"/>
+      <xs:element name="keyVersion_new" type="xs:int"/>
+      <xs:element name="keyExpired_new" type="xs:int"/>
+      <xs:element name="stsVersion" type="xs:int"/>
+      <xs:element name="tct" type="xs:int"/>
+      <xs:element minOccurs="0" name="keyRegister_current" type="xs:string"/>
+      <xs:element minOccurs="0" name="keyRegister_new" type="xs:string"/>
+      <xs:element minOccurs="0" name="keyChangeNums" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenSTS6Response">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="HelloWorld">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="HelloWorldResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="counterIncrement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="counterIncrementResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CounterIncrement" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxInfoSTS6">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetBoxInfoSTS6Response">
+    <xs:sequence>
+      <xs:element name="GetBoxInfoSTS6Result" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="boxId" type="xs:string"/>
+      <xs:element minOccurs="0" name="boxType" type="xs:string"/>
+      <xs:element minOccurs="0" name="hardwareId" type="xs:string"/>
+      <xs:element minOccurs="0" name="firmwareId" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadKF">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="kmcId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="KmcLoadKFResponse">
+    <xs:sequence>
+      <xs:element name="KmcLoadKFResult" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="fhjg" type="xs:string"/>
+      <xs:element minOccurs="0" name="cxml" type="xs:string"/>
+      <xs:element minOccurs="0" name="oldZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="newZt" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="errorMsg" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetLoadKey">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="GetLoadKeyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GetLoadKeyResult" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyToken">
+    <xs:sequence>
+      <xs:element name="meterNo" type="xs:long"/>
+      <xs:element name="supplyGroupCode_current" type="xs:int"/>
+      <xs:element name="supplyGroupCode_new" type="xs:int"/>
+      <xs:element name="tarrifIndex_current" type="xs:int"/>
+      <xs:element name="tarrifIndex_new" type="xs:int"/>
+      <xs:element name="keyVersion_current" type="xs:int"/>
+      <xs:element name="keyExpired_current" type="xs:int"/>
+      <xs:element name="keyVersion_new" type="xs:int"/>
+      <xs:element name="keyExpired_new" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MakeKeyTokenResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="MakeKeyTokenResult" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetBoxKeysInfoSTS6">
+    <wsdl:part element="tns:GetBoxKeysInfoSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6ForM">
+    <wsdl:part element="tns:MakeKeyTokenSTS6ForM" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenResponse">
+    <wsdl:part element="tns:MakeManagementTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resetDeviceResponse">
+    <wsdl:part element="tns:resetDeviceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6Response">
+    <wsdl:part element="tns:MakeManagementTokenSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="vkLoadRequest">
+    <wsdl:part element="tns:vkLoadRequest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setDITKSTS6Response">
+    <wsdl:part element="tns:setDITKSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="HelloWorldResponse">
+    <wsdl:part element="tns:HelloWorldResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6ForM">
+    <wsdl:part element="tns:MakeManagementTokenSTS6ForM" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenResponse">
+    <wsdl:part element="tns:MakeKeyTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeTokenSTS6WithTime">
+    <wsdl:part element="tns:MakeTokenSTS6WithTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxKmcInfoSTS6Response">
+    <wsdl:part element="tns:GetBoxKmcInfoSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryDITKSTS6">
+    <wsdl:part element="tns:queryDITKSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ManufactoryKeyToken">
+    <wsdl:part element="tns:ManufactoryKeyToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetLogInfoSTS6">
+    <wsdl:part element="tns:GetLogInfoSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resetDevice">
+    <wsdl:part element="tns:resetDevice" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeDefaultKeyToken">
+    <wsdl:part element="tns:MakeDefaultKeyToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedTokenSTS6">
+    <wsdl:part element="tns:VerifyEncryptedTokenSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRtcAndWinsizeSTS6Response">
+    <wsdl:part element="tns:GetRtcAndWinsizeSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LoadKey">
+    <wsdl:part element="tns:LoadKey" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BoxAuthorize">
+    <wsdl:part element="tns:BoxAuthorize" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteKeySTS6">
+    <wsdl:part element="tns:DeleteKeySTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVendingTimes">
+    <wsdl:part element="tns:GetVendingTimes" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxKeysInfoSTS6Response">
+    <wsdl:part element="tns:GetBoxKeysInfoSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetLogInfoSTS6Response">
+    <wsdl:part element="tns:GetLogInfoSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6WithTime">
+    <wsdl:part element="tns:MakeManagementTokenSTS6WithTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BoxCommunicationTestSTS6">
+    <wsdl:part element="tns:BoxCommunicationTestSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedTokenSTS6Response">
+    <wsdl:part element="tns:VerifyEncryptedTokenSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadKR">
+    <wsdl:part element="tns:KmcLoadKR" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedToken">
+    <wsdl:part element="tns:VerifyEncryptedToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetLoadKeyResponse">
+    <wsdl:part element="tns:GetLoadKeyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryDITKSTS6Response">
+    <wsdl:part element="tns:queryDITKSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadKRResponse">
+    <wsdl:part element="tns:KmcLoadKRResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6">
+    <wsdl:part element="tns:MakeKeyTokenSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetVendingTimesResponse">
+    <wsdl:part element="tns:GetVendingTimesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="HelloWorld">
+    <wsdl:part element="tns:HelloWorld" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadVKResponse">
+    <wsdl:part element="tns:KmcLoadVKResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadKF">
+    <wsdl:part element="tns:KmcLoadKF" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetLoadKey">
+    <wsdl:part element="tns:GetLoadKey" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6ForMResponse">
+    <wsdl:part element="tns:MakeKeyTokenSTS6ForMResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxKmcDetailInfoSTS6">
+    <wsdl:part element="tns:GetBoxKmcDetailInfoSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="counterIncrementResponse">
+    <wsdl:part element="tns:counterIncrementResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6">
+    <wsdl:part element="tns:MakeManagementTokenSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ManufactoryKeyTokenSTS6Response">
+    <wsdl:part element="tns:ManufactoryKeyTokenSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedTokenSTS6ForM">
+    <wsdl:part element="tns:VerifyEncryptedTokenSTS6ForM" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="vkLoadRequestResponse">
+    <wsdl:part element="tns:vkLoadRequestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeTokenSTS6Response">
+    <wsdl:part element="tns:MakeTokenSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateDITKSTS6Response">
+    <wsdl:part element="tns:generateDITKSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedTokenResponse">
+    <wsdl:part element="tns:VerifyEncryptedTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetRtcAndWinsizeSTS6">
+    <wsdl:part element="tns:GetRtcAndWinsizeSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxKmcDetailInfoSTS6Response">
+    <wsdl:part element="tns:GetBoxKmcDetailInfoSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoSTS6Response">
+    <wsdl:part element="tns:GetBoxInfoSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteKeySTS6Response">
+    <wsdl:part element="tns:DeleteKeySTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeTokenSTS6">
+    <wsdl:part element="tns:MakeTokenSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeToken">
+    <wsdl:part element="tns:MakeToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6Response">
+    <wsdl:part element="tns:MakeKeyTokenSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateDITKSTS6">
+    <wsdl:part element="tns:generateDITKSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BoxAuthorizeResponse">
+    <wsdl:part element="tns:BoxAuthorizeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6WithTimeResponse">
+    <wsdl:part element="tns:MakeManagementTokenSTS6WithTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyEncryptedTokenSTS6ForMResponse">
+    <wsdl:part element="tns:VerifyEncryptedTokenSTS6ForMResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeTokenResponse">
+    <wsdl:part element="tns:MakeTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setDITKSTS6">
+    <wsdl:part element="tns:setDITKSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadVK">
+    <wsdl:part element="tns:KmcLoadVK" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6WithTimeResponse">
+    <wsdl:part element="tns:MakeKeyTokenSTS6WithTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcLoadKFResponse">
+    <wsdl:part element="tns:KmcLoadKFResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeTokenSTS6WithTimeResponse">
+    <wsdl:part element="tns:MakeTokenSTS6WithTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcApplyResponse">
+    <wsdl:part element="tns:KmcApplyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxKmcInfoSTS6">
+    <wsdl:part element="tns:GetBoxKmcInfoSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementTokenSTS6ForMResponse">
+    <wsdl:part element="tns:MakeManagementTokenSTS6ForMResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="KmcApply">
+    <wsdl:part element="tns:KmcApply" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyTokenSTS6WithTime">
+    <wsdl:part element="tns:MakeKeyTokenSTS6WithTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteKmcSTS6Response">
+    <wsdl:part element="tns:DeleteKmcSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeDefaultKeyTokenResponse">
+    <wsdl:part element="tns:MakeDefaultKeyTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BoxCommunicationTestSTS6Response">
+    <wsdl:part element="tns:BoxCommunicationTestSTS6Response" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LoadKeyResponse">
+    <wsdl:part element="tns:LoadKeyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ManufactoryKeyTokenResponse">
+    <wsdl:part element="tns:ManufactoryKeyTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ManufactoryKeyTokenSTS6">
+    <wsdl:part element="tns:ManufactoryKeyTokenSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DeleteKmcSTS6">
+    <wsdl:part element="tns:DeleteKmcSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeManagementToken">
+    <wsdl:part element="tns:MakeManagementToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="counterIncrement">
+    <wsdl:part element="tns:counterIncrement" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoSTS6">
+    <wsdl:part element="tns:GetBoxInfoSTS6" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="MakeKeyToken">
+    <wsdl:part element="tns:MakeKeyToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EncrptionService">
+    <wsdl:operation name="GetBoxKeysInfoSTS6">
+      <wsdl:input message="tns:GetBoxKeysInfoSTS6" name="GetBoxKeysInfoSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBoxKeysInfoSTS6Response" name="GetBoxKeysInfoSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxKmcDetailInfoSTS6">
+      <wsdl:input message="tns:GetBoxKmcDetailInfoSTS6" name="GetBoxKmcDetailInfoSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBoxKmcDetailInfoSTS6Response" name="GetBoxKmcDetailInfoSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6ForM">
+      <wsdl:input message="tns:MakeKeyTokenSTS6ForM" name="MakeKeyTokenSTS6ForM">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeKeyTokenSTS6ForMResponse" name="MakeKeyTokenSTS6ForMResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6">
+      <wsdl:input message="tns:MakeManagementTokenSTS6" name="MakeManagementTokenSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeManagementTokenSTS6Response" name="MakeManagementTokenSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedTokenSTS6ForM">
+      <wsdl:input message="tns:VerifyEncryptedTokenSTS6ForM" name="VerifyEncryptedTokenSTS6ForM">
+    </wsdl:input>
+      <wsdl:output message="tns:VerifyEncryptedTokenSTS6ForMResponse" name="VerifyEncryptedTokenSTS6ForMResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="vkLoadRequest">
+      <wsdl:input message="tns:vkLoadRequest" name="vkLoadRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:vkLoadRequestResponse" name="vkLoadRequestResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRtcAndWinsizeSTS6">
+      <wsdl:input message="tns:GetRtcAndWinsizeSTS6" name="GetRtcAndWinsizeSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetRtcAndWinsizeSTS6Response" name="GetRtcAndWinsizeSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6ForM">
+      <wsdl:input message="tns:MakeManagementTokenSTS6ForM" name="MakeManagementTokenSTS6ForM">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeManagementTokenSTS6ForMResponse" name="MakeManagementTokenSTS6ForMResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTokenSTS6WithTime">
+      <wsdl:input message="tns:MakeTokenSTS6WithTime" name="MakeTokenSTS6WithTime">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeTokenSTS6WithTimeResponse" name="MakeTokenSTS6WithTimeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTokenSTS6">
+      <wsdl:input message="tns:MakeTokenSTS6" name="MakeTokenSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeTokenSTS6Response" name="MakeTokenSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeToken">
+      <wsdl:input message="tns:MakeToken" name="MakeToken">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeTokenResponse" name="MakeTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryDITKSTS6">
+      <wsdl:input message="tns:queryDITKSTS6" name="queryDITKSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:queryDITKSTS6Response" name="queryDITKSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generateDITKSTS6">
+      <wsdl:input message="tns:generateDITKSTS6" name="generateDITKSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:generateDITKSTS6Response" name="generateDITKSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManufactoryKeyToken">
+      <wsdl:input message="tns:ManufactoryKeyToken" name="ManufactoryKeyToken">
+    </wsdl:input>
+      <wsdl:output message="tns:ManufactoryKeyTokenResponse" name="ManufactoryKeyTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogInfoSTS6">
+      <wsdl:input message="tns:GetLogInfoSTS6" name="GetLogInfoSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetLogInfoSTS6Response" name="GetLogInfoSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resetDevice">
+      <wsdl:input message="tns:resetDevice" name="resetDevice">
+    </wsdl:input>
+      <wsdl:output message="tns:resetDeviceResponse" name="resetDeviceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setDITKSTS6">
+      <wsdl:input message="tns:setDITKSTS6" name="setDITKSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:setDITKSTS6Response" name="setDITKSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadVK">
+      <wsdl:input message="tns:KmcLoadVK" name="KmcLoadVK">
+    </wsdl:input>
+      <wsdl:output message="tns:KmcLoadVKResponse" name="KmcLoadVKResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeDefaultKeyToken">
+      <wsdl:input message="tns:MakeDefaultKeyToken" name="MakeDefaultKeyToken">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeDefaultKeyTokenResponse" name="MakeDefaultKeyTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedTokenSTS6">
+      <wsdl:input message="tns:VerifyEncryptedTokenSTS6" name="VerifyEncryptedTokenSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:VerifyEncryptedTokenSTS6Response" name="VerifyEncryptedTokenSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadKey">
+      <wsdl:input message="tns:LoadKey" name="LoadKey">
+    </wsdl:input>
+      <wsdl:output message="tns:LoadKeyResponse" name="LoadKeyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoxAuthorize">
+      <wsdl:input message="tns:BoxAuthorize" name="BoxAuthorize">
+    </wsdl:input>
+      <wsdl:output message="tns:BoxAuthorizeResponse" name="BoxAuthorizeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxKmcInfoSTS6">
+      <wsdl:input message="tns:GetBoxKmcInfoSTS6" name="GetBoxKmcInfoSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBoxKmcInfoSTS6Response" name="GetBoxKmcInfoSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteKeySTS6">
+      <wsdl:input message="tns:DeleteKeySTS6" name="DeleteKeySTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteKeySTS6Response" name="DeleteKeySTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendingTimes">
+      <wsdl:input message="tns:GetVendingTimes" name="GetVendingTimes">
+    </wsdl:input>
+      <wsdl:output message="tns:GetVendingTimesResponse" name="GetVendingTimesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6WithTime">
+      <wsdl:input message="tns:MakeManagementTokenSTS6WithTime" name="MakeManagementTokenSTS6WithTime">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeManagementTokenSTS6WithTimeResponse" name="MakeManagementTokenSTS6WithTimeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcApply">
+      <wsdl:input message="tns:KmcApply" name="KmcApply">
+    </wsdl:input>
+      <wsdl:output message="tns:KmcApplyResponse" name="KmcApplyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoxCommunicationTestSTS6">
+      <wsdl:input message="tns:BoxCommunicationTestSTS6" name="BoxCommunicationTestSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:BoxCommunicationTestSTS6Response" name="BoxCommunicationTestSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6WithTime">
+      <wsdl:input message="tns:MakeKeyTokenSTS6WithTime" name="MakeKeyTokenSTS6WithTime">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeKeyTokenSTS6WithTimeResponse" name="MakeKeyTokenSTS6WithTimeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadKR">
+      <wsdl:input message="tns:KmcLoadKR" name="KmcLoadKR">
+    </wsdl:input>
+      <wsdl:output message="tns:KmcLoadKRResponse" name="KmcLoadKRResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManufactoryKeyTokenSTS6">
+      <wsdl:input message="tns:ManufactoryKeyTokenSTS6" name="ManufactoryKeyTokenSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:ManufactoryKeyTokenSTS6Response" name="ManufactoryKeyTokenSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedToken">
+      <wsdl:input message="tns:VerifyEncryptedToken" name="VerifyEncryptedToken">
+    </wsdl:input>
+      <wsdl:output message="tns:VerifyEncryptedTokenResponse" name="VerifyEncryptedTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteKmcSTS6">
+      <wsdl:input message="tns:DeleteKmcSTS6" name="DeleteKmcSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:DeleteKmcSTS6Response" name="DeleteKmcSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementToken">
+      <wsdl:input message="tns:MakeManagementToken" name="MakeManagementToken">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeManagementTokenResponse" name="MakeManagementTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6">
+      <wsdl:input message="tns:MakeKeyTokenSTS6" name="MakeKeyTokenSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeKeyTokenSTS6Response" name="MakeKeyTokenSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorld" name="HelloWorld">
+    </wsdl:input>
+      <wsdl:output message="tns:HelloWorldResponse" name="HelloWorldResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="counterIncrement">
+      <wsdl:input message="tns:counterIncrement" name="counterIncrement">
+    </wsdl:input>
+      <wsdl:output message="tns:counterIncrementResponse" name="counterIncrementResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfoSTS6">
+      <wsdl:input message="tns:GetBoxInfoSTS6" name="GetBoxInfoSTS6">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBoxInfoSTS6Response" name="GetBoxInfoSTS6Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadKF">
+      <wsdl:input message="tns:KmcLoadKF" name="KmcLoadKF">
+    </wsdl:input>
+      <wsdl:output message="tns:KmcLoadKFResponse" name="KmcLoadKFResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadKey">
+      <wsdl:input message="tns:GetLoadKey" name="GetLoadKey">
+    </wsdl:input>
+      <wsdl:output message="tns:GetLoadKeyResponse" name="GetLoadKeyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyToken">
+      <wsdl:input message="tns:MakeKeyToken" name="MakeKeyToken">
+    </wsdl:input>
+      <wsdl:output message="tns:MakeKeyTokenResponse" name="MakeKeyTokenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EncryptionEngineServiceSoapBinding" type="tns:EncrptionService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetBoxKeysInfoSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetBoxKeysInfoSTS6" style="document"/>
+      <wsdl:input name="GetBoxKeysInfoSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBoxKeysInfoSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxKmcDetailInfoSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetBoxKmcDetailInfoSTS6" style="document"/>
+      <wsdl:input name="GetBoxKmcDetailInfoSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBoxKmcDetailInfoSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6ForM">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeKeyTokenSTS6ForM" style="document"/>
+      <wsdl:input name="MakeKeyTokenSTS6ForM">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeKeyTokenSTS6ForMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeManagementTokenSTS6" style="document"/>
+      <wsdl:input name="MakeManagementTokenSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeManagementTokenSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedTokenSTS6ForM">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/VerifyEncryptedTokenSTS6ForM" style="document"/>
+      <wsdl:input name="VerifyEncryptedTokenSTS6ForM">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="VerifyEncryptedTokenSTS6ForMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="vkLoadRequest">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/vkLoadRequest" style="document"/>
+      <wsdl:input name="vkLoadRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="vkLoadRequestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRtcAndWinsizeSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetRtcAndWinsizeSTS6" style="document"/>
+      <wsdl:input name="GetRtcAndWinsizeSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetRtcAndWinsizeSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6ForM">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeManagementTokenSTS6ForM" style="document"/>
+      <wsdl:input name="MakeManagementTokenSTS6ForM">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeManagementTokenSTS6ForMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTokenSTS6WithTime">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeTokenSTS6WithTime" style="document"/>
+      <wsdl:input name="MakeTokenSTS6WithTime">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeTokenSTS6WithTimeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTokenSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeTokenSTS6" style="document"/>
+      <wsdl:input name="MakeTokenSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeTokenSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeToken" style="document"/>
+      <wsdl:input name="MakeToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryDITKSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/queryDITKSTS6" style="document"/>
+      <wsdl:input name="queryDITKSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryDITKSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generateDITKSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/generateDITKSTS6" style="document"/>
+      <wsdl:input name="generateDITKSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateDITKSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManufactoryKeyToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/ManufactoryKeyToken" style="document"/>
+      <wsdl:input name="ManufactoryKeyToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ManufactoryKeyTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogInfoSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetLogInfoSTS6" style="document"/>
+      <wsdl:input name="GetLogInfoSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetLogInfoSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resetDevice">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/resetDevice" style="document"/>
+      <wsdl:input name="resetDevice">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="resetDeviceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setDITKSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/setDITKSTS6" style="document"/>
+      <wsdl:input name="setDITKSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setDITKSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadVK">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/KmcLoadVK" style="document"/>
+      <wsdl:input name="KmcLoadVK">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="KmcLoadVKResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeDefaultKeyToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeDefaultKeyToken" style="document"/>
+      <wsdl:input name="MakeDefaultKeyToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeDefaultKeyTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedTokenSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/VerifyEncryptedTokenSTS6" style="document"/>
+      <wsdl:input name="VerifyEncryptedTokenSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="VerifyEncryptedTokenSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadKey">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/LoadKey" style="document"/>
+      <wsdl:input name="LoadKey">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="LoadKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoxAuthorize">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/BoxAuthorize" style="document"/>
+      <wsdl:input name="BoxAuthorize">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BoxAuthorizeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxKmcInfoSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetBoxKmcInfoSTS6" style="document"/>
+      <wsdl:input name="GetBoxKmcInfoSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBoxKmcInfoSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteKeySTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/DeleteKeySTS6" style="document"/>
+      <wsdl:input name="DeleteKeySTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeleteKeySTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendingTimes">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetVendingTimes" style="document"/>
+      <wsdl:input name="GetVendingTimes">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetVendingTimesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementTokenSTS6WithTime">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeManagementTokenSTS6WithTime" style="document"/>
+      <wsdl:input name="MakeManagementTokenSTS6WithTime">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeManagementTokenSTS6WithTimeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcApply">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/KmcApply" style="document"/>
+      <wsdl:input name="KmcApply">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="KmcApplyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BoxCommunicationTestSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/BoxCommunicationTestSTS6" style="document"/>
+      <wsdl:input name="BoxCommunicationTestSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="BoxCommunicationTestSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6WithTime">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeKeyTokenSTS6WithTime" style="document"/>
+      <wsdl:input name="MakeKeyTokenSTS6WithTime">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeKeyTokenSTS6WithTimeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadKR">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/KmcLoadKR" style="document"/>
+      <wsdl:input name="KmcLoadKR">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="KmcLoadKRResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ManufactoryKeyTokenSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/ManufactoryKeyTokenSTS6" style="document"/>
+      <wsdl:input name="ManufactoryKeyTokenSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ManufactoryKeyTokenSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyEncryptedToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/VerifyEncryptedToken" style="document"/>
+      <wsdl:input name="VerifyEncryptedToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="VerifyEncryptedTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteKmcSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/DeleteKmcSTS6" style="document"/>
+      <wsdl:input name="DeleteKmcSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DeleteKmcSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeManagementToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeManagementToken" style="document"/>
+      <wsdl:input name="MakeManagementToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeManagementTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyTokenSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeKeyTokenSTS6" style="document"/>
+      <wsdl:input name="MakeKeyTokenSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeKeyTokenSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="HelloWorld">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="HelloWorldResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="counterIncrement">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/counterIncrement" style="document"/>
+      <wsdl:input name="counterIncrement">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="counterIncrementResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfoSTS6">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetBoxInfoSTS6" style="document"/>
+      <wsdl:input name="GetBoxInfoSTS6">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBoxInfoSTS6Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KmcLoadKF">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/KmcLoadKF" style="document"/>
+      <wsdl:input name="KmcLoadKF">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="KmcLoadKFResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoadKey">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/GetLoadKey" style="document"/>
+      <wsdl:input name="GetLoadKey">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetLoadKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeKeyToken">
+      <soap:operation soapAction="http://tempuri.org/IEncryptionEngine/MakeKeyToken" style="document"/>
+      <wsdl:input name="MakeKeyToken">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="MakeKeyTokenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EncryptionEngineService">
+    <wsdl:port binding="tns:EncryptionEngineServiceSoapBinding" name="EncryptionEnginePort">
+      <soap:address location="http://192.168.80.35:8010/EncrptionService/ws/EncrptionService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
