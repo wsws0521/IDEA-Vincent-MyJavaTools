@@ -7,18 +7,52 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
+
+	if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVBL_FLOW' AND COLUMN_NAME = 'DEBTID') = 0 then
+        CALL PR_MOD_COL('VD_A_RCVBL_FLOW','ADD','DEBTID','VARCHAR(64)','NULL','NULL','');
+    end if;
+    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVBL_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
+        CALL PR_MOD_COL('VD_A_RCVBL_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
+    end if;
+    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_PAY_FLOW' AND COLUMN_NAME = 'DEBTID') = 0 then
+        CALL PR_MOD_COL('VD_A_PAY_FLOW','ADD','DEBTID','VARCHAR(64)','NULL','NULL','');
+    end if;
+    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_PAY_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
+        CALL PR_MOD_COL('VD_A_PAY_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
+    end if;
+    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVED_FLOW' AND COLUMN_NAME = 'DEBTID') = 0 then
+        CALL PR_MOD_COL('VD_A_RCVED_FLOW','ADD','DEBTID','VARCHAR(64)','NULL','NULL','');
+    end if;
+    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVED_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
+        CALL PR_MOD_COL('VD_A_RCVED_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
+    end if;
+
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_user_debt' AND index_name='INDEX_vd_a_user_debt_OBJID') THEN
+		# 为2插入 应收表（债务）【做准备】
+        ALTER table vd_a_user_debt ADD INDEX INDEX_vd_a_user_debt_OBJID(DEBT_FROM_OBJ_ID);
+	END IF;
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_pay_flow' AND index_name='INDEX_vd_a_pay_flow_OBJID') THEN
+		# 为4插入 实收表【做准备】
+        ALTER table vd_a_pay_flow ADD INDEX INDEX_vd_a_pay_flow_OBJID(DEBTID, ORDERID);
+	END IF;
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcvbl_flow' AND index_name='INDEX_vd_a_rcvbl_flow_OBJID') THEN
+		# 为5插入 实收表（债务）【做准备】
+        ALTER table vd_a_rcvbl_flow ADD INDEX INDEX_vd_a_rcvbl_flow_OBJID(DEBTID, ORDERID);
+	END IF;
+
+
 	# 开启事务
 	START TRANSACTION;
 
 
-	# 清除还债记录数据
-	DELETE FROM VD_A_RCVED_DEBT;
-	DELETE FROM VD_A_RCVED_FLOW;
-
-	DELETE FROM VD_A_PAY_FLOW;
-
-	DELETE FROM VD_A_RCVBL_DEBT;
-	DELETE FROM VD_A_RCVBL_FLOW;
+	# 清除还债记录数据(并轨结束后才迁移该记录，实收应收表已存在业务记录，不能删除)
+-- 	DELETE FROM VD_A_RCVED_DEBT;
+-- 	DELETE FROM VD_A_RCVED_FLOW;
+--
+-- 	DELETE FROM VD_A_PAY_FLOW;
+--
+-- 	DELETE FROM VD_A_RCVBL_DEBT;
+-- 	DELETE FROM VD_A_RCVBL_FLOW;
 
 	# 1-插入 应收表
 	INSERT INTO vd_a_rcvbl_flow
@@ -47,8 +81,11 @@ BEGIN
 		NULL, -- 业务来源标识
 		a.debtid, -- 临时存储所属老表债务ID
 		a.orderid -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
-	FROM tmp_hzjl a, a_consumer b, a_equip_meter c, uap_organization d
-	WHERE CONCAT('yh_',a.CUSTOMER_ID) = b.CONS_NO AND a.MT_COMM_ADDR = c.ASSETNO AND b.ORG_NO = d.no;
+	FROM tmp_hzjl a
+	INNER JOIN a_consumer b on CONCAT('yh_',a.CUSTOMER_ID) = b.CONS_NO
+    INNER JOIN a_equip_meter c on a.MT_COMM_ADDR = c.ASSETNO
+    LEFT JOIN uap_organization d on b.ORG_NO = d.no;
+
 	# 2-插入 应收表（债务）
 	INSERT INTO vd_a_rcvbl_debt
 		(lessee_id, rcvbl_debt_id, rcvbl_amt_id, debt_id, debt_type, amount,
@@ -120,11 +157,18 @@ BEGIN
 	WHERE a.DEBTID = b.DEBTID AND a.orderid = b.ORDERID
 	AND a.DEBTID = c.DEBTID AND a.orderid = c.ORDERID;
 
+
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
 		COMMIT;
 	END IF;
+
+    # 删除索引
+    ALTER table vd_a_user_debt DROP INDEX INDEX_vd_a_user_debt_OBJID;
+    ALTER table vd_a_pay_flow DROP INDEX INDEX_vd_a_pay_flow_OBJID;
+    ALTER table vd_a_rcvbl_flow DROP INDEX INDEX_vd_a_rcvbl_flow_OBJID;
+
 	SELECT t_error, msg;
 
 	/*
@@ -168,3 +212,15 @@ d.CURENTBLC paymoney, 0 payedBalance,d.OPERATE_DATE paydate, u.USER_ACCOUNT as o
 order by t.CUSTOMER_ID,t.paydate
 
 -------------------------------------tmp_hzjl  自动建表语句-----------------------------------------
+CREATE TABLE `tmp_hzjl` (
+  `orderid` varchar(128) NOT NULL,
+  `DEBTID` varchar(128) NOT NULL,
+  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
+  `MT_COMM_ADDR` varchar(128) DEFAULT NULL,
+  `paymoney` varchar(128) DEFAULT NULL,
+  `payedBalance` varchar(128) DEFAULT NULL,
+  `paydate` DATE DEFAULT NULL,
+  `operator` varchar(128) DEFAULT NULL,
+  `payType` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`orderid`,`DEBTID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

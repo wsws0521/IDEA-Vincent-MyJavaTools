@@ -162,6 +162,9 @@
     <select id="queryDwNullNum" resultType="java.lang.Integer">
         select count(1) from a_consumer cons where cons.org_no is null
     </select>
+    <select id="queryDwNullNumForMeter" resultType="java.lang.Integer">
+          select count(1) from a_equip_meter meter where meter.org_no is null
+    </select>
 
     <select id="queryBjWithVkChanged" resultType="cn.vincent.pojo.TmpBjChangedVk">
         SELECT  bj.*,

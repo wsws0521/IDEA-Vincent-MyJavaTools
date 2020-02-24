@@ -40,6 +40,7 @@ public interface MysqlDao {
     List<TmpYhChangedDw> queryYhWithDwChanged();
     ProcessParam executeScript1(ProcessParam processParam);
     int queryDwNullNum();
+    int queryDwNullNumForMeter();
 
     List<TmpBjChangedVk> queryBjWithVkChanged();
     List<TmpBjChangedTi> queryBjWithTiChanged();

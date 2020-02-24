@@ -256,6 +256,8 @@ public class DbServiceImpl implements DbService {
                 throw new RuntimeException(processParam.getError_msg());
             if(mysqlDao.queryDwNullNum() > 0)
                 logger.warn("注意：存在用户单位为空！");
+            if(mysqlDao.queryDwNullNumForMeter() > 0)
+                logger.warn("注意：存在表计单位为空！");
             logger.info("--------------------------------------------" + StepConstant.STEP_001 + "同步完成");
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
