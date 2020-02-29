@@ -86,7 +86,7 @@ END
 
 ------------------------------------sqlserver数据源获取-------------------------------------------
 
-select  cu.USER_ID,
+/*select  cu.USER_ID,
         cu.USER_ACCOUNT,
         cu.USER_NAME,
         cu.user_type,
@@ -119,6 +119,34 @@ from (
 LEFT JOIN IAUDIT_USER mu on cu.CREATER=mu.USER_ID
 LEFT JOIN IPARA_CDUSTATION mc on mc.MANAGER=mu.USER_ID
 LEFT JOIN IPARA_CDUREGION mr on mr.REGION_ID=mc.REGIOINID
+order by cu.create_TIME desc*/
+select cu.USER_ID, cu.USER_ACCOUNT, cu.USER_NAME, cu.user_type, cu.TELEPHONE, cu.MOBILE_TELEPHONE,
+cu.EMAIL,cu.address,cu.note,cu.CREATE_TIME,cu.CREATE_END,
+ltrim(rtrim((case when cu.CDUArea IS NOT null then isnull(cu.CDUArea,'') WHEN mr.REGIONNAME IS NOT NULL THEN isnull(mr.REGIONNAME,'') else mr2.REGIONNAME end))) as CDUArea,
+ltrim(rtrim((case when cu.CDUName IS NOT null then isnull(cu.CDUName,'') WHEN mc.TE_NAME IS NOT NULL THEN isnull(mc.TE_NAME,'') else mc2.TE_NAME end))) as CDUName,
+(case when len(cu.roleName)=0 and cu.user_type=2 and mc.MANAGER IS not null then 'Cashier' when LEN(cu.roleName)=0 and len(mc2.TE_NAME)>0 then 'Cashier' else cu.roleName end) roleName
+,cu.roles
+ from (
+select u.CREATER, u.USER_ID,USER_ACCOUNT,USER_NAME,cr.REGIONNAME as CDUArea,c.TE_NAME as CDUName,
+(CASE when USER_TYPE=1 AND c.MANAGER IS null THEN 3 else USER_TYPE END) user_type
+,TELEPHONE,MOBILE_TELEPHONE,EMAIL,
+replace(ADDRESS,',','.') as [address],replace(u.note,',','.') as [note],CREATE_TIME,CREATE_END
+ ,(case when USER_TYPE=1 AND c.MANAGER>0 THEN 'CDU' else isnull(stuff((select '|'+ltrim(rtrim(r.ROLE_NAME))
+ from IAUDIT_USER_ROLE ur left join IAUDIT_ROLE r on ur.ROLE_ID=r.ROLE_ID where ur.USER_ID=u.USER_ID and r.ROLE_TYPE=0 for xml path('')),1,1,''),'') end) as roleName
+,isnull(stuff((select '|'+r.ROLE_NAME+':'+cast(r.ROLE_TYPE as varchar)
+ from IAUDIT_USER_ROLE ur left join IAUDIT_ROLE r on ur.ROLE_ID=r.ROLE_ID where ur.USER_ID=u.USER_ID for xml path('')),1,1,''),'') as roles
+ from IAUDIT_USER u
+ LEFT JOIN IPARA_CDUSTATION c on c.MANAGER=u.USER_ID --and u.USER_TYPE=1
+ LEFT JOIN IPARA_CDUREGION cr on cr.REGION_ID=c.REGIOINID
+ where u.USER_ID not in (0,42,140)
+ --and create_end>=DATEADD(month,-3,getdate())
+ ) cu LEFT JOIN IAUDIT_USER mu on cu.CREATER=mu.USER_ID
+ LEFT JOIN IPARA_CDUSTATION mc on mc.MANAGER=mu.USER_ID
+ LEFT JOIN IPARA_CDUREGION mr on mr.REGION_ID=mc.REGIOINID
+ LEFT JOIN (SELECT b.OPERATORID,b.CDUID,ROW_NUMBER() over(PARTITION by b.operatorid order by b.starttime desc) rowid from ORDER_BANKING b) ob
+  on ob.rowid=1 and ob.OPERATORID=cu.USER_ID
+ LEFT JOIN IPARA_CDUSTATION mc2 on mc2.TERRITORYID=OB.CDUID
+ LEFT JOIN IPARA_CDUREGION mr2 on mr2.REGION_ID=mc2.REGIOINID
 order by cu.create_TIME desc
 
 -------------------------------------tmp_czy  自动建表语句-----------------------------------------
