@@ -43,3 +43,13 @@ public class TestController {
 //        testService.insertTmpTestTariffDate(tmpTestTariffDate);
 //    }
 }
+
+    /*
+    CREATE TABLE `tmp_user` (
+        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `tv` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `username` varchar(2000) DEFAULT NULL COMMENT '用户名',
+        `age` int(6) DEFAULT NULL COMMENT '年龄',
+        PRIMARY KEY (`id`,`tv`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    */

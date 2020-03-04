@@ -1,19 +1,33 @@
-package vincent.springmybatis.noxml.pojo;
+package vincent.springjpa.pojo;
 
-import java.math.BigInteger;
-import java.sql.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Date;
 
+/**
+ * 会自动映射成tmp_user的表名...
+ */
+@Entity
 public class TmpUser {
-    BigInteger id;
+    long id;
     Date tv;
     String username;
     Integer age;
+    public TmpUser(){} // findAll的时候需要有默认构造函数
+    public TmpUser(String username, Integer age) {
+        this.tv = new Date(); // 否则不会不插，而是会硬插NULL
+        this.username = username;
+        this.age = age;
+    }
 
-    public BigInteger getId() {
+    @Id
+    @GeneratedValue
+    public long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(long id) {
         this.id = id;
     }
 

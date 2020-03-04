@@ -66,6 +66,26 @@ BEGIN
 	LEFT JOIN uap_organization c ON CONCAT('dw_',a.station_id) = c.CODE
 	WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('yh_',a.customer_id) = cons.CONS_NO);
 
+	# 3-用户档案关键信息更新（租户换房，租户信息修改）
+	UPDATE a_consumer cons INNER JOIN tmp_yh yh ON CONCAT('yh_',yh.customer_id) = cons.CONS_NO
+	SET cons.cons_sort_code = (CASE WHEN yh.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
+			                        ELSE '04' -- 低压居民
+		                       END),
+	cons.reg_no = yh.BUSINESS_REGISTRATION_NUMBER,
+	cons.elec_addr = yh.address,
+	cons.elec_type_code = IF(yh.tariffname IN ('MANGAUNG-TG1(FBE)','MANTSOPA-TG2(FBE)', 'NALEDI-TG3(FBE)','MOHOKARE-TG4(FBE)', 'KOPANONG-TG5(FBE)'), '201', NULL),
+	cons.id_no = yh.US_IDNUM,
+	cons.erf_stand = yh.StandNumber;
+
+	# 4-用户档案关键信息更新（租户换房，租户信息修改）（性别/联系方式）(后期添加性别字段！！！)
+    UPDATE a_consumer_contacts a
+    INNER JOIN (SELECT * FROM a_consumer b INNER JOIN tmp_yh c ON SUBSTRING_INDEX(b.CONS_NO,'_',-1) = c.CUSTOMER_ID) tmp
+    ON a.CONS_ID = tmp.CONS_ID
+    SET a.PHONE_NUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
+            a.TELEPHONENUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
+            a.EMAIL = tmp.US_EMAIL;
+    --		a.GENDER = IF(tmp.us_sex = 0,'01','02');
+
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
