@@ -50,9 +50,9 @@ BEGIN
 		e.pkg_id -- pkg_id 费率方案标识
 	FROM a_consumer a
 	INNER JOIN tmp_bj b ON a.cons_no = CONCAT('CN_', b.customer_id)
-	LEFT JOIN a_grid_line c ON CONCAT('zxb_',b.line_id) = c.line_no
-	LEFT JOIN a_grid_transformer d ON CONCAT('zxb_',b.suburb_id) = d.tf_no
-	LEFT JOIN a_grid_subs subs ON CONCAT('zxb_',b.station_id) = subs.subs_no
+	LEFT JOIN a_grid_line c ON CONCAT('SLT_',b.line_id) = c.line_no
+	LEFT JOIN a_grid_transformer d ON CONCAT('SLT_',b.suburb_id) = d.tf_no
+	LEFT JOIN a_grid_subs subs ON CONCAT('SLT_',b.station_id) = subs.subs_no
 	LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name;
 
 	# 删除索引

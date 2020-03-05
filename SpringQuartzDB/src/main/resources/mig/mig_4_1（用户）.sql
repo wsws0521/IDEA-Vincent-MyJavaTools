@@ -49,7 +49,7 @@ BEGIN
 		a.StandNumber -- 地址资产编号（新增）
 	FROM tmp_yh a
 	LEFT JOIN tmp_bj b ON a.customer_id = b.customer_id
-	LEFT JOIN uap_organization c ON CONCAT('dw_',a.station_id) = c.CODE;
+	LEFT JOIN uap_organization c ON CONCAT('ORG_',a.station_id) = c.CODE;
 
 
 	IF t_error = 1 THEN

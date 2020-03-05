@@ -17,7 +17,7 @@ BEGIN
 		m_meterbox, socket_server_model, is_solar, install_address, unit_id, ed_no, mgt_status)
 	SELECT
 		AMI_GET_SEQUENCE('S_AMI_FILE'),					-- 表计ID
-		(SELECT NO FROM uap_organization WHERE CODE = CONCAT('dw_',b.station_id)), -- 单位编号
+		(SELECT NO FROM uap_organization WHERE CODE = CONCAT('ORG_',b.station_id)), -- 单位编号
 		'meter', 										-- 设备类型标识
 		b.mt_comm_addr, 								-- 资产编号
 		NULL, 											-- 通讯地址

@@ -63,7 +63,7 @@ BEGIN
 		a.US_IDNUM, -- 身份证号（新增）
 		a.StandNumber -- 地址资产编号（新增）
 	FROM tmp_yh a
-	LEFT JOIN uap_organization c ON CONCAT('dw_',a.station_id) = c.CODE
+	LEFT JOIN uap_organization c ON CONCAT('ORG_',a.station_id) = c.CODE
 	WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('CN_',a.customer_id) = cons.CONS_NO);
 
 	# 3-用户档案关键信息更新（租户换房，租户信息修改）

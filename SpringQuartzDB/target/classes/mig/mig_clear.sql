@@ -70,16 +70,16 @@ BEGIN
 	# ----------------------- 清除 【脚本2：站线变】
 	DELETE FROM a_grid_line_tf;
 	DELETE FROM a_grid_subs_line_rela;
-	DELETE FROM a_grid_transformer WHERE tf_no like 'zxb_%';
-	DELETE FROM a_grid_line WHERE line_no like 'zxb_%';
-	DELETE FROM a_grid_subs WHERE subs_no like 'zxb_%';
+	DELETE FROM a_grid_transformer WHERE tf_no like 'SLT_%';
+	DELETE FROM a_grid_line WHERE line_no like 'SLT_%';
+	DELETE FROM a_grid_subs WHERE subs_no like 'SLT_%';
 
 	DROP TABLE IF EXISTS tmp_zxb;
 	# ----------------------- 清除 【脚本1：单位】
 	UPDATE uap_sequence SET next_val = 20000 WHERE sequence_name = 'orgId';
 	DELETE FROM vd_p_org_vk_rel;
 	DELETE FROM UAP_USER_ORG_MANAGE WHERE org_id <> 10000;
-	DELETE FROM UAP_ORGANIZATION WHERE code like 'dw_%';
+	DELETE FROM UAP_ORGANIZATION WHERE code like 'ORG_%';
 
 	DROP TABLE IF EXISTS tmp_dw;
 	# ----------------------- 清除 【脚本0：运行时秘钥】暂不清除应该也没影响

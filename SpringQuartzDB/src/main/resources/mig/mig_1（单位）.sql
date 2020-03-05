@@ -31,7 +31,7 @@ BEGIN
 	UPDATE uap_sequence SET next_val = 20000 WHERE sequence_name = 'orgId';
 	DELETE FROM vd_p_org_vk_rel; /* 清空单位与VK之间的绑定关系 */
 	DELETE FROM UAP_USER_ORG_MANAGE WHERE org_id <> 10000; /* 清空操作员与单位之间的权限关系 */
-	DELETE FROM UAP_ORGANIZATION WHERE code like 'dw_%';
+	DELETE FROM UAP_ORGANIZATION WHERE code like 'ORG_%';
 	# 更新根单位的名称为Centlec
 	UPDATE uap_organization SET name = 'Centlec' WHERE id = 10000;
 	UPDATE uap_user_org_manage SET org_name = 'Centlec' WHERE org_id = 10000;
@@ -49,12 +49,12 @@ BEGIN
 				# 将一级单位插入
 				INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME,
 														NO, PARENT_ID,RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-				SELECT  var_orgId,NULL,CONCAT('dw_',object_id),1551179068484,0,object_name,
+				SELECT  var_orgId,NULL,CONCAT('ORG_',object_id),1551179068484,0,object_name,
 								CONCAT('002',LPAD(var_initNo1,3,0)), 10000,1,'1',1551423273905,NULL,0,NULL,NULL,2 FROM tmp_dw where object_id = mainKey;
 				SET var_initNo1 = var_initNo1 + 1;
 			WHEN var_typeFlag = 1 THEN
 				# 查询uap中所属父单位的id
-				SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = CONCAT('dw_',(select fatherid from tmp_dw where object_id = mainKey)));
+				SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = CONCAT('ORG_',(select fatherid from tmp_dw where object_id = mainKey)));
 				# 查询uap中所属父单位的NO
 				SET var_uapFatherNo = (SELECT NO FROM UAP_ORGANIZATION WHERE id = var_uapFatherId);
 				# 拼接自己的单位NO
@@ -68,7 +68,7 @@ BEGIN
 				INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME,
 														NO, PARENT_ID,
 														RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-				SELECT  var_orgId,NULL,CONCAT('dw_',object_id),1551179068484,0,object_name,
+				SELECT  var_orgId,NULL,CONCAT('ORG_',object_id),1551179068484,0,object_name,
 								var_dwNo, var_uapFatherId,
 								1,'1',1551423273905,NULL,0,NULL,NULL,2 FROM tmp_dw where object_id = mainKey;
 				# 将二级单位VK关系插入（注意需要先执行tmp_1_vk_p）
@@ -79,12 +79,12 @@ BEGIN
 					select
 						2, AMI_GET_SEQUENCE('seq_vd_p_org_vk_rel'),
 						(select vk_id from vd_p_vk where sgc = var_dwSgc and base_time = 1993 and ms = '02'),
-						(select id from UAP_ORGANIZATION where code = CONCAT('dw_',mainKey)),
+						(select id from UAP_ORGANIZATION where code = CONCAT('ORG_',mainKey)),
 						'11', SYSDATE(), NULL from DUAL;
 				END IF;
 			WHEN var_typeFlag = 2 THEN
 				# 查询uap中所属父单位的id
-				SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = CONCAT('dw_',(select fatherid from tmp_dw where object_id = mainKey)));
+				SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = CONCAT('ORG_',(select fatherid from tmp_dw where object_id = mainKey)));
 				# 查询uap中所属父单位的NO
 				SET var_uapFatherNo = (SELECT NO FROM UAP_ORGANIZATION WHERE id = var_uapFatherId);
 				# 拼接自己的单位NO
@@ -98,12 +98,12 @@ BEGIN
 				INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME,
 														NO, PARENT_ID,
 														RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-				SELECT  var_orgId,NULL,CONCAT('dw_',object_id),1551179068484,1,object_name,
+				SELECT  var_orgId,NULL,CONCAT('ORG_',object_id),1551179068484,1,object_name,
 								var_dwNo, var_uapFatherId,
 								1,'1',1551423273905,NULL,0,NULL,NULL,2 FROM tmp_dw where object_id = mainKey;
 		END CASE;
 		# 将新ID更新至临时表
-		UPDATE tmp_dw SET NEWID = (select id from UAP_ORGANIZATION where code = CONCAT('dw_',mainKey)) where object_id = mainKey;
+		UPDATE tmp_dw SET NEWID = (select id from UAP_ORGANIZATION where code = CONCAT('ORG_',mainKey)) where object_id = mainKey;
 	END IF;
 	UNTIL done END REPEAT;
 	CLOSE noCur;
@@ -115,7 +115,7 @@ BEGIN
 	UPDATE uap_sequence SET next_val = next_val + 1 WHERE sequence_name = 'orgId';
 	# 将一级单位插入
 	INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME, NO, PARENT_ID,RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-	SELECT  var_orgId,NULL,CONCAT('dw_agent_',var_orgId),1551179068484,1,'ThirdParty', CONCAT('002',LPAD(var_initNo1,3,0)), 10000,1,'1',1551423273905,NULL,0,NULL,NULL,2
+	SELECT  var_orgId,NULL,CONCAT('ORG_agent_',var_orgId),1551179068484,1,'ThirdParty', CONCAT('002',LPAD(var_initNo1,3,0)), 10000,1,'1',1551423273905,NULL,0,NULL,NULL,2
 	FROM DUAL;
 	SET var_initNo1 = var_initNo1 + 1;
 	# ---------------------------------------------------
@@ -123,7 +123,7 @@ BEGIN
 	SET var_orgId = (SELECT next_val FROM uap_sequence WHERE sequence_name = 'orgId');
 	UPDATE uap_sequence SET next_val = next_val + 1 WHERE sequence_name = 'orgId';
 	# 查询uap中所属父单位的id
-	SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = 'dw_3');
+	SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = 'ORG_3');
 	# 查询uap中所属父单位的NO
 	SET var_uapFatherNo = (SELECT NO FROM UAP_ORGANIZATION WHERE id = var_uapFatherId);
 	# 拼接自己的单位NO
@@ -135,14 +135,14 @@ BEGIN
 	END IF;
 	# 将三级单位插入
 	INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME, NO, PARENT_ID,RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-	SELECT  var_orgId,NULL,CONCAT('dw_agent_',var_orgId),1551179068484,1,'BLOEMFONTEIN', var_dwNo, var_uapFatherId,1,'1',1551423273905,NULL,0,NULL,NULL,2
+	SELECT  var_orgId,NULL,CONCAT('ORG_agent_',var_orgId),1551179068484,1,'BLOEMFONTEIN', var_dwNo, var_uapFatherId,1,'1',1551423273905,NULL,0,NULL,NULL,2
 	FROM DUAL;
 	# ---------------------------------------------------
 	# 取uap序列
 	SET var_orgId = (SELECT next_val FROM uap_sequence WHERE sequence_name = 'orgId');
 	UPDATE uap_sequence SET next_val = next_val + 1 WHERE sequence_name = 'orgId';
 	# 查询uap中所属父单位的id
-	SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = 'dw_3');
+	SET var_uapFatherId = (SELECT id FROM UAP_ORGANIZATION WHERE code = 'ORG_3');
 	# 查询uap中所属父单位的NO
 	SET var_uapFatherNo = (SELECT NO FROM UAP_ORGANIZATION WHERE id = var_uapFatherId);
 	# 拼接自己的单位NO
@@ -154,7 +154,7 @@ BEGIN
 	END IF;
 	# 将三级单位插入
 	INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME, NO, PARENT_ID,RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
-	SELECT  var_orgId,NULL,CONCAT('dw_agent_',var_orgId),1551179068484,1,'BOTSHABELO', var_dwNo, var_uapFatherId,1,'1',1551423273905,NULL,0,NULL,NULL,2
+	SELECT  var_orgId,NULL,CONCAT('ORG_agent_',var_orgId),1551179068484,1,'BOTSHABELO', var_dwNo, var_uapFatherId,1,'1',1551423273905,NULL,0,NULL,NULL,2
 	FROM DUAL;
 
 

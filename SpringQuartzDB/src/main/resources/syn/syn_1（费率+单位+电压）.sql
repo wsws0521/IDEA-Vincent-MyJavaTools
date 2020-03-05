@@ -58,8 +58,8 @@ BEGIN
 	UPDATE a_usagepoint POINT INNER JOIN (SELECT org2.no,conscurr.cons_id
 			FROM temp_yh yh
 			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('CN_',yh.customer_id)
-			LEFT JOIN uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
-			LEFT JOIN uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
+			LEFT JOIN uap_organization org1 ON CONCAT('ORG_',yh.station_idold) = org1.CODE
+			LEFT JOIN uap_organization org2 ON CONCAT('ORG_',yh.station_id) = org2.CODE
 			WHERE conscurr.org_no = org1.no) tb ON tb.cons_id = point.cons_id
 	SET point.ORG_NO = tb.no;
 
@@ -68,34 +68,37 @@ BEGIN
 			FROM tmp_bj bj
 			INNER JOIN temp_yh yh ON bj.customer_id = yh.customer_id
 			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('CN_',yh.customer_id)
-			LEFT JOIN uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
-			LEFT JOIN uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
+			LEFT JOIN uap_organization org1 ON CONCAT('ORG_',yh.station_idold) = org1.CODE
+			LEFT JOIN uap_organization org2 ON CONCAT('ORG_',yh.station_id) = org2.CODE
 			WHERE conscurr.org_no = org1.no) tb ON meter.assetno = tb.mt_comm_addr
 	SET meter.ORG_NO = tb.no;
 
 	/*5-更新计量点关联战线变*/
 	UPDATE a_usagepoint point
 	INNER JOIN(
-		SELECT c.line_id,d.tf_id,pointmain.mp_id
+		SELECT c.line_id,d.tf_id,pointmain.mp_id,subs.subs_id
 		FROM a_consumer a
 		INNER JOIN temp_yh yh ON CONCAT('CN_',yh.customer_id) = a.cons_no
 		INNER JOIN a_usagepoint pointmain ON a.cons_id=pointmain.cons_id
 		INNER JOIN a_mp_equipment_rela rela ON pointmain.mp_id=rela.mp_id
 		INNER JOIN a_equip_meter meter ON meter.METER_ID=rela.EQUIPMENTID AND rela.EQUIPMENTTYPE='02'
 		INNER JOIN tmp_bj b ON meter.ASSETNO=b.mt_comm_addr
-		LEFT JOIN uap_organization org ON CONCAT('dw_',yh.station_idold) = org.CODE
-		LEFT JOIN a_grid_line c ON CONCAT('zxb_',b.line_id) = c.line_no
-		LEFT JOIN a_grid_transformer d ON CONCAT('zxb_',b.suburb_id) = d.tf_no
+		LEFT JOIN uap_organization org ON CONCAT('ORG_',yh.station_idold) = org.CODE
+		LEFT JOIN a_grid_line c ON CONCAT('SLT_',b.line_id) = c.line_no
+		LEFT JOIN a_grid_transformer d ON CONCAT('SLT_',b.suburb_id) = d.tf_no
+		LEFT JOIN a_grid_subs subs ON CONCAT('SLT_',b.station_id) = subs.subs_no
 		WHERE a.org_no = org.no
 	) AS line_transformer ON line_transformer.mp_id = point.mp_id
-	SET point.line_id = line_transformer.line_id,point.tf_id = line_transformer.tf_id;
+	SET point.line_id = line_transformer.line_id,
+	    point.tf_id = line_transformer.tf_id,
+	    point.subs_id = line_transformer.subs_id;
 
 	/*6-更新用户管理单位*/
 	update a_consumer cons inner join (select org2.no,conscurr.cons_no
 			from temp_yh yh
 			inner join a_consumer conscurr on CONCAT('CN_',yh.customer_id) = conscurr.CONS_NO
-			left join uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
-			left join uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
+			left join uap_organization org1 ON CONCAT('ORG_',yh.station_idold) = org1.CODE
+			left join uap_organization org2 ON CONCAT('ORG_',yh.station_id) = org2.CODE
 			where conscurr.org_no = org1.no) tb on cons.cons_no = tb.cons_no
 	set cons.ORG_NO = tb.no;
 
