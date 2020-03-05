@@ -82,7 +82,7 @@ BEGIN
 		a.debtid, -- 临时存储所属老表债务ID
 		a.orderid -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
 	FROM tmp_hzjl a
-	INNER JOIN a_consumer b on CONCAT('yh_',a.CUSTOMER_ID) = b.CONS_NO
+	INNER JOIN a_consumer b on CONCAT('CN_',a.CUSTOMER_ID) = b.CONS_NO
     INNER JOIN a_equip_meter c on a.MT_COMM_ADDR = c.ASSETNO
     LEFT JOIN uap_organization d on b.ORG_NO = d.no;
 

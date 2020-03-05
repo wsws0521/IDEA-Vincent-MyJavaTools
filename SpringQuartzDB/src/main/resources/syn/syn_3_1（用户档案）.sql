@@ -18,7 +18,7 @@ BEGIN
 
 	/*1-更新用户状态*/
 	/*01-新开户;02-已投运；03-已销户*/
-	UPDATE a_consumer cons INNER JOIN temp_yh yh ON CONCAT('yh_',yh.customer_id) = cons.CONS_NO
+	UPDATE a_consumer cons INNER JOIN temp_yh yh ON CONCAT('CN_',yh.customer_id) = cons.CONS_NO
 						AND cons.STATUS = (CASE
 							WHEN yh.statusold = 0 THEN '03' -- 已销户
 							WHEN yh.statusold = 1 AND yh.MT_COMM_ADDRold IS NOT NULL AND yh.MT_COMM_ADDRold <> '' THEN '02' -- 已投运
@@ -42,7 +42,7 @@ BEGIN
 		STATUS, jfh, zjfbz, single_limit, free_charge, free_tax, premises_no, arrears, account_balance, mdc_id, id_no, erf_stand)
 	SELECT
 		AMI_GET_SEQUENCE('S_AMI_FILE'),
-		CONCAT('yh_',a.customer_id), a.customer_name,
+		CONCAT('CN_',a.customer_id), a.customer_name,
 		(CASE
 			WHEN a.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
 			ELSE '04' -- 低压居民
@@ -64,10 +64,10 @@ BEGIN
 		a.StandNumber -- 地址资产编号（新增）
 	FROM tmp_yh a
 	LEFT JOIN uap_organization c ON CONCAT('dw_',a.station_id) = c.CODE
-	WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('yh_',a.customer_id) = cons.CONS_NO);
+	WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('CN_',a.customer_id) = cons.CONS_NO);
 
 	# 3-用户档案关键信息更新（租户换房，租户信息修改）
-	UPDATE a_consumer cons INNER JOIN tmp_yh yh ON CONCAT('yh_',yh.customer_id) = cons.CONS_NO
+	UPDATE a_consumer cons INNER JOIN tmp_yh yh ON CONCAT('CN_',yh.customer_id) = cons.CONS_NO
 	SET cons.cons_sort_code = (CASE WHEN yh.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
 			                        ELSE '04' -- 低压居民
 		                       END),

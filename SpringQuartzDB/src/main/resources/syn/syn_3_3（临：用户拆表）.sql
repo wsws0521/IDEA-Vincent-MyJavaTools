@@ -30,7 +30,7 @@ BEGIN
 		FROM a_consumer cons
 		INNER JOIN a_usagepoint pointmain ON cons.cons_id = pointmain.cons_id
 		INNER JOIN a_mp_equipment_rela rela ON rela.mp_id = pointmain.mp_id AND rela.EQUIPMENTTYPE='02'
-		INNER JOIN temp_bj bj ON CONCAT('yh_',bj.customer_idold) = cons.CONS_NO;
+		INNER JOIN temp_bj bj ON CONCAT('CN_',bj.customer_idold) = cons.CONS_NO;
 
 	#2-更新计量点设备关联状态*/
 	DELETE FROM a_mp_equipment_rela rela where exists(select tb.mp_id from temp_bj2 tb where tb.mp_id=rela.mp_id);
@@ -45,7 +45,7 @@ BEGIN
 	WHERE EXISTS(
 		SELECT * FROM temp_bj bj INNER JOIN a_equip_meter meter ON bj.mt_comm_addr=meter.assetno
 			INNER JOIN a_mp_equipment_rela rela ON meter.METER_ID = rela.EQUIPMENTID AND rela.EQUIPMENTTYPE='02'
-			INNER JOIN a_consumer cons ON CONCAT('yh_',bj.customer_idold) = cons.cons_no
+			INNER JOIN a_consumer cons ON CONCAT('CN_',bj.customer_idold) = cons.cons_no
 			WHERE rela.mp_id=point.mp_id);*/
 
 

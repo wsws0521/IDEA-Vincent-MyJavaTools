@@ -111,7 +111,7 @@ BEGIN
 		END,			-- debtType债务类型：01历史陈欠电费、02电表初装费preload、03市政服务、04窃电篡改tamper
 		NULL, a.debtid		-- 债务来源（暂存债务ID）
 	FROM tmp_zw a
-	inner join a_consumer b on CONCAT('yh_',a.customer_id) = b.CONS_NO
+	inner join a_consumer b on CONCAT('CN_',a.customer_id) = b.CONS_NO
 	WHERE NOT EXISTS(SELECT debt.debt_from_obj_id FROM vd_a_user_debt debt WHERE debt.debt_from_obj_id = a.debtid);
 
 	# 3-插入用户债务配置表
@@ -122,7 +122,7 @@ BEGIN
 		NULL, -- 限制日期
 		'01' -- 偿还方式:01正常还债 02延期还债 03强制还债
 	FROM tmp_zw a
-	inner join a_consumer b on CONCAT('yh_',a.customer_id) = b.CONS_NO
+	inner join a_consumer b on CONCAT('CN_',a.customer_id) = b.CONS_NO
 	WHERE NOT EXISTS(SELECT debt.CONS_ID FROM vd_a_user_debt_set debt WHERE debt.CONS_ID = b.CONS_ID);
 
 	IF t_error = 1 THEN

@@ -27,7 +27,7 @@ BEGIN
 		AMI_GET_SEQUENCE('S_AMI_FILE'), b.customer_name, '03',
 		REPLACE(b.LINKMAN_PHONE, ' ', ''), REPLACE(b.LINKMAN_PHONE, ' ', ''), b.US_EMAIL, a.cons_id, 'Y', 'Y'
 	FROM a_consumer a
-	INNER JOIN tmp_yh b ON (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '') AND a.cons_no = CONCAT('yh_', b.CUSTOMER_ID)
+	INNER JOIN tmp_yh b ON (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '') AND a.cons_no = CONCAT('CN_', b.CUSTOMER_ID)
 	WHERE NOT EXISTS(SELECT c.CUSTOMER_ID FROM tmp_yh1 c WHERE c.CUSTOMER_ID = b.CUSTOMER_ID);
 
 	IF t_error = 1 THEN

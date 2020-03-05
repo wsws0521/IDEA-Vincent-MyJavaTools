@@ -17,7 +17,7 @@
 	SELECT
 		2, AMI_GET_SEQUENCE('seq_vd_bank_acc'), '02', -- 对象标识：02用户03代理商
 		a.cons_id, NULL, b.bankaccount, '迁移账号'
-	FROM a_consumer a, tmp_yh b WHERE a.cons_no = CONCAT('yh_',b.customer_id);
+	FROM a_consumer a, tmp_yh b WHERE a.cons_no = CONCAT('CN_',b.customer_id);
 
 
 
@@ -46,7 +46,7 @@
 			1, -- 优先级
 			org_no,
 			'迁移数据'
-		FROM a_consumer WHERE cons_no = CONCAT('yh_',mainKey);
+		FROM a_consumer WHERE cons_no = CONCAT('CN_',mainKey);
 		INSERT INTO vd_c_contact_info
 			(lessee_id, contactinfo_id, contact_id, contact_type, sub_type, addr_no, contact_no, is_default, seq)
 		SELECT
@@ -85,7 +85,7 @@
 			'02', -- 对象类型:01客户、02用户03代理商04加密盒03表计厂商
 			cons_id, NULL, -- 关系类型
 			10000
-		FROM A_CONSUMER WHERE cons_no = CONCAT('yh_',mainKey);
+		FROM A_CONSUMER WHERE cons_no = CONCAT('CN_',mainKey);
 	END IF;
 	UNTIL done END REPEAT;
 	CLOSE noCur;
@@ -109,7 +109,7 @@
 		# 查询表计所绑定的用户ID
 		SELECT cons_id INTO var_consid
 		FROM a_consumer a, tmp_bj b
-		WHERE a.cons_no = CONCAT('yh_',b.customer_id)
+		WHERE a.cons_no = CONCAT('CN_',b.customer_id)
 		AND b.mt_comm_addr = mainKey;
 		# 且用户有免费额度（费率）
 		SELECT COUNT(1) INTO var_hasfree

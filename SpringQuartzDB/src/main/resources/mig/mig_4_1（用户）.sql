@@ -27,7 +27,7 @@ BEGIN
 		STATUS, jfh, zjfbz, single_limit, free_charge, free_tax, premises_no, arrears, account_balance, mdc_id, id_no, erf_stand)
 	SELECT
 		AMI_GET_SEQUENCE('S_AMI_FILE'),
-		CONCAT('yh_',a.customer_id), a.customer_name,
+		CONCAT('CN_',a.customer_id), a.customer_name,
 		(CASE
 			WHEN a.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
 			ELSE '04' -- 低压居民

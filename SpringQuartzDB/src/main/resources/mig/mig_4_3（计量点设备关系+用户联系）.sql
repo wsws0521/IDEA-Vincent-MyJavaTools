@@ -26,7 +26,7 @@ BEGIN
 		replace(b.LINKMAN_PHONE, ' ', ''), replace(b.LINKMAN_PHONE, ' ', ''), b.US_EMAIL,
 		a.cons_id, 'Y', 'Y'
 	FROM a_consumer a, tmp_yh b
-	WHERE a.cons_no = CONCAT('yh_', b.CUSTOMER_ID) AND (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '');
+	WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID) AND (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '');
 
 	IF t_error = 1 THEN
 		ROLLBACK;

@@ -29,7 +29,7 @@ BEGIN
 	UPDATE a_usagepoint pointmain INNER JOIN (
 		SELECT yh.tariffname,point.mp_id
 			FROM temp_yh yh
-			INNER JOIN a_consumer cons ON CONCAT('yh_',yh.customer_id) = cons.CONS_NO
+			INNER JOIN a_consumer cons ON CONCAT('CN_',yh.customer_id) = cons.CONS_NO
 			INNER JOIN a_usagepoint POINT ON point.cons_id = cons.cons_id
 			LEFT JOIN VD_E_BILL_Package pkgcurr ON pkgcurr.pkg_id=point.pkg_id
 			WHERE IFNULL(pkgcurr.pkg_name,'')=IFNULL(yh.tariffnameold,'')
@@ -42,7 +42,7 @@ BEGIN
 							ELSE '04' -- 低压居民
 						 END) AS sort_code,conscurr.CONS_ID
 			FROM temp_yh yh
-			INNER JOIN a_consumer conscurr ON CONCAT('yh_',yh.customer_id) = conscurr.CONS_NO
+			INNER JOIN a_consumer conscurr ON CONCAT('CN_',yh.customer_id) = conscurr.CONS_NO
 			WHERE (CASE
 					WHEN yh.tariffnameold LIKE '%(BUS)' THEN '02' -- 工商业用户
 					ELSE '04' -- 低压居民
@@ -57,7 +57,7 @@ BEGIN
 	/*3-更新计量点管理单位*/
 	UPDATE a_usagepoint POINT INNER JOIN (SELECT org2.no,conscurr.cons_id
 			FROM temp_yh yh
-			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('yh_',yh.customer_id)
+			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('CN_',yh.customer_id)
 			LEFT JOIN uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
 			LEFT JOIN uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
 			WHERE conscurr.org_no = org1.no) tb ON tb.cons_id = point.cons_id
@@ -67,7 +67,7 @@ BEGIN
 	UPDATE a_equip_meter meter INNER JOIN (SELECT org2.no,bj.mt_comm_addr
 			FROM tmp_bj bj
 			INNER JOIN temp_yh yh ON bj.customer_id = yh.customer_id
-			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('yh_',yh.customer_id)
+			INNER JOIN a_consumer conscurr ON conscurr.cons_no = CONCAT('CN_',yh.customer_id)
 			LEFT JOIN uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
 			LEFT JOIN uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
 			WHERE conscurr.org_no = org1.no) tb ON meter.assetno = tb.mt_comm_addr
@@ -78,7 +78,7 @@ BEGIN
 	INNER JOIN(
 		SELECT c.line_id,d.tf_id,pointmain.mp_id
 		FROM a_consumer a
-		INNER JOIN temp_yh yh ON CONCAT('yh_',yh.customer_id) = a.cons_no
+		INNER JOIN temp_yh yh ON CONCAT('CN_',yh.customer_id) = a.cons_no
 		INNER JOIN a_usagepoint pointmain ON a.cons_id=pointmain.cons_id
 		INNER JOIN a_mp_equipment_rela rela ON pointmain.mp_id=rela.mp_id
 		INNER JOIN a_equip_meter meter ON meter.METER_ID=rela.EQUIPMENTID AND rela.EQUIPMENTTYPE='02'
@@ -93,7 +93,7 @@ BEGIN
 	/*6-更新用户管理单位*/
 	update a_consumer cons inner join (select org2.no,conscurr.cons_no
 			from temp_yh yh
-			inner join a_consumer conscurr on CONCAT('yh_',yh.customer_id) = conscurr.CONS_NO
+			inner join a_consumer conscurr on CONCAT('CN_',yh.customer_id) = conscurr.CONS_NO
 			left join uap_organization org1 ON CONCAT('dw_',yh.station_idold) = org1.CODE
 			left join uap_organization org2 ON CONCAT('dw_',yh.station_id) = org2.CODE
 			where conscurr.org_no = org1.no) tb on cons.cons_no = tb.cons_no

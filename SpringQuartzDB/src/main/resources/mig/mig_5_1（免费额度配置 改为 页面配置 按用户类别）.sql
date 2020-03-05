@@ -33,7 +33,7 @@ BEGIN
 		('MANGAUNG-TG1(FBE)','MANTSOPA-TG2(FBE)',
 		'NALEDI-TG3(FBE)','MOHOKARE-TG4(FBE)',
 		'KOPANONG-TG5(FBE)')
-	AND CONCAT('yh_',a.customer_id) = b.cons_no;
+	AND CONCAT('CN_',a.customer_id) = b.cons_no;
 
 	IF t_error = 1 THEN
 		ROLLBACK;

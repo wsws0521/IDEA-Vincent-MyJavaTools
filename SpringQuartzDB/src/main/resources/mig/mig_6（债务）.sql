@@ -57,7 +57,7 @@ BEGIN
 		END,			-- debtType债务类型：01历史陈欠电费、02电表初装费preload、03市政服务、04窃电篡改tamper
 		NULL, a.debtid		-- 债务来源（暂存债务ID）
 	FROM tmp_zw a, a_consumer b
-	WHERE CONCAT('yh_',a.customer_id) = b.CONS_NO;
+	WHERE CONCAT('CN_',a.customer_id) = b.CONS_NO;
 	# 3-插入用户债务配置表
 	INSERT INTO vd_a_user_debt_set
 		(lessee_id, set_id, cons_id, expired_date, pay_type)
@@ -66,7 +66,7 @@ BEGIN
 		NULL, -- 限制日期
 		'01' -- 偿还方式:01正常还债 02延期还债 03强制还债
 	FROM tmp_zw a, a_consumer b
-	WHERE CONCAT('yh_',a.customer_id) = b.CONS_NO;
+	WHERE CONCAT('CN_',a.customer_id) = b.CONS_NO;
 
 	IF t_error = 1 THEN
 		ROLLBACK;
