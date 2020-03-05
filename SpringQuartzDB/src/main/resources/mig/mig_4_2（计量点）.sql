@@ -13,11 +13,14 @@ BEGIN
 	# 0-索引
 	ALTER table a_grid_line ADD INDEX index_a_grid_line_lineno(line_no);
 	ALTER table a_grid_transformer ADD INDEX index_a_grid_transformer_tfno(tf_no);
+	ALTER table a_grid_subs ADD INDEX index_a_grid_subs_subsno(subs_no);
 	ALTER table vd_e_bill_package ADD INDEX index_vd_e_bill_package_pkgname(pkg_name);
 
 	# 3-插入计量点档案
 	INSERT INTO a_usagepoint
-		(mp_id, mp_no, mp_name, location, org_no, type_code, usage_type_code, side_code, cons_id, line_id, tf_id, tf_line_id, mp_grade, is_load_c, is_calc_loss, main_standby, basevoltage, wiringmode, measuremode, ct, pt, STATUS, out_no, load_grade, subs_id, mdc_id, pkg_id)
+		(mp_id, mp_no, mp_name, location, org_no, type_code, usage_type_code, side_code, cons_id,
+		line_id, tf_id, tf_line_id, mp_grade, is_load_c, is_calc_loss, main_standby, basevoltage,
+		wiringmode, measuremode, ct, pt, STATUS, out_no, load_grade, subs_id, mdc_id, pkg_id)
 	SELECT 	AMI_GET_SEQUENCE('S_AMI_FILE'),			-- 计量点标识
 		CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr), -- 计量点编号
 		CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr), -- 计量点名称
@@ -42,18 +45,20 @@ BEGIN
 		'02', -- 状态：01设立02在用03注销
 		NULL, -- 外部标识
 		NULL, -- 负荷等级
-		NULL, -- 所属变电站标识?冗余
-		NULL, -- ？
-		e.pkg_id -- 费率方案标识
+		subs.subs_id, -- subs_id 所属变电站标识
+		NULL, -- mdc_id ？
+		e.pkg_id -- pkg_id 费率方案标识
 	FROM a_consumer a
 	INNER JOIN tmp_bj b ON a.cons_no = CONCAT('yh_', b.customer_id)
 	LEFT JOIN a_grid_line c ON CONCAT('zxb_',b.line_id) = c.line_no
 	LEFT JOIN a_grid_transformer d ON CONCAT('zxb_',b.suburb_id) = d.tf_no
+	LEFT JOIN a_grid_subs subs ON CONCAT('zxb_',b.station_id) = subs.subs_no
 	LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name;
 
 	# 删除索引
 	ALTER table a_grid_line DROP INDEX index_a_grid_line_lineno;
 	ALTER table a_grid_transformer DROP INDEX index_a_grid_transformer_tfno;
+	ALTER table a_grid_subs DROP INDEX index_a_grid_subs_subsno;
 	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
 
 	IF t_error = 1 THEN
