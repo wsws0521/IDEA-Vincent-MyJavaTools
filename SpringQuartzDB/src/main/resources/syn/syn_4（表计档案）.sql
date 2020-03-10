@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS syn_4;
+delimiter $$
+CREATE PROCEDURE syn_4(OUT `error_code` integer, OUT `error_msg` text)
+
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg TEXT;
@@ -31,19 +35,20 @@ BEGIN
 		NULL,											-- 安装方向
 		NULL,											-- 自身倍率
 		CASE
-		WHEN b.customer_id = '' THEN NULL																	-- 未绑用户，则认为‘装表日期’是‘null’
-		WHEN b.customer_id != '' AND b.lastvenddate = '' THEN CURDATE()										-- 绑了用户，最后购电为null，则认为‘装表日期’是‘当前时间’
-		WHEN b.customer_id != '' AND b.lastvenddate != '' AND DATE_FORMAT(b.lastvenddate, '%Y-%m') < DATE_FORMAT(CURDATE(), '%Y-%m')
-			THEN DATE_ADD(DATE_ADD(b.lastvenddate, INTERVAL -DAY(b.lastvenddate)+1 DAY), INTERVAL 1 MONTH)	-- 绑了用户，最后购电为当前月以前，则认为‘装表日期’是‘最后购电时间的下月1号’
-		ELSE b.lastvenddate																					-- 绑了用户，最后购电为当前月，则认为‘装表日期’是‘最后购电时间’
-		END, 											-- 装表日期
+            WHEN b.customer_id = '' THEN NULL																	-- 未绑用户，则认为‘装表日期’是‘null’
+            WHEN b.customer_id != '' AND b.lastvenddate = '' THEN CURDATE()										-- 绑了用户，最后购电为null，则认为‘装表日期’是‘当前时间’
+            WHEN b.customer_id != '' AND b.lastvenddate != '' AND DATE_FORMAT(b.lastvenddate, '%Y-%m') < DATE_FORMAT(CURDATE(), '%Y-%m')
+                THEN DATE_ADD(DATE_ADD(b.lastvenddate, INTERVAL -DAY(b.lastvenddate)+1 DAY), INTERVAL 1 MONTH)	-- 绑了用户，最后购电为当前月以前，则认为‘装表日期’是‘最后购电时间的下月1号’
+            ELSE b.lastvenddate																					-- 绑了用户，最后购电为当前月，则认为‘装表日期’是‘最后购电时间’
+            END, 											-- 装表日期
 		NULL, 											-- 拆除日期
 		NULL, 											-- 经度
 		NULL, 											-- 纬度
-		CASE
-			WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
-			ELSE '02' 							-- 未绑用户，则认为‘状态’是02运行
-			END, 								-- 状态：01入库、02运行、03投运、04拆回
+		'01',                                   -- dbzt状态：离线表统一认为是01入库
+	--	CASE
+	--		WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
+	--		ELSE '02' 							-- 未绑用户，则认为‘状态’是02运行
+	--		END, 								-- dbzt状态：01入库、02运行、03投运、04拆回
 		NULL, 											-- 电表厂家
 		NULL, 											-- 外部标识
 		NULL, 											-- 功能版本流水号
@@ -92,4 +97,6 @@ BEGIN
 	END IF;
 	SELECT t_error into error_code;
 	SELECT msg into error_msg;
-END;
+END
+$$
+delimiter ;

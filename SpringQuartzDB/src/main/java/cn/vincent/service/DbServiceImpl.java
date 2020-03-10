@@ -545,7 +545,7 @@ public class DbServiceImpl implements DbService {
             logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
             if(tmpljzList.size() > 0){
                 logger.info("执行往新库同步..............暂时不动");
-                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
+//                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
             }
             logger.info("--------------------------------------------" + StepConstant.STEP_008 + "同步完成");
         }else{

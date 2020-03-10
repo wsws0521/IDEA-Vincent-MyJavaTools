@@ -46,19 +46,20 @@ BEGIN
 		NULL,											-- 安装方向
 		NULL,											-- 自身倍率
 		CASE
-		WHEN b.customer_id = '' THEN NULL																	-- 未绑用户，则认为‘装表日期’是‘null’
-		WHEN b.customer_id != '' AND b.lastvenddate = '' THEN CURDATE()										-- 绑了用户，最后购电为null，则认为‘装表日期’是‘当前时间’
-		WHEN b.customer_id != '' AND b.lastvenddate != '' AND DATE_FORMAT(b.lastvenddate, '%Y-%m') < DATE_FORMAT(CURDATE(), '%Y-%m')
-			THEN DATE_ADD(DATE_ADD(b.lastvenddate, INTERVAL -DAY(b.lastvenddate)+1 DAY), INTERVAL 1 MONTH)	-- 绑了用户，最后购电为当前月以前，则认为‘装表日期’是‘最后购电时间的下月1号’
-		ELSE b.lastvenddate																					-- 绑了用户，最后购电为当前月，则认为‘装表日期’是‘最后购电时间’
-		END, 											-- 装表日期
+            WHEN b.customer_id = '' THEN NULL																	-- 未绑用户，则认为‘装表日期’是‘null’
+            WHEN b.customer_id != '' AND b.lastvenddate = '' THEN CURDATE()										-- 绑了用户，最后购电为null，则认为‘装表日期’是‘当前时间’
+            WHEN b.customer_id != '' AND b.lastvenddate != '' AND DATE_FORMAT(b.lastvenddate, '%Y-%m') < DATE_FORMAT(CURDATE(), '%Y-%m')
+                THEN DATE_ADD(DATE_ADD(b.lastvenddate, INTERVAL -DAY(b.lastvenddate)+1 DAY), INTERVAL 1 MONTH)	-- 绑了用户，最后购电为当前月以前，则认为‘装表日期’是‘最后购电时间的下月1号’
+            ELSE b.lastvenddate																					-- 绑了用户，最后购电为当前月，则认为‘装表日期’是‘最后购电时间’
+            END, 											-- 装表日期
 		NULL, 											-- 拆除日期
 		NULL, 											-- 经度
 		NULL, 											-- 纬度
-		CASE
-			WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
-			ELSE '02' 							-- 绑了用户，则认为‘状态’是02运行
-			END, 								-- 'dbzt'电表状态：01入库Warehouse、02运行/装出Installed、03投运Running、04拆回Uninstalled
+		'01',                                   -- 'dbzt'电表状态：离线表统一使用：01入库Warehouse
+	--	CASE
+	--		WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
+	--		ELSE '02' 							-- 绑了用户，则认为‘状态’是02运行
+	--		END, 								-- 'dbzt'电表状态：01入库Warehouse、02运行/装出Installed、03投运Running、04拆回Uninstalled
 		NULL, 											-- 电表厂家
 		NULL, 											-- 外部标识
 		NULL, 											-- 功能版本流水号

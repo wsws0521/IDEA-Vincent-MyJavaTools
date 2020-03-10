@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS syn_5_1;
+delimiter $$
+CREATE PROCEDURE syn_5_1(OUT `error_code` integer, OUT `error_msg` text)
+
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -74,3 +78,5 @@ BEGIN
 	SELECT t_error into error_code;
 	SELECT msg into error_msg;
 END;
+$$
+delimiter ;

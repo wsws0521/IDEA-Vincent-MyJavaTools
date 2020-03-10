@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS syn_7;
+delimiter $$
+CREATE PROCEDURE syn_7(OUT `error_code` integer, OUT `error_msg` text)
+
  BEGIN
 
 	DECLARE freeValue decimal(18,2); 			/* 用户免费额度 */
@@ -155,3 +159,5 @@
 	SELECT msg into error_msg;
 
 END
+$$
+delimiter ;

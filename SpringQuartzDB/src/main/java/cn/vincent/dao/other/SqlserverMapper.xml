@@ -33,7 +33,7 @@
     <select id="queryTmpYh" resultType="cn.vincent.pojo.TmpYh">
         select CUSTOMER_ID,RTRIM(LTRIM(replace(CUSTOMER_NAME,',','.'))) customer_name,r.STATUS
             ,OPENACCOUNT_DATE
-            ,RTRIM(LTRIM(isnull(REPLACE(ADDRESS,',','.'),''))) ADDRESS,RTRIM(LTRIM(isnull(REPLACE(LINKMAN,',','.'),''))) StandNumber
+            ,RTRIM(LTRIM(isnull(REPLACE(REPLACE(ADDRESS,';',' '),',','.'),''))) ADDRESS,RTRIM(LTRIM(isnull(REPLACE(LINKMAN,',','.'),''))) StandNumber
             ,RTRIM(LTRIM(isnull(REPLACE(LINKMAN_PHONE,',','.'),''))) LINKMAN_PHONE,r.POWER_SUPPLYER as Station_id
             ,US_TI,RTRIM(LTRIM(isnull(REPLACE(US_IDNUM,',','.'),''))) US_IDNUM
             ,RTRIM(LTRIM(isnull(REPLACE(US_EMAIL,',','.'),''))) US_EMAIL,RTRIM(LTRIM(isnull(REPLACE(US_ZIP,',','.'),''))) US_ZIP,US_SEX
