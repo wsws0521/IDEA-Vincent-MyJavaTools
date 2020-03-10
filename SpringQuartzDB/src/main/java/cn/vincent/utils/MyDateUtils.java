@@ -1,5 +1,7 @@
 package cn.vincent.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -26,14 +28,34 @@ public class MyDateUtils {
         calendar.add(calendar.DATE, -1);
         return SDF_DATE_CUMU.format(calendar.getTime());
     }
+//    public static Date getStartDate(String inputStartDateStr){
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.MONTH, 0);
+//        calendar.set(Calendar.DAY_OF_MONTH, 1);
+//        try {
+//            Date monthFirst = SDF_DATE_CUMU.parse(SDF_DATE_CUMU.format(calendar.getTime()));
+//            Date inputStartDate = SDF_DATE_CUMU.parse(inputStartDateStr);
+//            if(inputStartDate.after(monthFirst)){
+//                return inputStartDate;
+//            }else{
+//                return monthFirst;
+//            }
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /**
      * 获取指定日期与当前日期中间的日期字符串，开区间（每天只自动同步一次累计值的情况）
-     * @param maxVendDateStr    tmp_ljz1表中的日期字符串
+     * @param maxVendDateStr    tmp_ljz1表中的日期字符串，yyyy-MM-dd
      * @return
      */
     public static List<String> getDuringDateStrListOpen(String maxVendDateStr){
         List<String> result = new ArrayList<String>();
+        if(StringUtils.isEmpty(maxVendDateStr))
+            return result;
         try {
             Date startDate = SDF_DATE_CUMU.parse(maxVendDateStr);
 

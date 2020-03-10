@@ -77,14 +77,14 @@ BEGIN
 	cons.id_no = yh.US_IDNUM,
 	cons.erf_stand = yh.StandNumber;
 
-	# 4-用户档案关键信息更新（租户换房，租户信息修改）（性别/联系方式）(后期添加性别字段！！！)
+	# 4-用户档案关键信息更新（租户换房，租户信息修改）（性别/联系方式）
     UPDATE a_consumer_contacts a
     INNER JOIN (SELECT * FROM a_consumer b INNER JOIN tmp_yh c ON SUBSTRING_INDEX(b.CONS_NO,'_',-1) = c.CUSTOMER_ID) tmp
     ON a.CONS_ID = tmp.CONS_ID
     SET a.PHONE_NUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
             a.TELEPHONENUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
-            a.EMAIL = tmp.US_EMAIL;
-    --		a.GENDER = IF(tmp.us_sex = 0,'01','02');
+            a.EMAIL = tmp.US_EMAIL,
+    		a.GENDER = IF(tmp.us_sex = 0,'01','02');
 
 	IF t_error = 1 THEN
 		ROLLBACK;

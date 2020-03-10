@@ -7,11 +7,13 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
 
 	# 0-索引
 	ALTER table tmp_yh ADD INDEX index_tmp_yh_cusid(CUSTOMER_ID);
+
+	# 开启事务
+	START TRANSACTION;
+
 	# 1-删除已有数据
 	DELETE FROM VD_A_USER_DEBT;
 	DELETE FROM VD_A_USER_DEBT_SET;

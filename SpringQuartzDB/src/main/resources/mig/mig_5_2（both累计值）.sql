@@ -85,7 +85,7 @@ BEGIN
 END
 
 
-------------------------------------sqlserver数据源获取-------------------------------------------
+------------------------------------sqlserver数据源获取(最好也是晚上执行)-------------------------------------------
 SELECT SUM(OCD_ENERGY) energy,
         m.MT_COMM_ADDR,
         convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,
@@ -106,8 +106,8 @@ CREATE TABLE `tmp_ljz` (
   `LASTVENDDATE` varchar(128) NOT NULL,
   `ISFREE` varchar(128) NOT NULL,
   `ISUSED` varchar(128) NOT NULL,
-  `meterId` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  `consId` varchar(128) DEFAULT NULL COMMENT 'NULL',
+  `meterId` varchar(128) DEFAULT NULL COMMENT '新系统对应-表计ID',
+  `consId` varchar(128) DEFAULT NULL COMMENT '新系统对应-用户ID',
   `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
   `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
   `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',

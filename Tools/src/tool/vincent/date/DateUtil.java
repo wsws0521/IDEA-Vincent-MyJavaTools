@@ -8,13 +8,65 @@ public class DateUtil {
     private final static SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
     private final static SimpleDateFormat SDF_DATE_CUMU = new SimpleDateFormat("yyyy-MM-dd");
     public static void main(String[] args) {
-        List<String> datesOpen = getDuringDateStr("2020-02-17");
-        System.out.println(datesOpen);
-        List<String> datesClose = getDuringDateStrListClose("2020-02-17");
-        System.out.println(datesClose);
-
-        System.out.println(getShortDateFromString("2020-02-07 16:52:18"));
+        System.out.println(getStartDate("2020-02-08"));
+        try {
+            System.out.println(SDF_DATE_CUMU.parse("2020-03-08"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(getDuringDateStrListOpen("2020-02-08 11:11:11"));
+//        List<String> datesOpen = getDuringDateStr("2020-02-17");
+//        System.out.println(datesOpen);
+//        List<String> datesClose = getDuringDateStrListClose("2020-02-17");
+//        System.out.println(datesClose);
+//
+//        System.out.println(getShortDateFromString("2020-02-07 16:52:18"));
 //        System.out.println(getDateFromString("2020-02-06 19:30:17"));
+    }
+    public static List<String> getDuringDateStrListOpen(String maxVendDateStr){
+        List<String> result = new ArrayList<String>();
+        if(maxVendDateStr == null)
+            return result;
+        try {
+            Date startDate = getStartDate(maxVendDateStr);
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(new Date());
+            calendar.add(calendar.DATE, -1);
+            String yesterdayStr = SDF_DATE_CUMU.format(calendar.getTime());
+            Date endDate = SDF_DATE_CUMU.parse(yesterdayStr);
+
+            Calendar calBegin = Calendar.getInstance();
+            calBegin.setTime(startDate);
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.setTime(endDate);
+            while (endDate.after(calBegin.getTime())) {
+                // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
+                calBegin.add(Calendar.DAY_OF_MONTH, 1);
+                result.add(SDF_DATE_CUMU.format(calBegin.getTime()));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static Date getStartDate(String inputStartDateStr){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        try {
+            Date monthFirst = SDF_DATE_CUMU.parse(SDF_DATE_CUMU.format(calendar.getTime()));
+            Date inputStartDate = SDF_DATE_CUMU.parse(inputStartDateStr);
+            if(inputStartDate.after(monthFirst)){
+                return inputStartDate;
+            }else{
+                return monthFirst;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 //    public static String getSysDateYestoday(){
 //        Date now = new Date();

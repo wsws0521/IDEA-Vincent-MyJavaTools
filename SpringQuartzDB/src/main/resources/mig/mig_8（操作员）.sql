@@ -20,10 +20,11 @@ BEGIN
 		set t_error = 1;
 	end;
 
+    # 增大email字段长度（后期由王良柏修改ddl脚本）
+	CALL PR_MOD_COL('UAP_USER','MODIFY','EMAIL','VARCHAR(64)','','','');
+
 	# 开启事务
 	START TRANSACTION;
-	# 增大email字段长度（后期由王良柏修改ddl脚本）
-	CALL PR_MOD_COL('UAP_USER','MODIFY','EMAIL','VARCHAR(64)','','','');
 
 	# 打开游标
 	OPEN noCur;
@@ -84,7 +85,7 @@ BEGIN
 	SELECT t_error, msg;
 END
 
-------------------------------------sqlserver数据源获取-------------------------------------------
+------------------------------------sqlserver数据源获取  341-------------------------------------------
 
 /*select  cu.USER_ID,
         cu.USER_ACCOUNT,

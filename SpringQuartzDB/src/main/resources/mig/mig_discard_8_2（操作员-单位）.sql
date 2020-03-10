@@ -22,8 +22,6 @@ BEGIN
 
 	# 开启事务
 	START TRANSACTION;
-	# 增大email字段长度（后期由王良柏修改ddl脚本）
-	CALL PR_MOD_COL('UAP_USER','MODIFY','EMAIL','VARCHAR(64)','','','');
 
 	# 打开游标
 	OPEN noCur;

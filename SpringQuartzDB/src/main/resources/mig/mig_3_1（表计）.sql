@@ -1,3 +1,4 @@
+--------------------------先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -7,12 +8,18 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
+
+	# 0-索引
+	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='tmp_bj' AND index_name='index_tmp_bj_cusid') THEN
+		ALTER table tmp_bj ADD INDEX index_tmp_bj_cusid(customer_id);
+	END IF;
+	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='tmp_bj' AND index_name='index_tmp_bj_meterno') THEN
+		ALTER table tmp_bj ADD INDEX index_tmp_bj_meterno(MT_COMM_ADDR);
+	END IF;
+
 	# 开启事务
 	START TRANSACTION;
 
-	# 0-索引
-	ALTER table tmp_bj ADD INDEX index_tmp_bj_cusid(customer_id);
-	ALTER table tmp_bj ADD INDEX index_tmp_bj_meterno(MT_COMM_ADDR);
 	# 1-删除已有数据
 	DELETE FROM A_MP_EQUIPMENT_RELA;
 	DELETE FROM A_EQUIP_METER_VENDING;
@@ -50,8 +57,8 @@ BEGIN
 		NULL, 											-- 纬度
 		CASE
 			WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
-			ELSE '02' 							-- 未绑用户，则认为‘状态’是02运行
-			END, 								-- 状态：01入库、02运行、03投运、04拆回
+			ELSE '02' 							-- 绑了用户，则认为‘状态’是02运行
+			END, 								-- 'dbzt'电表状态：01入库Warehouse、02运行/装出Installed、03投运Running、04拆回Uninstalled
 		NULL, 											-- 电表厂家
 		NULL, 											-- 外部标识
 		NULL, 											-- 功能版本流水号
@@ -86,7 +93,7 @@ BEGIN
 	SELECT t_error, msg;
 END
 
-------------------------------------sqlserver数据源获取-------------------------------------------
+------sqlserver数据源获取(建议马上同时取得用户档案tmp_yh ！！！防止迁移过程中用户档案继续建立的问题)----------------
 
 select  mt.MT_MODEL_DESC,
         ltrim(rtrim(MT_COMM_ADDR)) MT_COMM_ADDR,

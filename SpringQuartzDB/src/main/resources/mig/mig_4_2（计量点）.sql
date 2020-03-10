@@ -7,14 +7,16 @@ BEGIN
 		get diagnostics condition 1 msg = message_text;
 		set t_error = 1;
 	end;
-	# 开启事务
-	START TRANSACTION;
 
 	# 0-索引
+	ALTER table a_consumer ADD INDEX index_a_consumer_cons_no(cons_no);
 	ALTER table a_grid_line ADD INDEX index_a_grid_line_lineno(line_no);
 	ALTER table a_grid_transformer ADD INDEX index_a_grid_transformer_tfno(tf_no);
 	ALTER table a_grid_subs ADD INDEX index_a_grid_subs_subsno(subs_no);
 	ALTER table vd_e_bill_package ADD INDEX index_vd_e_bill_package_pkgname(pkg_name);
+
+	# 开启事务
+	START TRANSACTION;
 
 	# 3-插入计量点档案
 	INSERT INTO a_usagepoint
@@ -55,16 +57,18 @@ BEGIN
 	LEFT JOIN a_grid_subs subs ON CONCAT('SLT_',b.station_id) = subs.subs_no
 	LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name;
 
-	# 删除索引
-	ALTER table a_grid_line DROP INDEX index_a_grid_line_lineno;
-	ALTER table a_grid_transformer DROP INDEX index_a_grid_transformer_tfno;
-	ALTER table a_grid_subs DROP INDEX index_a_grid_subs_subsno;
-	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
-
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
 		COMMIT;
 	END IF;
+
+	# 删除索引
+	-- ALTER table a_consumer DROP INDEX index_a_consumer_cons_no;
+	ALTER table a_grid_line DROP INDEX index_a_grid_line_lineno;
+	ALTER table a_grid_transformer DROP INDEX index_a_grid_transformer_tfno;
+	ALTER table a_grid_subs DROP INDEX index_a_grid_subs_subsno;
+	ALTER table vd_e_bill_package DROP INDEX index_vd_e_bill_package_pkgname;
+
 	SELECT t_error, msg;
 END

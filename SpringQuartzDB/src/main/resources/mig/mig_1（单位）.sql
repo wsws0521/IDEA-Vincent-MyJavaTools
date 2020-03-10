@@ -156,7 +156,8 @@ BEGIN
 	INSERT INTO UAP_ORGANIZATION(ID,BASE_ORG_ID,CODE,IN_TIME,IS_LEAF,NAME, NO, PARENT_ID,RANK_ID,STATE,UP_TIME,TIME_ZONE,TYPE,ORG_PATH,ORG_PATH_ID,TENANT_ID)
 	SELECT  var_orgId,NULL,CONCAT('ORG_agent_',var_orgId),1551179068484,1,'BOTSHABELO', var_dwNo, var_uapFatherId,1,'1',1551423273905,NULL,0,NULL,NULL,2
 	FROM DUAL;
-
+	# ---------------------------------------------------
+    # 为MDCAdmin赋予所有单位权限
 
 	IF t_error = 1 THEN
 		ROLLBACK;
@@ -167,7 +168,7 @@ BEGIN
 
 END
 
-------------------------------------sqlserver数据源获取-------------------------------------------
+------------------------------------sqlserver数据源获取(85)-------------------------------------------
 select  cast(o.OBJECT_ID as varchar) as 'object_id',
         o.OBJECT_TYPE,
         (case when o.REGION_ID=-1 then o.GRID_ID else o.REGION_ID end) as 'FatherId',

@@ -708,5 +708,6 @@ BEGIN
 	ELSE
 		COMMIT;
 	END IF;
+	SELECT t_error, msg;
 
 END
