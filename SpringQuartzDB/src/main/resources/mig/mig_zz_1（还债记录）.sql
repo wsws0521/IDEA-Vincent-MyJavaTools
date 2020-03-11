@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS mig_zz_1;
+delimiter $$
+CREATE PROCEDURE mig_zz_1()
+
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -187,8 +191,9 @@ BEGIN
 	*/
 
 END
-
-------------------------------------sqlserver数据源获取-------------------------------------------
+$$
+delimiter ;
+------------------------------------sqlserver数据源获取, 72319条-------------------------------------------
 
 select * from (
 select cast(od.ORDERSID as varchar) orderid,od.DEBTID, od.USER_ID as CUSTOMER_ID,m.MT_COMM_ADDR,
