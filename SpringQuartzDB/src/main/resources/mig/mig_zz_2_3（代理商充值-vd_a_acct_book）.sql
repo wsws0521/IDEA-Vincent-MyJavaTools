@@ -1,7 +1,7 @@
 
-DROP PROCEDURE IF EXISTS mig_zz_2_4;
+DROP PROCEDURE IF EXISTS mig_zz_2_3;
 delimiter $$
-CREATE PROCEDURE mig_zz_2_4()
+CREATE PROCEDURE mig_zz_2_3()
 
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
@@ -40,19 +40,18 @@ BEGIN
         -- a.createDate, -- 解款日期（新版本删除）
         a.createDate -- 手动插入TV字段，应用于分区
     FROM tmp_dlsczjl a
+    INNER JOIN vd_a_pay_flow d ON a.ID = d.charge_remark -- 只插tmp_dlsczjl.CCL_EVIDENCE不为空的记录，与vd_a_pay_flow一一对应
     LEFT JOIN vd_agt_agent b ON a.TE_NAME = b.AGENT_NAME
-    LEFT JOIN VD_A_ACCOUNT c ON b.AGENT_NO = c.ACCT_NO
-    LEFT JOIN vd_a_pay_flow d ON a.ID = d.charge_remark;
+    LEFT JOIN VD_A_ACCOUNT c ON b.AGENT_NO = c.ACCT_NO;
 
-    # ③ 将[VD_A_ACCT_BOOK.BOOK_ID]更新至[vd_a_tof_flow.BOOK_ID]
-    UPDATE vd_a_tof_flow tof
-    INNER JOIN (
-        select a.ds_id, b.BOOK_ID
-        from vd_a_pay_flow a, vd_a_acct_book b
-        where a.charge_id = b.CHARGE_ID
-        and a.ds_id is not NULL and a.ds_id <> '' -- 在没有
-    )tmp ON tof.DS_ID = tmp.ds_id
-    SET tof.BOOK_ID = tmp.BOOK_ID;
+--     # ③ 将[VD_A_ACCT_BOOK.BOOK_ID]更新至[vd_a_tof_flow.BOOK_ID]
+--     UPDATE vd_a_tof_flow tof
+--     INNER JOIN (
+--         select a.ds_id, b.BOOK_ID
+--         from vd_a_pay_flow a, vd_a_acct_book b
+--         where a.charge_id = b.CHARGE_ID -- 因为3、4只插tmp_dlsczjl.CCL_EVIDENCE不为空的记录，所以tmp结果字段不会出现为空的情况
+--     )tmp ON tof.DS_ID = tmp.ds_id
+--     SET tof.BOOK_ID = tmp.BOOK_ID;
 
     IF t_error = 1 THEN
 		ROLLBACK;

@@ -2,9 +2,9 @@
 # ① 先【VD_A_ACCT_BOOK】JOIN【vd_a_pay_flow(11、14、31、40类型)】4种summary
 # ② 再查【VD_A_ACCT_BOOK】JOIN【vd_a_pay_flow(类型不限)】LEFT JOIN【VD_POS_AGENT】LEFT JOIN【VD_POS_ASSETS】LEFT JOIN【VD_A_TOF_FLOW】LEFT JOIN【VD_A_DAILY_FLOW】
 -----------------------------------------------------存储过程--------------------------------------------------------
-DROP PROCEDURE IF EXISTS mig_zz_2_3;
+DROP PROCEDURE IF EXISTS mig_zz_2_2;
 delimiter $$
-CREATE PROCEDURE mig_zz_2_3()
+CREATE PROCEDURE mig_zz_2_2()
 
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
@@ -24,7 +24,7 @@ BEGIN
     # 开启事务
     START TRANSACTION;
 
-    # ① 收费明细
+    # ① 收费明细（郭工要求：只插tmp_dlsczjl.CCL_EVIDENCE不为空的记录...）
     INSERT INTO vd_a_pay_flow
         (lessee_id, charge_id, ds_id, obj_type, obj_id, obj_no, meter_id, meter_no,
         charge_ym, charge_date, acct_ym, type_code, rcv_amt, change_amt, rcvd_amt,
@@ -58,7 +58,7 @@ BEGIN
         a.createDate -- 手动插入TV字段，应用于分区
     FROM tmp_dlsczjl a
     LEFT JOIN vd_agt_agent b ON a.TE_NAME = b.AGENT_NAME
-    LEFT JOIN vd_a_daily_flow c ON a.CCL_EVIDENCE = c.DS_NO
+    INNER JOIN vd_a_daily_flow c ON a.CCL_EVIDENCE = c.DS_NO -- 只插tmp_dlsczjl.CCL_EVIDENCE不为空的记录
     LEFT JOIN uap_user d ON a.operator = d.no;
 
     IF t_error = 1 THEN
