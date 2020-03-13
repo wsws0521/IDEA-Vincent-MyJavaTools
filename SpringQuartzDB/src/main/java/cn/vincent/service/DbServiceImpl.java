@@ -116,7 +116,7 @@ public class DbServiceImpl implements DbService {
                     throw new RuntimeException(processParam.getError_msg());
                 }
             }
-            logger.info("执行归档脚本0.2将 tmp_bj, tmp_yh, tmp_zw, tmp_ljz 后缀全部+1，再重新创建这几个空表");
+            logger.info("执行归档脚本0.2将 tmp_bj, tmp_yh, tmp_zw 后缀全部+1(tmp_ljz留到后面单独处理)，再重新创建这3个空表");
             mysqlDao.prepareTmpToTmp1(processParam);
             if(processParam.getError_code() != 0)
                 throw new RuntimeException(processParam.getError_msg());

@@ -85,7 +85,7 @@ BEGIN
 END
 
 
-------------------------------------sqlserver数据源获取(最好也是晚上执行)-------------------------------------------
+-----------------------------sqlserver数据源获取(最好也是半夜执行，后面不会再单独同步本日的累计值)-------------------------
 SELECT SUM(OCD_ENERGY) energy,
         m.MT_COMM_ADDR,
         convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,

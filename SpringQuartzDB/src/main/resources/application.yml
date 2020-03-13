@@ -46,6 +46,7 @@ spring:
       max-wait: 10000
       min-idle: 5
       max-active: 50
+      max-idle: 50
       # 验证连接是否有效
       validation-query: SELECT 1
       # 允许连接被空闲连接回收器检测：即检测失败会被从池中移除
@@ -61,11 +62,18 @@ spring:
       pool-prepared-statements: true
       max-open-prepared-statements: 20
     other:
-      # url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb20200113
+      # DB-1
       url: jdbc:sqlserver://192.168.108.11:1433;DatabaseName=hxdb
-      # url: jdbc:sqlserver://192.168.108.152:1433;DatabaseName=hxdb
       username: pns
-      password: pnspns
+      password: pnssnp
+      # DB-2
+      # url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb20200113
+      # username: pns
+      # password: pnssnp
+      # DB-TEST
+      # url: jdbc:sqlserver://192.168.108.152:1433;DatabaseName=hxdb
+      # username: pns
+      # password: pnspns
       #使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -75,6 +83,7 @@ spring:
       max-wait: 10000
       min-idle: 5
       max-active: 50
+      max-idle: 50
       # 验证连接是否有效
       validation-query: SELECT 1
       # 允许连接被空闲连接回收器检测：即检测失败会被从池中移除

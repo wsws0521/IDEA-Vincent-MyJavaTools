@@ -195,7 +195,7 @@
     <select id="queryNewYh" resultType="cn.vincent.pojo.TmpYh">
         SELECT a.*
         FROM tmp_yh a
-	    WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('yh_',a.customer_id) = cons.CONS_NO)
+	    WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('CN_',a.customer_id) = cons.CONS_NO)
     </select>
     <select id="executeScript3_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_3_1(
