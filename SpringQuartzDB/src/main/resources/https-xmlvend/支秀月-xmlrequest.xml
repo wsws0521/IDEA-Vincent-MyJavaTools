@@ -1,143 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
+## SoupUI
+0、（传说soupui不认pfx，需要转成jks？槽）
+keytool -importkeystore -srckeystore c:\xmlvend\vincent.pfx -srcstoretype pkcs12 -srcstorepass 123456 -destkeystore c:\xmlvend\vincent.jks -deststoretype jks -deststorepass 123456
+1、右击项目文件夹:Show Project View>>WS-Security Configurations>>[Keystores]vincent.pfx,[Truststores]client_truststore
+2、点选Request1，左下角Properties>>SSL KeyStore>>vincent.pfx
+https://192.168.80.37:8443/xmlvend/xmlvend.wsdl
+<!--可以配置并在1个Request里面尝试下面所有请求-->
 
-
-
-        /*登录*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--仅供·第三方代理商·登录-->
+<!--clientID接入码-->
+<!--opName代理商编号-->
+<!--password代理商密码-->
 <soap:Envelope  xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
     <soap:Body>
         <ns2:loginReq  xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"  xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"  xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
-            <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="1000000000123"/>
+            <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="0000000000026"/>
             <terminalID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="GenericDeviceID"  id="000098"/>
             <msgID  dateTime="20191126090312"  uniqueNumber="972238"/>
             <authCred>
-                <opName>TEST001</opName>
-                <password>000000</password>
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
             </authCred>
         </ns2:loginReq>
     </soap:Body>
 </soap:Envelope>
 
-        /*查询用户表计信息*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--查询用户表计信息-->
+<!--meterIdentifier表号-->
 <soap:Envelope  xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-<soap:Body>
-    <ns2:confirmCustomerReq  xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"  xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"  xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
-        <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="1000000000123"/>
-        <terminalID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="GenericDeviceID"  id="000098"/>
-        <msgID  dateTime="20191126090312"  uniqueNumber="972238"/>
-        <authCred>
-            <opName>TEST001</opName>
-            <password>000000</password>
-        </authCred>
-        <ns2:idMethod  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="VendIDMethod">
-            <meterIdentifier  xsi:type="MeterNumber"  msno="000006191011"/>
-        </ns2:idMethod>
-    </ns2:confirmCustomerReq>
-</soap:Body>
+    <soap:Body>
+        <ns2:confirmCustomerReq  xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"  xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"  xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+            <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="0000000000026"/>
+            <terminalID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="GenericDeviceID"  id="000098"/>
+            <msgID  dateTime="20191126090312"  uniqueNumber="972238"/>
+            <authCred>
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
+            </authCred>
+            <ns2:idMethod  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="VendIDMethod">
+                <meterIdentifier  xsi:type="MeterNumber"  msno="14339800360"/>
+            </ns2:idMethod>
+        </ns2:confirmCustomerReq>
+    </soap:Body>
 </soap:Envelope>
 
-        /*FBE*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--FBE-->
+<!--meterIdentifier表号-->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-<soapenv:Body>
-    <ns2:fbeReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:FBEReq">
-        <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="1000000000123"/>
-        <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="1000000000123"/>
-        <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="12992"/>
-        <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
-            <opName>TEST001</opName>
-            <password>000000</password>
-        </authCred>
-        <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
-            <meterIdentifier xsi:type="MeterNumber" msno="000006191001"/>
-        </idMethod>
-    </ns2:fbeReq>
-</soapenv:Body>
+    <soapenv:Body>
+        <ns2:fbeReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:FBEReq">
+            <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="0000000000026"/>
+            <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="0000000000026"/>
+            <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="12992"/>
+            <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
+            </authCred>
+            <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
+                <meterIdentifier xsi:type="MeterNumber" msno="14339800360"/>
+            </idMethod>
+        </ns2:fbeReq>
+    </soapenv:Body>
 </soapenv:Envelope>
 
 
-        /*试购电*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--试购电-->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-<soapenv:Body>
-    <ns2:trialCreditVendReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:TrialCreditVendReq">
-        <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="1000000000123"/>
-        <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="1000000000123"/>
-        <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="29701"/>
-        <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
-            <opName>TEST001</opName>
-            <password>000000</password>
-        </authCred>
-        <resource xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="Electricity"/>
-        <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
-            <meterIdentifier xsi:type="MeterNumber" msno="000006191006"/>
-        </idMethod>
-        <ns2:purchaseValue xsi:type="ns2:PurchaseValueCurrency">
-            <ns2:amt value="90.00" symbol="AZM"/>
-        </ns2:purchaseValue>
-    </ns2:trialCreditVendReq>
-</soapenv:Body>
+    <soapenv:Body>
+        <ns2:trialCreditVendReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:TrialCreditVendReq">
+            <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="0000000000026"/>
+            <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="0000000000026"/>
+            <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="29701"/>
+            <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
+            </authCred>
+            <resource xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="Electricity"/>
+            <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
+                <meterIdentifier xsi:type="MeterNumber" msno="14339800360"/>
+            </idMethod>
+            <ns2:purchaseValue xsi:type="ns2:PurchaseValueCurrency">
+                <ns2:amt value="90.00" symbol="AZM"/>
+            </ns2:purchaseValue>
+        </ns2:trialCreditVendReq>
+    </soapenv:Body>
 </soapenv:Envelope>
 
 
-        /*购电*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--购电-->
+<!--如果使用重复的msgId（dateTime+uniqueNumber）购电，则认为是同一笔交易，仅第一次有效，后面都是查出第一次的订单信息-->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-<soapenv:Body>
-    <ns2:creditVendReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:CreditVendReq">
-        <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="1000000000123"/>
-        <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="1000000000123"/>
-        <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="4001"/>
-        <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
-            <opName>TEST001</opName>
-            <password>000000</password>
-        </authCred>
-        <resource xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="Electricity"/>
-        <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
-            <meterIdentifier xsi:type="MeterNumber" msno="000006191006"/>
-        </idMethod>
-        <ns2:purchaseValue xsi:type="ns2:PurchaseValueCurrency">
-            <ns2:amt value="90.00" symbol="AZM"/>
-        </ns2:purchaseValue>
-    </ns2:creditVendReq>
-</soapenv:Body>
+    <soapenv:Body>
+        <ns2:creditVendReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:CreditVendReq">
+            <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="0000000000026"/>
+            <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="0000000000026"/>
+            <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="01911270000296" uniqueNumber="4001"/>
+            <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
+            </authCred>
+            <resource xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="Electricity"/>
+            <idMethod xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="VendIDMethod">
+                <meterIdentifier xsi:type="MeterNumber" msno="14339800360"/>
+            </idMethod>
+            <ns2:purchaseValue xsi:type="ns2:PurchaseValueCurrency">
+                <ns2:amt value="90.00" symbol="AZM"/>
+            </ns2:purchaseValue>
+        </ns2:creditVendReq>
+    </soapenv:Body>
 </soapenv:Envelope>
 
-        /*advice*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--advice-->
+<!--通过msgId（dateTime+uniqueNumber）查询到对应的那笔售电信息-->
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-<soapenv:Body>
-    <ns1:adviceReq xmlns:ns1="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns1:LastRespAdviceReq">
-        <ns1:clientID xsi:type="ns1:EANDeviceID" ean="1000000000123"/>
-        <ns1:terminalID xsi:type="ns1:GenericDeviceID" id="1000000000123"/>
-        <ns1:msgID dateTime="20191127173825" uniqueNumber="419867"/>
-        <ns1:authCred>
-            <ns1:opName>TEST001</ns1:opName>
-            <ns1:password>000000</ns1:password>
-        </ns1:authCred>
-        <ns1:adviceReqMsgID dateTime="01911270000296" uniqueNumber="4003"/>
-    </ns1:adviceReq>
-</soapenv:Body>
+    <soapenv:Body>
+        <ns1:adviceReq xmlns:ns1="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns1:LastRespAdviceReq">
+            <ns1:clientID xsi:type="ns1:EANDeviceID" ean="0000000000026"/>
+            <ns1:terminalID xsi:type="ns1:GenericDeviceID" id="0000000000026"/>
+            <ns1:msgID dateTime="20191127173825" uniqueNumber="419867"/>
+            <ns1:authCred>
+                <ns1:opName>AG000026</ns1:opName>
+                <ns1:password>CENT123456</ns1:password>
+            </ns1:authCred>
+            <ns1:adviceReqMsgID dateTime="01911270000296" uniqueNumber="4001"/>
+        </ns1:adviceReq>
+    </soapenv:Body>
 </soapenv:Envelope>
 
-        /*reprint*/
-        <?xml version="1.0" encoding="utf-8"?>
+<!--reprint-->
+<!--根据terminalID时间范围+meterIdentifier 去筛选订单信息-->
+<!--（目前仅能查到xmlvend的售电记录，后期需要修改）-->
 <soap:Envelope  xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-<soap:Body>
-    <ns2:reprintReq  xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"  xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"  xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
-        <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="2019112800001"/>
-        <terminalID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="GenericDeviceID"  id="R202002,202002"/>
-        <msgID  dateTime="20191126090312"  uniqueNumber="972238"/>
-        <authCred>
-            <opName>AG000081</opName>
-            <password>HXagent</password>
-        </authCred>
-        <ns2:idMethod  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="VendIDMethod">
-            <meterIdentifier  xsi:type="MeterNumber"  msno="14012018064"/>
-        </ns2:idMethod>
-    </ns2:reprintReq>
-</soap:Body>
+    <soap:Body>
+        <ns2:reprintReq  xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema"  xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema"  xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+            <clientID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="EANDeviceID"  ean="0000000000026"/>
+            <terminalID  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="GenericDeviceID"  id="R202003,202004"/>
+            <msgID  dateTime="01911270000296"  uniqueNumber="4001"/>
+            <authCred>
+                <opName>AG000026</opName>
+                <password>CENT123456</password>
+            </authCred>
+            <ns2:idMethod  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:type="VendIDMethod">
+                <meterIdentifier  xsi:type="MeterNumber"  msno="14339800360"/>
+            </ns2:idMethod>
+        </ns2:reprintReq>
+    </soap:Body>
 </soap:Envelope>
 
 

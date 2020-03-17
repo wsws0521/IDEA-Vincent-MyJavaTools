@@ -67,7 +67,7 @@ C:\Windows\System32\《client.pfx》
 >>keytool -importcert -alias tomcat_server -keystore c:\_cert\server_truststore       -storepass 123456      -file C:\_cert\clients\vincent_cert.cer
 >>keytool -importcert                      -keystore c:\_cert\server.jks              -storepass 123456      -file C:\_cert\clients\vincent_cert.cer
 
-## 6-创建client的truststore文件并导入server的证书【不是必须的】（其中包括server的公钥）
+## 6-创建client的truststore文件并导入server的证书【不是必须的，也就soupui用得到】（其中包括server的公钥）
 >>keytool -import -alias tomcat_server  -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456      -file c:\xmlvend\server\catserver.cer
 >>keytool -import -alias vincent_client -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456      -file c:\xmlvend\foxclient.cer
 >>
@@ -105,11 +105,37 @@ keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 12
      clientAuth="true" sslProtocol="TLS"
      keystoreFile="D:/key2/server.keystore" keystorePass="123456"
    truststoreFile="D:/key2/server.keystore" truststorePass="123456"/>`
+或者
+`<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+        maxThreads="150" SSLEnabled="true" scheme="https">
+     <SSLHostConfig certificateVerification="required" truststoreFile="C:/_cert/server_truststore" truststorePassword="123456">
+         <Certificate certificateKeystoreFile="C:/_cert/server.jks"
+                      type="RSA" certificateKeyAlias="tomcat_server"
+                     certificateKeyPassword="123456"
+                     certificateKeystorePassword="123456" />
+     </SSLHostConfig>
+</Connector>`
 
+## Tomcat/webapp/WEB-INFO，追加，强制跳转8443
+`<login-config>
+ 		<auth-method>CLIENT-CERT</auth-method>
+ 		<realm-name>Client Cert Users-only Area</realm-name>
+</login-config>
+<security-constraint>
+    <web-resource-collection>
+        <web-resource-name>SSL</web-resource-name>
+        <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>`
 
-
-
-
+## SoupUI
+0、（传说soupui不认pfx，需要转成jks？槽）
+keytool -importkeystore -srckeystore c:\xmlvend\vincent.pfx -srcstoretype pkcs12 -srcstorepass 123456 -destkeystore c:\xmlvend\vincent.jks -deststoretype jks -deststorepass 123456
+1、右击项目文件夹:Show Project View>>WS-Security Configurations>>[Keystores]vincent.pfx,[Truststores]client_truststore
+2、点选Request1，左下角Properties>>SSL KeyStore>>vincent.pfx
 
 
 ## JDK中keytool 常用命令: 
