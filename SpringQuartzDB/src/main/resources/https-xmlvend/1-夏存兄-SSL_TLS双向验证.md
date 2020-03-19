@@ -129,7 +129,7 @@ keytool
 -srckeystore server.jks    //源keystore 文件
 -srcstoretype jks      //源keystore type
 -srcstorepass store123456  //源keystore 访问口令
--destkeystore server.pfx  //目标keystore 文件
+-destkeystore server.pfx  //目标keystore 文件（pfx/p12都是pkcs12格式的，应该是能被.net广泛接受的格式）
 -deststoretype pkcs12    //目标keystore type
 -deststorepass pfx123456  //目标keystore 访问口令
 ```

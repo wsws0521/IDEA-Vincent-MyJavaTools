@@ -1,6 +1,12 @@
 https://blog.csdn.net/fw0124/article/details/41013333
 https://my.oschina.net/u/2336787/blog/1826615
 http://www.5ec8.com/seker/650.html
+## 自主签发的免费证书有以下不安全的方面：（电力局，局域网，非全人类受众谁用谁添加，无在线支付环节，可以勉强使用吧？）
+自签名证书不受浏览器信任，用户访问部署自签名证书的网站时会被浏览器警告并阻止访问；（需要自己将证书添加到受信任的CA颁发机构，收费的可能就不需要吧）
+自签名证书可以随意签发，不受国际标准监管，你能自己签发，黑客也可以自己签发和你一样的证书用来进行中间人攻击，SSL加密的保护机制形同虚设。（服务端公钥、客户端证书被窃取）
+自签名证书可能采用不安全的1024位公钥算法或SHA-1摘要算法等已经过时的标准，非常容易被破解。（那没办法了）
+使用SSL证书主要是为了通过SSL加密验证机制保护数据传输安全，如果使用自签名证书完全无法起到安全保护的作用，最好是向浏览器信任的证书颁发机构沃通WoSign申请SSL证书。
+付费的还可以绑多IP多域名，有效期长，客服支持到位
 ## CSR是什么（类似）
 CSR是Certificate Signing Request的英文缩写，即证书签名请求文件，
 是证书申请者在申请数字证书时由CSP(加密服务提供者)在生成私钥的同时也生成证书请求文件，
@@ -32,7 +38,7 @@ C1A51E515CA15EC1E56A1C56A15C1A5
 国家代码：SA
 确认：y
 C:\Java\jdk1.8.0_181\bin\《server.jks》(实际名称0315_test.jks)
-## 2-从server的keystore中导出server的证书（其中包括server的公钥）【cer添加到浏览器“受信任的根证书颁发机构”证书】
+## 2-从server的keystore中导出server的证书（其中包括server的公钥）【cer添加到浏览器“受信任的根证书颁发机构”证书，很骚，不安全，不是必须的】
 文件名《server_cert.cer》
 >>keytool -export -alias tomcat_server -keystore c:\_cert\catserver.keystore   -storepass 123456 -file c:\_cert\server_cert.cer
 >>keytool -export -alias tomcat_server -keystore c:\_cert\server.jks           -storepass 123456 -file c:\_cert\server_cert.cer
