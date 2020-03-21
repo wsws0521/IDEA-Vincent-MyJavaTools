@@ -246,6 +246,12 @@
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
+    <select id="executeScript5_3" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_5_3(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
     <select id="executeScript6" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_6(
             #{error_code,mode=OUT,jdbcType=INTEGER},

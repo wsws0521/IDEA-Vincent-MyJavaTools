@@ -36,11 +36,17 @@ BEGIN
 		INNER JOIN a_mp_equipment_rela rela ON rela.mp_id = pointmain.mp_id AND rela.EQUIPMENTTYPE='02'
 		INNER JOIN temp_bj bj ON CONCAT('CN_',bj.customer_idold) = cons.CONS_NO;
 
-	#2-更新计量点设备关联状态*/
+	# 2-删除计量点设备关联（或者更新状态？）*/
 	DELETE FROM a_mp_equipment_rela rela where exists(select tb.mp_id from temp_bj2 tb where tb.mp_id=rela.mp_id);
 
-	/*3-删除计量点*/
+	# 3-删除 计量点
 	DELETE FROM a_usagepoint point where exists(select tb.mp_id from temp_bj2 tb where tb.mp_id=point.mp_id);
+
+    # 4-删除 a_data_catalogue 表的相关记录（或者更新状态？，因为都是离线表，直接删问题也不大）
+   /* UPDATE a_data_catalogue cata SET cata.DISCARD_TIME = SYSDATE(), cata.STATUS = 0
+    WHERE EXISTS (select 1 from temp_bj2 tb where tb.mp_id = cata.mp_id);*/
+    DELETE FROM a_data_catalogue cata WHERE EXISTS (select 1 from temp_bj2 tb where tb.meter_id = cata.METER_ID);
+
 
 	DROP TEMPORARY TABLE IF EXISTS temp_bj;
 	DROP TEMPORARY TABLE IF EXISTS temp_bj2;

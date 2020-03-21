@@ -54,6 +54,10 @@ public interface DbService {
      */
     void startFromScript5_2();
     /**
+     * 执行<脚本5.3：a_data_catalogue>新建档案时，定时任务刷出来的记录
+     */
+    void startFromScript5_3();
+    /**
      * 执行<脚本6：债务.txt>：更新债务，插入新债务、债务配置表
      */
     void startFromScript6();

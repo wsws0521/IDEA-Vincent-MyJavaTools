@@ -48,7 +48,7 @@ BEGIN
 		NULL, -- 外部标识
 		NULL, -- 负荷等级
 		subs.subs_id, -- subs_id 所属变电站标识
-		NULL, -- mdc_id ？
+		2, -- mdc_id ？
 		e.pkg_id -- pkg_id 费率方案标识
 	FROM a_consumer a
 	INNER JOIN tmp_bj b ON a.cons_no = CONCAT('CN_', b.customer_id)

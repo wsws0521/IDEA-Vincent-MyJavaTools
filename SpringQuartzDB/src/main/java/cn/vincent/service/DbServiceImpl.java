@@ -68,6 +68,8 @@ public class DbServiceImpl implements DbService {
             startFromScript5_1();
         }else if(StepConstant.STEP_005_2.equals(CUR_STEP)){
             startFromScript5_2();
+        }else if(StepConstant.STEP_005_3.equals(CUR_STEP)){
+            startFromScript5_3();
         }else if(StepConstant.STEP_006.equals(CUR_STEP)){
             startFromScript6();
         }else if(StepConstant.STEP_007.equals(CUR_STEP)){
@@ -449,9 +451,31 @@ public class DbServiceImpl implements DbService {
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
+        startFromScript5_3();
+    }
+    /**
+     * 执行<脚本5.3：a_data_catalogue>新建档案时，定时任务刷出来的记录
+     */
+    @Override
+    public void startFromScript5_3(){
+        logger.info("005.3：执行<脚本5.3：a_data_catalogue.txt>：新建档案时，定时任务刷出来的记录");
+        int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_005_3);
+        if(updateNum == 1){
+            // --------------------当前a_data_catalogue数量
+            logger.info("同步前[a_data_catalogue]数量：" + mysqlToolDao.queryTableSize("a_data_catalogue"));
+            // --------------------同步
+            ProcessParam processParam = new ProcessParam();
+            mysqlDao.executeScript5_3(processParam);
+            if(processParam.getError_code() != 0)
+                throw new RuntimeException(processParam.getError_msg());
+            // --------------------同步后a_data_catalogue数量
+            logger.info("同步后[a_data_catalogue]数量：" + mysqlToolDao.queryTableSize("a_data_catalogue"));
+            logger.info("--------------------------------------------" + StepConstant.STEP_005_3 + "同步完成");
+        }else{
+            throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
+        }
         startFromScript6();
     }
-
     /**
      * 执行<脚本6：债务.txt>：更新债务，插入新债务、债务配置表
      */

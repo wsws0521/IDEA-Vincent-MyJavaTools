@@ -62,6 +62,8 @@ public interface MysqlDao {
 
     ProcessParam executeScript5_2(ProcessParam processParam);
 
+    ProcessParam executeScript5_3(ProcessParam processParam);
+
     ProcessParam executeScript6(ProcessParam processParam);
 
     int updateTmpWithNewIds();
