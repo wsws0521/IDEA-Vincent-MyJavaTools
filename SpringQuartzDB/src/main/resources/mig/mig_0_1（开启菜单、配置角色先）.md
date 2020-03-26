@@ -16,4 +16,4 @@ userRoleId
 ## 三、MDC Role权限 + Centlec角色
 MDCAdmin/MDCAdmin2019-登录vending8.0，系统设置>>权限管理>>角色管理：
 ① MDC Role开启所有菜单权限
-② 手动新增Centlec角色。14个
+② 手动新增Centlec角色。15个!!!!

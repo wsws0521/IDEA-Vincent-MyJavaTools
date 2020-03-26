@@ -51,7 +51,7 @@ BEGIN
 		  AMI_WEB_DATE2NUMBER(AMI_WEB_GET_SYSDATE()), 2,
 		  IF(CDUArea IS NULL OR CDUArea = '',10000,(SELECT id FROM uap_organization where name = CDUArea)) -- 关联单位id
 		FROM tmp_czy WHERE user_id = mainKey;
-		# 插入UAP_USER_ROLE
+		# 插入UAP_USER_ROLE（UAP重启才生效）
 		SET var_opRoleId = (select a.id from uap_role a, tmp_czy b where a.name = b.roleName and b.user_id = mainKey);
 		IF(var_opRoleId IS NOT NULL AND var_opRoleId <> '') THEN
 			# 取uap序列

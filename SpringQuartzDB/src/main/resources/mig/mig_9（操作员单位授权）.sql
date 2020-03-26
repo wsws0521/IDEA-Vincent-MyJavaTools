@@ -13,7 +13,7 @@ BEGIN
 
     # 1-因为UAP的sequence取的比较恶心，需要手动加一，所以临时创建一个sequence，然后使用AMI_GET_SEQUENCE()
     INSERT INTO sequence (NAME, current_value, increment) VALUES ('seq_uap_user_org_manage', 100000, 1);
-    # 2-插入
+    # 2-插入 uap_user_org_manage (只需要插入操作员所属单位下辖单位即可，都不影响全局档案售电)
     INSERT INTO `uap_user_org_manage` (`id`, `user_no`, `user_id`, `user_name`, `org_id`, `org_name`, `is_cascade`, `org_no`, `up_time`, `ORG_PATH_ID`)
     SELECT  AMI_GET_SEQUENCE('seq_uap_user_org_manage'), -- uap序列（临时替代）
             aa.userNo, -- uap_user.no
