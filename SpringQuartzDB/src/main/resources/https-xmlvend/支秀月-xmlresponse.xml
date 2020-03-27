@@ -1,0 +1,334 @@
+<!--仅供·第三方代理商·登录-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns2:user xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema">
+            <ns2:ID>26</ns2:ID>
+            <ns2:TID>26</ns2:TID>
+            <ns2:CDUID>26</ns2:CDUID>
+            <ns2:CDUName>SL116 Homegrown</ns2:CDUName>
+            <ns2:CDUBalance>-90.00</ns2:CDUBalance>
+            <ns2:MinVendAmt>0.00</ns2:MinVendAmt>
+            <ns2:MaxVendAmt>1500.00</ns2:MaxVendAmt>
+            <ns2:LoginTime>2020-03-27T12:51:23.000+02:00</ns2:LoginTime>
+        </ns2:user>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--查询用户表计信息-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns3:confirmCustomerResp xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+        <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:terminalID id="000098" xsi:type="ns2:GenericDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:reqMsgID dateTime="20191126090312" uniqueNumber="972238"/>
+        <ns2:respDateTime>2020-03-27T12:54:38.000+02:00</ns2:respDateTime>
+        <ns2:dispHeader/>
+        <ns3:confirmCustResult>
+            <ns3:custVendDetail accNo="CN_1234567891011" address="SA test" contactNo="0000000" daysLastPurchase="10" locRef="(8012)SMITHFIELD" name="test-key"/>
+            <ns3:custVendConfig>
+                <ns3:canVend>true</ns3:canVend>
+                <ns3:fbeDue>false</ns3:fbeDue>
+                <ns3:maxVendAmt symbol="R" value="1500.00"/>
+                <ns3:minVendAmt symbol="R" value="0.00"/>
+            </ns3:custVendConfig>
+            <ns3:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                <ns2:meterType at="07" tt="02"/>
+                <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                <ns2:minVendEng>24.96</ns2:minVendEng>
+            </ns3:meterDetail>
+        </ns3:confirmCustResult>
+    </ns3:confirmCustomerResp>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--单卖FBE--><!--目前已关闭该接口--><!--单独免费购电已关闭-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <SOAP-ENV:Fault>
+        <faultcode>SOAP-ENV:Server</faultcode>
+        <faultstring xml:lang="en">NRSFaultResponseSoapOut</faultstring>
+        <detail>
+            <ns2:xmlvendFaultResp xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema">
+                <ns2:fault xsi:type="ns2:SystemEx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <ns2:desc>Separate free electricity purchase is closed</ns2:desc>
+                    <ns2:faultCode>VD.17020012</ns2:faultCode>
+                </ns2:fault>
+            </ns2:xmlvendFaultResp>
+        </detail>
+    </SOAP-ENV:Fault>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--试购电-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns3:trialCreditVendResp xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+        <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:terminalID id="0000000000026" xsi:type="ns2:GenericDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="29702"/>
+        <ns2:respDateTime>2020-03-27T13:00:50.000+02:00</ns2:respDateTime>
+        <ns2:dispHeader>CREDIT VEND – TAX INVOICE|0|0.00|0</ns2:dispHeader>
+        <ns2:clientStatus>
+            <ns2:availCredit symbol="R" value="-90.00"/>
+        </ns2:clientStatus>
+        <ns2:utility address=" " name="MDC Tenant"/>
+        <ns2:vendor address="Gauteng Johannesburg" name="SL116 Homegrown"/>
+        <ns2:custVendDetail accNo="CN_1234567891011" address="SA test" daysLastPurchase="1" locRef="(8012)SMITHFIELD" name="test-key"/>
+        <ns3:creditVendReceipt receiptNo="000000000000000">
+            <ns3:transactions>
+                <ns3:tx receiptNo="000000000000000" xsi:type="ns3:CreditVendTx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <ns3:amt symbol="R" value="78.26"/>
+                    <ns3:tax rate="0.1500" xsi:type="ns2:VAT">
+                        <ns2:amt symbol="R" value="11.74"/>
+                    </ns3:tax>
+                    <ns3:creditTokenIssue xsi:type="ns2:SaleCredTokenIssue">
+                        <ns2:desc>SaleCredTokenIssue</ns2:desc>
+                        <ns2:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                            <ns2:meterType at="07" tt="02"/>
+                            <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                            <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                            <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                            <ns2:minVendEng>24.96</ns2:minVendEng>
+                        </ns2:meterDetail>
+                        <ns2:token xsi:type="ns2:STS1Token">
+                            <ns2:stsCipher>00000000000000000000</ns2:stsCipher>
+                        </ns2:token>
+                        <ns2:units siUnit="KWH" value="64.7"/>
+                        <ns2:resource xsi:type="ns2:Electricity"/>
+                    </ns3:creditTokenIssue>
+                    <ns3:tariff>
+                        <ns2:name>MANGAUNG-TG1(FBE)</ns2:name>
+                    </ns3:tariff>
+                </ns3:tx>
+                <ns3:lessRound symbol="R" value="90.00"/>
+                <ns3:tenderAmt symbol="R" value="90.00"/>
+                <ns3:change symbol="R" value="0"/>
+            </ns3:transactions>
+        </ns3:creditVendReceipt>
+    </ns3:trialCreditVendResp>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--购电-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns3:creditVendResp xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+        <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:terminalID id="0000000000026" xsi:type="ns2:GenericDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+        <ns2:respDateTime>2020-03-27T13:03:00.000+02:00</ns2:respDateTime>
+        <ns2:dispHeader>CREDIT VEND – TAX INVOICE|0|0|0</ns2:dispHeader>
+        <ns2:clientStatus>
+            <ns2:availCredit symbol="R" value="-180.00"/>
+        </ns2:clientStatus>
+        <ns2:utility address=" " name="MDC Tenant"/>
+        <ns2:vendor address="Gauteng Johannesburg" name="SL116 Homegrown"/>
+        <ns2:custVendDetail accNo="CN_1234567891011" address="SA test" daysLastPurchase="1" locRef="(8012)SMITHFIELD" name="test-key"/>
+        <ns3:creditVendReceipt receiptNo="000000000000090">
+            <ns3:transactions>
+                <ns3:tx receiptNo="000000000000090" xsi:type="ns3:CreditVendTx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <ns3:amt symbol="R" value="78.26"/>
+                    <ns3:tax rate="0.1500" xsi:type="ns2:VAT">
+                        <ns2:amt symbol="R" value="11.74"/>
+                    </ns3:tax>
+                    <ns3:creditTokenIssue xsi:type="ns2:SaleCredTokenIssue">
+                        <ns2:desc>SaleCredTokenIssue</ns2:desc>
+                        <ns2:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                            <ns2:meterType at="07" tt="02"/>
+                            <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                            <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                            <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                            <ns2:minVendEng>24.96</ns2:minVendEng>
+                        </ns2:meterDetail>
+                        <ns2:token xsi:type="ns2:STS1Token">
+                            <ns2:stsCipher>24563810754260247291</ns2:stsCipher>
+                        </ns2:token>
+                        <ns2:units siUnit="KWH" value="64.7"/>
+                        <ns2:resource xsi:type="ns2:Electricity"/>
+                    </ns3:creditTokenIssue>
+                    <ns3:tariff>
+                        <ns2:name>MANGAUNG-TG1(FBE)</ns2:name>
+                    </ns3:tariff>
+                </ns3:tx>
+                <ns3:lessRound symbol="R" value="90.00"/>
+                <ns3:tenderAmt symbol="R" value="90.00"/>
+                <ns3:change symbol="R" value="0"/>
+            </ns3:transactions>
+        </ns3:creditVendReceipt>
+    </ns3:creditVendResp>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--advice-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns2:adviceResp xsi:type="ns2:LastRespAdviceResp" xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID"/>
+        <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID"/>
+        <ns2:terminalID id="0000000000026" xsi:type="ns2:GenericDeviceID"/>
+        <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+        <ns2:respDateTime>2020-03-27T13:05:21.000+02:00</ns2:respDateTime>
+        <ns2:adviceReqMsgID dateTime="01911270000296" uniqueNumber="4001"/>
+        <ns2:lastResponse xsi:type="ns4:CreditVendResp">
+            <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID"/>
+            <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID"/>
+            <ns2:terminalID id="0000000000026" xsi:type="ns2:GenericDeviceID"/>
+            <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+            <ns2:respDateTime>2020-03-17T10:44:29.000+02:00</ns2:respDateTime>
+            <ns2:dispHeader>CREDIT VEND – TAX INVOICE|0|0|0</ns2:dispHeader>
+            <ns2:clientStatus>
+                <ns2:availCredit symbol="R" value="-180.00"/>
+            </ns2:clientStatus>
+            <ns2:utility address=" " name="MDC Tenant"/>
+            <ns2:vendor address="Gauteng Johannesburg" name="SL116 Homegrown"/>
+            <ns2:custVendDetail accNo="CN_1234567891011" address="SA test" daysLastPurchase="1" locRef="(8012)SMITHFIELD" name="test-key"/>
+            <ns4:creditVendReceipt receiptNo="000000000000082">
+                <ns4:transactions>
+                    <ns4:tx receiptNo="000000000000082" xsi:type="ns4:CreditVendTx">
+                        <ns4:amt symbol="R" value="78.26"/>
+                        <ns4:tax rate="0.1500" xsi:type="ns2:VAT">
+                            <ns2:amt symbol="R" value="11.74"/>
+                        </ns4:tax>
+                        <ns4:creditTokenIssue xsi:type="ns2:SaleCredTokenIssue">
+                            <ns2:desc>SaleCredTokenIssue</ns2:desc>
+                            <ns2:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                                <ns2:meterType at="07" tt="02"/>
+                                <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                                <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                                <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                                <ns2:minVendEng>24.96</ns2:minVendEng>
+                            </ns2:meterDetail>
+                            <ns2:token xsi:type="ns2:STS1Token">
+                                <ns2:stsCipher>51372007063548978410</ns2:stsCipher>
+                            </ns2:token>
+                            <ns2:units siUnit="KWH" value="64.7"/>
+                            <ns2:resource xsi:type="ns2:Electricity"/>
+                        </ns4:creditTokenIssue>
+                        <ns4:tariff>
+                            <ns2:name>MANGAUNG-TG1(FBE)</ns2:name>
+                        </ns4:tariff>
+                    </ns4:tx>
+                    <ns4:lessRound symbol="R" value="90.00"/>
+                    <ns4:tenderAmt symbol="R" value="90.00"/>
+                    <ns4:change symbol="R" value="0"/>
+                </ns4:transactions>
+            </ns4:creditVendReceipt>
+        </ns2:lastResponse>
+    </ns2:adviceResp>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <!--reprint-->
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+<SOAP-ENV:Header/>
+<SOAP-ENV:Body>
+    <ns3:reprintResp xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xmlns:ns3="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:ns4="http://www.nrs.eskom.co.za/xmlvend/meter/2.1/schema">
+        <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:terminalID id="R202003,202004" xsi:type="ns2:GenericDeviceID" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+        <ns2:respDateTime>2020-03-27T13:08:10.000+02:00</ns2:respDateTime>
+        <ns3:reprint xsi:type="ns3:CreditVendResp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID"/>
+            <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID"/>
+            <ns2:terminalID id="R202003,202004" xsi:type="ns2:GenericDeviceID"/>
+            <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+            <ns2:respDateTime>2020-03-17T10:44:29.000+02:00</ns2:respDateTime>
+            <ns2:dispHeader>CREDIT VEND – TAX INVOICE|0|0|0</ns2:dispHeader>
+            <ns2:clientStatus>
+                <ns2:availCredit symbol="R" value="-180.00"/>
+            </ns2:clientStatus>
+            <ns2:utility address=" " name="MDC Tenant"/>
+            <ns2:vendor address="Gauteng Johannesburg" name="SL116 Homegrown"/>
+            <ns2:custVendDetail accNo="CN_1234567891011" address="SA test" daysLastPurchase="1" locRef="(8012)SMITHFIELD" name="test-key"/>
+            <ns3:creditVendReceipt receiptNo="000000000000082">
+                <ns3:transactions>
+                    <ns3:tx receiptNo="000000000000082" xsi:type="ns3:CreditVendTx">
+                        <ns3:amt symbol="R" value="78.26"/>
+                        <ns3:tax rate="0.1500" xsi:type="ns2:VAT">
+                            <ns2:amt symbol="R" value="11.74"/>
+                        </ns3:tax>
+                        <ns3:creditTokenIssue xsi:type="ns2:SaleCredTokenIssue">
+                            <ns2:desc>SaleCredTokenIssue</ns2:desc>
+                            <ns2:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                                <ns2:meterType at="07" tt="02"/>
+                                <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                                <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                                <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                                <ns2:minVendEng>24.96</ns2:minVendEng>
+                            </ns2:meterDetail>
+                            <ns2:token xsi:type="ns2:STS1Token">
+                                <ns2:stsCipher>51372007063548978410</ns2:stsCipher>
+                            </ns2:token>
+                            <ns2:units siUnit="KWH" value="64.7"/>
+                            <ns2:resource xsi:type="ns2:Electricity"/>
+                        </ns3:creditTokenIssue>
+                        <ns3:tariff>
+                            <ns2:name>MANGAUNG-TG1(FBE)</ns2:name>
+                        </ns3:tariff>
+                    </ns3:tx>
+                    <ns3:lessRound symbol="R" value="90.00"/>
+                    <ns3:tenderAmt symbol="R" value="90.00"/>
+                    <ns3:change symbol="R" value="0"/>
+                </ns3:transactions>
+            </ns3:creditVendReceipt>
+        </ns3:reprint>
+        <ns3:reprint xsi:type="ns3:CreditVendResp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ns2:clientID ean="0000000000026" xsi:type="ns2:EANDeviceID"/>
+            <ns2:serverID ean="3210987654321" xsi:type="ns2:EANDeviceID"/>
+            <ns2:terminalID id="R202003,202004" xsi:type="ns2:GenericDeviceID"/>
+            <ns2:reqMsgID dateTime="01911270000296" uniqueNumber="4002"/>
+            <ns2:respDateTime>2020-03-27T13:02:54.000+02:00</ns2:respDateTime>
+            <ns2:dispHeader>CREDIT VEND – TAX INVOICE|0|0|0</ns2:dispHeader>
+            <ns2:clientStatus>
+                <ns2:availCredit symbol="R" value="-180.00"/>
+            </ns2:clientStatus>
+            <ns2:utility address=" " name="MDC Tenant"/>
+            <ns2:vendor address="Gauteng Johannesburg" name="SL116 Homegrown"/>
+            <ns2:custVendDetail accNo="CN_1234567891011" address="SA test" daysLastPurchase="1" locRef="(8012)SMITHFIELD" name="test-key"/>
+            <ns3:creditVendReceipt receiptNo="000000000000090">
+                <ns3:transactions>
+                    <ns3:tx receiptNo="000000000000090" xsi:type="ns3:CreditVendTx">
+                        <ns3:amt symbol="R" value="78.26"/>
+                        <ns3:tax rate="0.1500" xsi:type="ns2:VAT">
+                            <ns2:amt symbol="R" value="11.74"/>
+                        </ns3:tax>
+                        <ns3:creditTokenIssue xsi:type="ns2:SaleCredTokenIssue">
+                            <ns2:desc>SaleCredTokenIssue</ns2:desc>
+                            <ns2:meterDetail krn="1" msno="14339800360" sgc="008000" ti="01">
+                                <ns2:meterType at="07" tt="02"/>
+                                <ns2:maxVendAmt>300.00</ns2:maxVendAmt>
+                                <ns2:minVendAmt>33.33</ns2:minVendAmt>
+                                <ns2:maxVendEng>224.70</ns2:maxVendEng>
+                                <ns2:minVendEng>24.96</ns2:minVendEng>
+                            </ns2:meterDetail>
+                            <ns2:token xsi:type="ns2:STS1Token">
+                                <ns2:stsCipher>24563810754260247291</ns2:stsCipher>
+                            </ns2:token>
+                            <ns2:units siUnit="KWH" value="64.7"/>
+                            <ns2:resource xsi:type="ns2:Electricity"/>
+                        </ns3:creditTokenIssue>
+                        <ns3:tariff>
+                            <ns2:name>MANGAUNG-TG1(FBE)</ns2:name>
+                        </ns3:tariff>
+                    </ns3:tx>
+                    <ns3:lessRound symbol="R" value="90.00"/>
+                    <ns3:tenderAmt symbol="R" value="90.00"/>
+                    <ns3:change symbol="R" value="0"/>
+                </ns3:transactions>
+            </ns3:creditVendReceipt>
+        </ns3:reprint>
+    </ns3:reprintResp>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
