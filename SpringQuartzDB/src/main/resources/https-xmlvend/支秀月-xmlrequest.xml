@@ -95,7 +95,7 @@ https://192.168.80.37:8443/xmlvend/xmlvend.wsdl
         <ns2:creditVendReq xmlns:ns2="http://www.nrs.eskom.co.za/xmlvend/revenue/2.1/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:CreditVendReq">
             <clientID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="EANDeviceID" ean="0000000000026"/>
             <terminalID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" xsi:type="GenericDeviceID" id="0000000000026"/>
-            <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="201911270000296" uniqueNumber="4002"/>
+            <msgID xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema" dateTime="201911270000296" uniqueNumber="4003"/>
             <authCred xmlns="http://www.nrs.eskom.co.za/xmlvend/base/2.1/schema">
                 <opName>AG000026</opName>
                 <password>CENT123456</password>
