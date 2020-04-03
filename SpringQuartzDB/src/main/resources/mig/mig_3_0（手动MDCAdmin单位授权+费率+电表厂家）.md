@@ -22,6 +22,23 @@ Update vd_e_bill_pkg_ver set ti = 1; -- 15个winter被更新
 新系统执行：
 Update vd_e_bill_pkg_ver set STATUS = '05' where STATUS = '03';  -- 15个summer+2个非盈利=17个被更新
 
+## ⑤ 准备电表厂家
+mysql先建临时表 tmp_dbcj：
+```
+CREATE TABLE `tmp_dbcj` (
+  `MT_MODEL` varchar(255) NOT NULL,
+  `MANUFACTURER_DESC` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`MT_MODEL`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+mysql导入向导：
+```
+select isnull(m.MT_MODEL_DESC,'') MT_MODEL, f.MANUFACTURER_DESC
+from IKERNEL_MANUFACTURER f
+left join IKERNEL_MT_TYPE m on f.MANUFACTURER_ID=m.MANUFACTURER_ID
+where m.MT_MODEL_DESC is not null
+```
+
 ## 注意：
 0、所有费率方案均可挂在根单位下，
 暂时统一选居民=低压居民，商业=非居民

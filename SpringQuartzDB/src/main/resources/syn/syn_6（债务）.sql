@@ -83,12 +83,12 @@ BEGIN
 	SELECT
 		2, AMI_GET_SEQUENCE('seq_vd_a_user_debt'), b.cons_id,
 		a.debt_total,	-- 债务金额
-		CASE WHEN a.dtype = 1 THEN '01'
+		CASE WHEN a.dtype = 1 THEN '08'
 			WHEN a.dtype = 2 THEN '06'
 			WHEN a.dtype = 3 THEN '04'
 			WHEN a.dtype = 4 THEN '03'
 			ELSE NULL
-		END,			-- zwsqlx债务收取类型: 01 按购电百分比 02 按截止日期 03一次性付清 04 债务百分比按次 05 债务百分比按月 06 固定金额按次 07固定金额按月
+		END,			-- zwsqlx债务收取类型: 01 按购电百分比 02 按截止日期 03一次性付清 04 债务百分比按次 05 债务百分比按月 06 固定金额按次 07固定金额按月 08 按总金额百分比（新增）
 		a.debtnm,		-- 债务名称
 		CASE WHEN a.dtype = 1 THEN a.pmoneypct
 			WHEN a.dtype = 2 THEN a.minpay

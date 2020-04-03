@@ -49,7 +49,12 @@ BEGIN
 	--		WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
 	--		ELSE '02' 							-- 未绑用户，则认为‘状态’是02运行
 	--		END, 								-- dbzt状态：01入库、02运行、03投运、04拆回
-		NULL, 											-- 电表厂家
+		(SELECT pc.value
+			FROM p_sys_code pc
+			LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
+			WHERE cj.MANUFACTURER_DESC IS NOT NULL
+			AND pc.code_type = 'dbcj' AND lang = 'en_US'
+			AND pcl.text = cj.MANUFACTURER_DESC), 		-- dbcj电表厂家,PCODE 根据表型关联
 		NULL, 											-- 外部标识
 		NULL, 											-- 功能版本流水号
 		'02', 											-- bjms表计模式：01正常模式、02预付费模式
@@ -72,7 +77,7 @@ BEGIN
 		LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
 		WHERE pc.code_type = 'meter_mgt_status' AND lang = 'en_US'
 		AND pcl.text = b.meterstatus) 					-- v_mgt_status 管理状态
-	FROM tmp_bj b
+	FROM tmp_bj b LEFT JOIN tmp_dbcj cj ON b.mt_model_desc = cj.MT_MODEL
 	WHERE NOT EXISTS(SELECT meter.assetno FROM a_equip_meter meter WHERE b.mt_comm_addr = meter.assetno);
 
 	# 2-插入表计预付费表
