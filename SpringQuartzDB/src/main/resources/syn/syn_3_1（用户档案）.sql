@@ -63,7 +63,7 @@ BEGIN
 			WHEN a.status IN (2, 5, 6, 8) AND (SELECT COUNT(MT_COMM_ADDR) FROM tmp_bj bj WHERE bj.customer_id=a.customer_id)>0 THEN '04' -- 已装表
 			ELSE '03'
 		END), -- 用户状态，依赖于于表计临时表
-		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2,
 		a.US_IDNUM, -- 身份证号（新增）
 		a.StandNumber -- 地址资产编号（新增）
 	FROM tmp_yh a

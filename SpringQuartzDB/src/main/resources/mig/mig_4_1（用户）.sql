@@ -46,7 +46,7 @@ BEGIN
 			WHEN a.status IN (2, 5, 6, 8) AND b.MT_COMM_ADDR IS NOT NULL AND b.MT_COMM_ADDR <> '' THEN '04' -- 已装表
 			ELSE '03'
 		END), -- 用户状态，依赖于于表计临时表
-		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2,
 		a.US_IDNUM, -- 身份证号（新增）
 		a.StandNumber -- 地址资产编号（新增）
 	FROM tmp_yh a

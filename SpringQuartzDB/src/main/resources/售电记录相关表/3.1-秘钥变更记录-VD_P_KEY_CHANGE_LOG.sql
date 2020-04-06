@@ -1,0 +1,51 @@
+-- MySQL dump 10.13  Distrib 5.7.12, for Linux (x86_64)
+--
+-- Host: 172.30.12.203    Database: mdc20190221
+-- ------------------------------------------------------
+-- Server version	5.7.12
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE=''+00:00'' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=''NO_AUTO_VALUE_ON_ZERO'' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `vd_p_key_change_log`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `vd_p_key_change_log` (
+  `LESSEE_ID` bigint(20) DEFAULT NULL COMMENT ''本实体唯一标识符'',
+  `KEY_CHG_ID` decimal(16,0) NOT NULL COMMENT ''本实体记录唯一标识，产生规则为流水号,'',
+  `STS_VERSION_ID` decimal(16,0) DEFAULT NULL COMMENT ''密钥版本标识'',
+  `OLD_STS_VERSION_ID` decimal(16,0) DEFAULT NULL COMMENT ''原密钥版本标识'',
+  `TI` decimal(5,0) DEFAULT NULL COMMENT ''TI值'',
+  `OLD_TI` decimal(5,0) DEFAULT NULL COMMENT ''原TI值'',
+  `SES_VERSION` varchar(8) DEFAULT NULL COMMENT ''加密版本（软加密）'',
+  `OLD_SES_VERSION` varchar(8) DEFAULT NULL COMMENT ''原加密版本（软加密）'',
+  `KEYNO` decimal(5,0) DEFAULT NULL COMMENT ''来自meterseq（1-200），超过200，keyno自动加1，然后meterseq变为1'',
+  `KEYNOOLD` decimal(5,0) DEFAULT NULL COMMENT ''来自meterseq（1-200），超过200，keyno自动加1，然后meterseq变为1'',
+  `ORG_ID` bigint(20) DEFAULT NULL COMMENT ''供电单位编号:供电管理单位的代码'',
+  `TV`		DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`KEY_CHG_ID`, `TV`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=''预付费订单除收费以外的信息：密钥、购电量等信息''
+PARTITION BY RANGE (TO_DAYS(TV))(PARTITION PMAX VALUES LESS THAN (MAXVALUE));
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-02-22 17:08:09
