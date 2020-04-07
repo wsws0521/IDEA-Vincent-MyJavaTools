@@ -93,26 +93,3 @@ BEGIN
 	SELECT t_error, msg;
 END
 
-
-------------------------------------sqlserver数据源获取  66-------------------------------------------
-
-select  ltrim(rtrim(c.TE_NAME)) TE_NAME,
-        ltrim(rtrim(c.TE_ADDRESS)) TE_ADDRESS,
-        c.TE_MINVAL,
-        c.TE_MAXVAL,
-        r.REGIONNAME as CDUArea,
-        c.TE_CREDIT
-from IPARA_CDUSTATION c
-left join IPARA_CDUREGION r on c.REGIOINID=r.REGION_ID
-
--------------------------------------tmp_dls  自动建表语句-----------------------------------------
-
-CREATE TABLE `tmp_dls` (
-  `TE_NAME` varchar(128) NOT NULL,
-  `TE_ADDRESS` varchar(128) DEFAULT NULL,
-  `TE_MINVAL` varchar(128) DEFAULT NULL,
-  `TE_MAXVAL` varchar(128) DEFAULT NULL,
-  `CDUArea` varchar(128) DEFAULT NULL,
-  `TE_CREDIT` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`TE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,5 +1,8 @@
 ## [手动]
 ### ① 清空 vd_pre_model；
+```sql
+DELETE FROM vd_pre_model;
+```
 ### ② 手动跑 V2_0_104__VD_PRE_MODEL_DATA.sql 脚本；
 
 

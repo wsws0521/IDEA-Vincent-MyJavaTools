@@ -63,49 +63,5 @@ BEGIN
 END
 
 
-------------------------------------sqlserver数据源获取-------------------------------------------
-
-select  CUSTOMER_ID,
-        RTRIM(LTRIM(replace(CUSTOMER_NAME,',','.'))) customer_name,
-        r.STATUS,
-        OPENACCOUNT_DATE,
-        RTRIM(LTRIM(isnull(REPLACE(REPLACE(ADDRESS,';',' '),',','.'),''))) ADDRESS,
-        RTRIM(LTRIM(isnull(REPLACE(LINKMAN,',','.'),''))) StandNumber,
-        RTRIM(LTRIM(isnull(REPLACE(LINKMAN_PHONE,',','.'),''))) LINKMAN_PHONE,
-        r.POWER_SUPPLYER as Station_id,
-        US_TI,RTRIM(LTRIM(isnull(REPLACE(US_IDNUM,',','.'),''))) US_IDNUM,
-        RTRIM(LTRIM(isnull(REPLACE(US_EMAIL,',','.'),''))) US_EMAIL,
-        RTRIM(LTRIM(isnull(REPLACE(US_ZIP,',','.'),''))) US_ZIP,US_SEX,
-        RTRIM(LTRIM(isnull(REPLACE(BANKACCOUNT,',','.'),''))) BANKACCOUNT,
-        ISNULL(BUSINESS_REGISTRATION_NUMBER,'') as BUSINESS_REGISTRATION_NUMBER,
-        isnull(tg.TG_NAME,'') as TARIFFNAME
-from IPARA_RESIDENT r
-left join IPARA_OBJECT ot on ot.OBJECT_ID=r.POWER_SUPPLYER
-left join TARIFF_GROUP tg on tg.TARIFFGROUPID=ot.TARIFFGROUPID
-
--------------------------------------tmp_yh  自动建表语句-----------------------------------------
-
-CREATE TABLE `tmp_yh` (
-  `CUSTOMER_ID` varchar(128) NOT NULL,
-  `customer_name` varchar(128) DEFAULT NULL,
-  `STATUS` varchar(128) DEFAULT NULL,
-  `OPENACCOUNT_DATE` varchar(128) DEFAULT NULL,
-  `ADDRESS` varchar(128) DEFAULT NULL,
-  `StandNumber` varchar(128) DEFAULT NULL,
-  `LINKMAN_PHONE` varchar(128) DEFAULT NULL,
-  `Station_id` varchar(128) DEFAULT NULL,
-  `US_TI` varchar(128) DEFAULT NULL,
-  `US_IDNUM` varchar(128) DEFAULT NULL,
-  `US_EMAIL` varchar(128) DEFAULT NULL,
-  `US_ZIP` varchar(128) DEFAULT NULL,
-  `US_SEX` varchar(128) DEFAULT NULL,
-  `BANKACCOUNT` varchar(128) DEFAULT NULL,
-  `BUSINESS_REGISTRATION_NUMBER` varchar(128) DEFAULT NULL,
-  `TARIFFNAME` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`CUSTOMER_ID`),
-  KEY `index_yh_tariffname` (`TARIFFNAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
 
 

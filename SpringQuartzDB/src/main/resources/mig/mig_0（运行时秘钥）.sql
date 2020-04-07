@@ -48,7 +48,7 @@ BEGIN
 	FROM DUAL;
 
 	# 4-更新STS2加密服务地址
-	UPDATE P_THIRD_PARTY SET INTERFACE_URL = 'http://192.168.80.35:8010/EncrptionService/rest/sts' WHERE BUSINESS_TYPE = '0402';
+	UPDATE P_THIRD_PARTY SET INTERFACE_URL = 'http://192.168.81.2:8010/EncrptionService/rest/sts' WHERE BUSINESS_TYPE = '0402';
 
 	# 5-1993-存储vk至 VD_P_VK
     /*现场模式 000397*/

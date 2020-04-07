@@ -46,7 +46,7 @@ BEGIN
 	SELECT t_error, msg;
 END
 
--------------------------------------tmp_user_org  自动建表语句-----------------------------------------
+-- -----------------------------------tmp_user_org  自动建表语句-----------------------------------------
 -- CREATE TABLE `tmp_user_org` (
 --   `mainkey` varchar(128) NOT NULL AUTO_INCREMENT,
 --   `userNo` varchar(128) DEFAULT NULL,

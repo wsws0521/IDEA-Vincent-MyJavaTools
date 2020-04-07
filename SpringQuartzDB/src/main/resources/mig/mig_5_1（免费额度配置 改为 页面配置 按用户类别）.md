@@ -1,8 +1,6 @@
 
 
-
-
-
+## 启动主站 》》 Tariff Setting 》》 Discount Setting 》》 add
 
 -----Name: FBE
 -----Type: Free Credit
@@ -13,7 +11,7 @@
 -----Expire Date: NULL
 -----File: 201-50
 
-
+## 关闭主站，先检查表型，再进行一次Navicat备份（mig_5_1.psc）（忽略tmp表）
 
 ----------------------------------------------------------------
 

@@ -110,7 +110,7 @@ left join IAUDIT_USER u on u.USER_ID=b.OPERATORID
 left join IPARA_CDUSTATION cdu on cdu.TERRITORYID=b.CDUID
 where b.BATCHNO=0
 
--------------------------------------tmp_hzjl  自动建表语句-----------------------------------------
+-------------------------------------tmp_rjd  自动建表语句-----------------------------------------
 CREATE TABLE `tmp_rjd` (
   `BANKINGNO` varchar(128) NOT NULL,
   `STARTTIME` varchar(128) DEFAULT NULL,

@@ -85,36 +85,6 @@ BEGIN
 END
 
 
------------------------------sqlserver数据源获取(最好也是半夜执行，后面不会再单独同步本日的累计值)-------------------------
-SELECT SUM(OCD_ENERGY) energy,
-        m.MT_COMM_ADDR,
-        convert(varchar(19),max(o.OD_DATE),120) as LASTVENDDATE,
-        o.ISFREE,
-        '0' as ISUSED
-FROM ORDER_trn o
-inner join IPARA_MTRPOINT m on o.METERID=m.MTRPOINT_ID
-inner join IPARA_RESIDENT r on r.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
-where   m.ACTUAL_CUSTOMER_ID is not null
-        and isnull(o.DELFLAG,0)=0
-        and DATEDIFF(MONTH,o.OD_DATE,GETDATE())=0
-group by m.MT_COMM_ADDR,o.ISFREE
-
--------------------------------------tmp_ljz  自动建表语句-----------------------------------------
-CREATE TABLE `tmp_ljz` (
-  `energy` varchar(128) DEFAULT NULL,
-  `MT_COMM_ADDR` varchar(128) NOT NULL,
-  `LASTVENDDATE` varchar(128) NOT NULL,
-  `ISFREE` varchar(128) NOT NULL,
-  `ISUSED` varchar(128) NOT NULL,
-  `meterId` varchar(128) DEFAULT NULL COMMENT '新系统对应-表计ID',
-  `consId` varchar(128) DEFAULT NULL COMMENT '新系统对应-用户ID',
-  `energy_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  `MT_COMM_ADDR_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  `LASTVENDDATE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  `ISFREE_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  `ISUSED_old` varchar(128) DEFAULT NULL COMMENT 'NULL',
-  PRIMARY KEY (`MT_COMM_ADDR`,`LASTVENDDATE`,`ISFREE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 

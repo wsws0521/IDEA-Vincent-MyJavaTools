@@ -1,3 +1,27 @@
+-------------------------------------tmp_dw  自动建表语句------------------------------------------
+CREATE TABLE `tmp_dw` (
+  `object_id` varchar(128) NOT NULL,
+  `OBJECT_TYPE` varchar(128) DEFAULT NULL,
+  `FatherId` varchar(128) DEFAULT NULL,
+  `OBJECT_NAME` varchar(128) DEFAULT NULL,
+  `SGC` varchar(128) DEFAULT NULL,
+  `NEWID` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-------------------------刷新导入【192.168.108.11,1433】，sqlserver数据源获取(85)----------------------
+select  cast(o.OBJECT_ID as varchar) as 'object_id',
+        o.OBJECT_TYPE,
+        (case when o.REGION_ID=-1 then o.GRID_ID else o.REGION_ID end) as 'FatherId',
+        rtrim(replace(o.OBJECT_NAME,',','-')) as 'OBJECT_NAME',
+        RIGHT('000000'+CAST(o2.SGCID as varchar(10)),6) as SGC,
+        '' as 'NEWID'
+from IPARA_OBJECT o
+left join (select on2.*,row_number() over (partition by on2.region_id order by modifydate desc) rn from IPARA_OBJECT on2 where on2.OBJECT_TYPE=2) o2
+            on o2.REGION_ID=o.OBJECT_ID and rn=1
+where o.OBJECT_TYPE in(1,2,0)
+order by OBJECT_NAME,FatherId
+-------------------------------------存储过程------------------------------------------
+
 BEGIN
 	DECLARE done INT DEFAULT 0; 			/* 结束标识 */
 	DECLARE mainKey VARCHAR(64); 			/* 游标所取的字段值 */
@@ -168,25 +192,4 @@ BEGIN
 
 END
 
-------------------------------------sqlserver数据源获取(85)-------------------------------------------
-select  cast(o.OBJECT_ID as varchar) as 'object_id',
-        o.OBJECT_TYPE,
-        (case when o.REGION_ID=-1 then o.GRID_ID else o.REGION_ID end) as 'FatherId',
-        rtrim(replace(o.OBJECT_NAME,',','-')) as 'OBJECT_NAME',
-        RIGHT('000000'+CAST(o2.SGCID as varchar(10)),6) as SGC,
-        '' as 'NEWID'
-from IPARA_OBJECT o
-left join (select on2.*,row_number() over (partition by on2.region_id order by modifydate desc) rn from IPARA_OBJECT on2 where on2.OBJECT_TYPE=2) o2
-            on o2.REGION_ID=o.OBJECT_ID and rn=1
-where o.OBJECT_TYPE in(1,2,0)
-order by OBJECT_NAME,FatherId
--------------------------------------tmp_dw  自动建表语句------------------------------------------
-CREATE TABLE `tmp_dw` (
-  `object_id` varchar(128) NOT NULL,
-  `OBJECT_TYPE` varchar(128) DEFAULT NULL,
-  `FatherId` varchar(128) DEFAULT NULL,
-  `OBJECT_NAME` varchar(128) DEFAULT NULL,
-  `SGC` varchar(128) DEFAULT NULL,
-  `NEWID` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
