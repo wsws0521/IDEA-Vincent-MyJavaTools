@@ -20,7 +20,7 @@ BEGIN
 	WHERE NOT EXISTS(SELECT bj.mt_comm_addr FROM tmp_bj bj WHERE bj.mt_comm_addr = bj1.mt_comm_addr);
 
 	/*1-更新表计旧系统状态*/
-	/*1-更新表计状态，如果表绑定到了新户，则status为运行02，否则拆回04*/
+	/*1-更新表计状态：拆回04*/
 	UPDATE a_equip_meter metermain
 		INNER JOIN temp_bj tb ON tb.mt_comm_addr=metermain.assetno and metermain.meter_mode='02'
 	SET metermain.mgt_status=(SELECT pc.value

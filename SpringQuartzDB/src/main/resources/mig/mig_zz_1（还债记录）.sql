@@ -51,18 +51,18 @@ BEGIN
 
 	# 清除还债记录数据(并轨结束后才迁移该记录，实收应收表已存在业务记录，不能删除)
 -- 	DELETE FROM VD_A_RCVED_DEBT;
--- 	DELETE FROM VD_A_RCVED_FLOW;
+-- 	DELETE FROM VD_A_RCVED_FLOW WHERE DEBTID IS NOT NULL OR ORDERID IS NOT NULL;
 --
--- 	DELETE FROM VD_A_PAY_FLOW;
+-- 	DELETE FROM VD_A_PAY_FLOW WHERE DEBTID IS NOT NULL OR ORDERID IS NOT NULL;
 --
 -- 	DELETE FROM VD_A_RCVBL_DEBT;
--- 	DELETE FROM VD_A_RCVBL_FLOW;
+-- 	DELETE FROM VD_A_RCVBL_FLOW WHERE DEBTID IS NOT NULL OR ORDERID IS NOT NULL;
 
 	# 1-插入 应收表
 	INSERT INTO vd_a_rcvbl_flow
 		(lessee_id, rcvbl_amt_id, calc_id, amt_type, rcvbl_ym, obj_type, obj_id, obj_no, meter_id, meter_no,
 		rcvbl_amt, rcved_amt, rcvbl_penalty, rcved_penalty, status_code, settle_flag, penalty_bgn_date, release_date, relate_id,
-		relate_flag, src, res_quan, org_id, bus_from_obj, bus_from_obj_id, debtid, orderid)
+		relate_flag, src, res_quan, org_id, bus_from_obj, bus_from_obj_id, tv, debtid, orderid)
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVBL_FLOW'), NULL,
 		'11', -- 费用类型:产生应收的来源分类，包括01 电费 02免费电费 11 债务 21 佣金 31 费率费用 32免费费率费用 41 业务费
@@ -83,6 +83,7 @@ BEGIN
 		d.id, -- 单位id
 		NULL, -- 业务来源对象
 		NULL, -- 业务来源标识
+		a.paydate, -- 手动插入TV字段，应用于分区（该值不应为空）
 		a.debtid, -- 临时存储所属老表债务ID
 		a.orderid -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
 	FROM tmp_hzjl a
@@ -93,11 +94,12 @@ BEGIN
 	# 2-插入 应收表（债务）
 	INSERT INTO vd_a_rcvbl_debt
 		(lessee_id, rcvbl_debt_id, rcvbl_amt_id, debt_id, debt_type, amount,
-		remain_debt, debt_value, expired_date, rcved_amt, org_id, rcvbl_amt)
+		remain_debt, debt_value, expired_date, rcved_amt, org_id, rcvbl_amt, tv)
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVBL_DEBT'), b.RCVBL_AMT_ID, c.DEBT_ID, c.DEBT_TYPE, c.debt_amount, -- 债务金额，取总金额
 		a.payedBalance + a.paymoney, -- 剩余债务：目前是存的此笔偿还之前的剩余！！！
-		c.DEBT_VALUE, c.EXPIRED_DATE, a.paymoney, b.ORG_ID, a.paymoney
+		c.DEBT_VALUE, c.EXPIRED_DATE, a.paymoney, b.ORG_ID, a.paymoney,
+		a.paydate -- 手动插入TV字段，应用于分区（该值不应为空）
 	FROM tmp_hzjl a, vd_a_rcvbl_flow b, vd_a_user_debt c
 	WHERE a.DEBTID = b.DEBTID AND a.orderid = b.ORDERID AND a.DEBTID = c.DEBT_FROM_OBJ_ID;
 
@@ -106,8 +108,8 @@ BEGIN
 		(lessee_id, charge_id, ds_id, obj_type, obj_id, obj_no, meter_id, meter_no,
 		charge_ym, charge_date, acct_ym, type_code, rcv_amt, change_amt, rcvd_amt,
 		charge_oper, settle_mode, settle_note_no, settle_bank_code, dept_id, rcv_org_id,
-		charge_remark, relate_id, src, org_id, pay_bank_acc, rcv_bank, rcv_bank_acc, channel,
-		debtid, orderid)
+		charge_remark, relate_id, src, org_id, pay_bank_acc, rcv_bank, rcv_bank_acc,
+		tv, channel, debtid, orderid)
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_PAY_FLOW'), NULL, -- 日结标识
 		'02', -- 对象类型:01客户、02用户03代理商04加密盒03表计厂商
@@ -129,6 +131,7 @@ BEGIN
 		NULL, -- 付款账号
 		NULL, -- 付款银行
 		NULL, -- 收款账号
+		a.paydate, -- 手动插入TV字段，应用于分区（该值不应为空）
 		NULL, -- 渠道
 		a.debtid, -- 临时存储所属老表债务ID
 		a.orderid -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
@@ -138,7 +141,7 @@ BEGIN
 	# 4-插入 实收表
 	INSERT INTO vd_a_rcved_flow
 		(lessee_id, rcved_amt_id, charge_id, rcvbl_amt_id, cons_no, meter_id, asset_no, rcved_date, rcvbl_ym,
-		this_rcved_amt, this_penalty, amt_type, owe_amt, org_id, debtid, orderid)
+		this_rcved_amt, this_penalty, amt_type, owe_amt, org_id, tv, debtid, orderid)
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'),
 		c.CHARGE_ID, b.RCVBL_AMT_ID, b.OBJ_NO, b.METER_ID, b.METER_NO,
@@ -146,6 +149,7 @@ BEGIN
 		ROUND(a.paymoney, 2), NULL,
 		'11', -- 按产生应收的来源分类，包括01 电费 02免费电费 11 债务 21 佣金 31 费率费用 32免费费率费用 41 业务费
 		NULL, b.ORG_ID,
+		a.paydate, -- 手动插入TV字段，应用于分区（该值不应为空）
 		a.debtid, -- 临时存储所属老表债务ID
 		a.orderid -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
 	FROM tmp_hzjl a, vd_a_rcvbl_flow b, vd_a_pay_flow c
@@ -154,9 +158,10 @@ BEGIN
 
 	# 5-插入 实收表（债务）
 	INSERT INTO vd_a_rcved_debt
-		(lessee_id, rcved_debt_id, rcvbl_debt_id, rcved_amt_id, this_rcved_amt, remark, org_id)
+		(lessee_id, rcved_debt_id, rcvbl_debt_id, rcved_amt_id, this_rcved_amt, remark, org_id, tv)
 	SELECT
-		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_DEBT'), b.RCVBL_AMT_ID, c.RCVED_AMT_ID, a.paymoney, 'Centlec debt record', b.ORG_ID
+		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_DEBT'), b.RCVBL_AMT_ID, c.RCVED_AMT_ID, a.paymoney, 'Centlec debt record', b.ORG_ID,
+		a.paydate -- 手动插入TV字段，应用于分区（该值不应为空）
 	FROM tmp_hzjl a, vd_a_rcvbl_flow b, vd_a_rcved_flow c
 	WHERE a.DEBTID = b.DEBTID AND a.orderid = b.ORDERID
 	AND a.DEBTID = c.DEBTID AND a.orderid = c.ORDERID;

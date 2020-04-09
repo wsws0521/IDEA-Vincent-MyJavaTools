@@ -69,18 +69,22 @@ BEGIN
 	FROM tmp_yh a
 	LEFT JOIN uap_organization c ON CONCAT('ORG_',a.station_id) = c.CODE
 	WHERE NOT EXISTS(SELECT cons.CONS_NO FROM a_consumer cons WHERE CONCAT('CN_',a.customer_id) = cons.CONS_NO);
+	-- 工商业用户，注册号不能为空
+	update a_consumer set reg_no = '000000000000' where cons_sort_code = '02' and (reg_no is null or reg_no = '');
+	-- 所有用户，身份证号不能为空，必须数字13位
+    update a_consumer set id_no = '0000000000000' where id_no is null or id_no = '';
 
 	# 3-用户档案关键信息更新（租户换房，租户信息修改）
 	UPDATE a_consumer cons INNER JOIN tmp_yh yh ON CONCAT('CN_',yh.customer_id) = cons.CONS_NO
 	SET cons.cons_name = yh.customer_name,
-	cons.cons_sort_code = (CASE WHEN yh.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
+	    cons.cons_sort_code = (CASE WHEN yh.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
 			                        ELSE '04' -- 低压居民
 		                       END),
-	cons.reg_no = yh.BUSINESS_REGISTRATION_NUMBER,
-	cons.elec_addr = yh.address,
-	cons.elec_type_code = IF(yh.tariffname IN ('MANGAUNG-TG1(FBE)','MANTSOPA-TG2(FBE)', 'NALEDI-TG3(FBE)','MOHOKARE-TG4(FBE)', 'KOPANONG-TG5(FBE)'), '201', NULL),
-	cons.id_no = yh.US_IDNUM,
-	cons.erf_stand = yh.StandNumber;
+	    cons.reg_no = yh.BUSINESS_REGISTRATION_NUMBER,
+	    cons.elec_addr = yh.address,
+	    cons.elec_type_code = IF(yh.tariffname IN ('MANGAUNG-TG1(FBE)','MANTSOPA-TG2(FBE)', 'NALEDI-TG3(FBE)','MOHOKARE-TG4(FBE)', 'KOPANONG-TG5(FBE)'), '201', NULL),
+	    cons.id_no = yh.US_IDNUM,
+	    cons.erf_stand = yh.StandNumber;
 
 	# 4-用户档案关键信息更新（租户换房，租户信息修改）（性别/联系方式）
     UPDATE a_consumer_contacts a
@@ -89,9 +93,9 @@ BEGIN
         FROM a_consumer b INNER JOIN tmp_yh c ON SUBSTRING_INDEX(b.CONS_NO,'_',-1) = c.CUSTOMER_ID) tmp
     ON a.CONS_ID = tmp.CONS_ID
     SET a.PHONE_NUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
-            a.TELEPHONENUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
-            a.EMAIL = tmp.US_EMAIL,
-    		a.GENDER = IF(tmp.us_sex = 0,'01','02');
+        a.TELEPHONENUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
+        a.EMAIL = tmp.US_EMAIL,
+        a.GENDER = IF(tmp.us_sex = 0,'01','02');
 
 	IF t_error = 1 THEN
 		ROLLBACK;

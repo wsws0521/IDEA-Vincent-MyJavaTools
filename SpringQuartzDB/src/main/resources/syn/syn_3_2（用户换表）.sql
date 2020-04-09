@@ -14,27 +14,28 @@ BEGIN
 	# 开启事务
 	START TRANSACTION;
 
-	CREATE TEMPORARY TABLE temp_bj SELECT bj.mt_comm_addr,bj.meterstatus,bj.customer_id,bj1.customer_id AS customer_idold FROM tmp_bj bj INNER JOIN tmp_bj1 bj1 ON bj1.mt_comm_addr = bj.mt_comm_addr
-			AND bj1.customer_id!=bj.customer_id;
+	CREATE TEMPORARY TABLE temp_bj  SELECT bj.mt_comm_addr,bj.meterstatus,bj.customer_id,bj1.customer_id AS customer_idold
+	                                FROM tmp_bj bj
+	                                INNER JOIN tmp_bj1 bj1 ON bj1.mt_comm_addr = bj.mt_comm_addr AND bj1.customer_id!=bj.customer_id;
 
-	/*1-更新表计旧系统状态*/
-	/*1-更新表计状态，如果表绑定到了新户，则status为运行02，否则拆回04*/
-	UPDATE a_equip_meter metermain
-		INNER JOIN temp_bj tb ON tb.mt_comm_addr=metermain.assetno and metermain.meter_mode='02'
+	/*1-更新表计管理状态*/
+	/*1-更新表计状态，如果表绑定到了新户，则status为运行02（全部改为仓库01），否则拆回04*/
+	UPDATE  a_equip_meter metermain
+		    INNER JOIN temp_bj tb ON tb.mt_comm_addr=metermain.assetno and metermain.meter_mode='02'
 	SET metermain.mgt_status=(SELECT pc.value
-		FROM p_sys_code pc
-		LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
-		WHERE pc.code_type = 'meter_mgt_status' AND lang = 'en_US'
-		AND pcl.text = tb.meterstatus)
-		, metermain.STATUS=(case when IFNULL(tb.customer_id,'')='' then '04'
-								when (SELECT count(cons.CONS_NO) FROM a_consumer cons where CONCAT('CN_',tb.customer_id) = cons.CONS_NO)>0 then '02'
+                                FROM p_sys_code pc
+                                LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
+                                WHERE pc.code_type = 'meter_mgt_status' AND lang = 'en_US'
+                                AND pcl.text = tb.meterstatus),
+		metermain.STATUS=(case when IFNULL(tb.customer_id,'')='' then '04'
+								when (SELECT count(cons.CONS_NO) FROM a_consumer cons where CONCAT('CN_',tb.customer_id) = cons.CONS_NO)>0 then '01'
 								else '04' end);
 
 	CREATE TEMPORARY TABLE temp_bj2 SELECT cons.CONS_ID, rela.EQUIPMENTID AS meter_id,rela.mp_id
-		FROM a_consumer cons
-		INNER JOIN a_usagepoint pointmain ON cons.cons_id = pointmain.cons_id
-		INNER JOIN a_mp_equipment_rela rela ON rela.mp_id = pointmain.mp_id AND rela.EQUIPMENTTYPE='02'
-		INNER JOIN temp_bj bj ON CONCAT('CN_',bj.customer_idold) = cons.CONS_NO;
+                                    FROM a_consumer cons
+                                    INNER JOIN a_usagepoint pointmain ON cons.cons_id = pointmain.cons_id
+                                    INNER JOIN a_mp_equipment_rela rela ON rela.mp_id = pointmain.mp_id AND rela.EQUIPMENTTYPE='02'
+                                    INNER JOIN temp_bj bj ON CONCAT('CN_',bj.customer_idold) = cons.CONS_NO;
 
 	# 2-删除计量点设备关联（或者更新状态？）*/
 	DELETE FROM a_mp_equipment_rela rela where exists(select tb.mp_id from temp_bj2 tb where tb.mp_id=rela.mp_id);

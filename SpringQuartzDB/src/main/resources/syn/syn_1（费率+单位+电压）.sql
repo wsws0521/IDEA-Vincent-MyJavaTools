@@ -26,8 +26,9 @@ BEGIN
     # 开启事务
 	START TRANSACTION;
 	# 临时表
-	CREATE TEMPORARY TABLE temp_yh SELECT yh.*,yh1.tariffname AS tariffnameold
-			FROM tmp_yh yh INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh.tariffname!=yh1.tariffname;
+	CREATE TEMPORARY TABLE temp_yh  SELECT yh.*,yh1.tariffname AS tariffnameold
+			                        FROM tmp_yh yh
+			                        INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh.tariffname!=yh1.tariffname;
 
 	/*1-更新计量点关联费率方案*/
 	UPDATE a_usagepoint pointmain INNER JOIN (
@@ -55,8 +56,9 @@ BEGIN
 
 	# 临时表
 	DROP TEMPORARY TABLE IF EXISTS temp_yh;
-	CREATE TEMPORARY TABLE temp_yh SELECT yh.*,yh1.station_id AS station_idold
-			FROM tmp_yh yh INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh1.station_id!=yh.station_id;
+	CREATE TEMPORARY TABLE temp_yh  SELECT yh.*,yh1.station_id AS station_idold
+			                        FROM tmp_yh yh
+			                        INNER JOIN tmp_yh1 yh1 ON yh.customer_id = yh1.customer_id AND yh1.station_id!=yh.station_id;
 
 	/*3-更新计量点管理单位*/
 	UPDATE a_usagepoint POINT INNER JOIN (SELECT org2.no,conscurr.cons_id
@@ -77,7 +79,7 @@ BEGIN
 			WHERE conscurr.org_no = org1.no) tb ON meter.assetno = tb.mt_comm_addr
 	SET meter.ORG_NO = tb.no;
 
-	/*5-更新计量点关联战线变*/
+	/*5-更新计量点关联 站、线、变 对应老系统 SGC、suburb、town */
 	UPDATE a_usagepoint point
 	INNER JOIN(
 		SELECT c.line_id,d.tf_id,pointmain.mp_id,subs.subs_id
