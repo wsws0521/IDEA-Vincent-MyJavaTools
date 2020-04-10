@@ -29,6 +29,11 @@ public class TestController {
     public int dbsize(){
         return testDbService.queryMysqlPthirdParty().size();
     }
+    @GetMapping("/mysql/proc")
+    public void mysqlProc(){
+//        testDbService.mysqlDropProc();
+//        testDbService.mysqlCreateProc();
+    }
     @GetMapping("/path/{id}")
     public String returnStringId(@PathVariable String id){
         System.out.println("sout:" + id);

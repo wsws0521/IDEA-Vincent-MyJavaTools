@@ -29,4 +29,9 @@ public interface ToolService {
      * @return
      */
     String getTmpLjz1DateName();
+
+    /**
+     * 创建同步存储过程 syn**.proc
+     */
+//    void createSynProcess();
 }

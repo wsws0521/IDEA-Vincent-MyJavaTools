@@ -26,13 +26,12 @@ BEGIN
         `BANK_CODE`, `DS_STATUS`, `CONFIRM_OPER`, `CONFIRM_DATE`, `ORG_ID`, `DS_START_DATE`, `DS_END_DATE`,
         `DS_COUNT`, `ENG_TOT`, `ENG_AMT_TOT`, `ITEM_AMT_TOT`, `DEBT_AMT_TOT`, `SF_AMT_TOT`, `ORD_AMT_TOT`, `FREE_ENG_TOT`,
         `FREE_ENG_AMT_TOT`, `ENG_CL_TOT`, `ENG_AMT_CL_TOT`, `ITEM_AMT_CL_TOT`, `DEBT_AMT_CL_TOT`, `SF_AMT_CL_TOT`,
-        `ORD_AMT_CL_TOT`, `DS_OBJ`, `DS_COUNT_FREE`, `DA_COUNT_CL`, `AGENT_ID`, tv
-        )
+        `ORD_AMT_CL_TOT`, `DS_OBJ`, `DS_COUNT_FREE`, `DA_COUNT_CL`, `AGENT_ID`, tv)
     SELECT
         2, AMI_GET_SEQUENCE('SEQ_VD_A_DAILY_FLOW'),
         -- NULL, -- TOF_ID（等后面更新）（新版本被删了）
         a.BANKINGNO, -- DS_NO日结编号，迁移数据用老banking编号
-        b.agent_id, -- DS_OPER 日结对象标识 操作员ID/代理商ID
+        IF(b.AGENT_TYPE='01',b.agent_id,c.id), -- DS_OPER 日结对象标识 如果是第三方的话要存【代理商ID】，如果是自营的话要存【操作员ID】
         '01', -- CHARGE_MODE 收费方式 01现金
         a.TOTAL_AMOUNT, -- DS_AMT 日结金额
         a.ENDTIME, -- DS_DATE 日结datetime

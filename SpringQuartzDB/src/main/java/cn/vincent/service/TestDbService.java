@@ -20,4 +20,8 @@ public interface TestDbService {
     int batchInsert();
 
     int testBatchQueryInsert();
+
+    void mysqlDropProc();
+
+//    void mysqlCreateProc();
 }

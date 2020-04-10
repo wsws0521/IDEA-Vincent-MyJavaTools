@@ -27,4 +27,8 @@ public interface TestMysqlDao {
     Integer insertTempInsert(List<TmpInsert> tmpinsert);
 
     int insertTmpBjCopy(List<TmpBj> bjlist);
+
+    void dropProc();
+
+//    void createProc();
 }

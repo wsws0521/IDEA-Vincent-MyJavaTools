@@ -68,4 +68,14 @@ public class TestDbServiceImpl implements TestDbService {
         }
         return insNum;
     }
+
+    @Override
+    public void mysqlDropProc() {
+        testMysqlDao.dropProc();
+    }
+//
+//    @Override
+//    public void mysqlCreateProc() {
+//        testMysqlDao.createProc();
+//    }
 }

@@ -89,4 +89,12 @@ public class ToolServiceImpl implements ToolService {
             return null;
         }
     }
+
+    /**
+     * 创建同步存储过程 syn**.proc
+     */
+//    @Override
+//    public void createSynProcess() {
+//        // mysqlToolDao
+//    }
 }

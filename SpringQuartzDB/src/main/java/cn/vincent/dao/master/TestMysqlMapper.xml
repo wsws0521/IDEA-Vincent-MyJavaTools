@@ -62,5 +62,7 @@
             )
         </foreach>
     </insert>
-
+    <update id="dropProc">
+        DROP PROCEDURE IF EXISTS syn_0_1
+    </update>
 </mapper>

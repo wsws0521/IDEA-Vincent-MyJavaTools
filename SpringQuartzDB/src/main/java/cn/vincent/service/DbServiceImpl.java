@@ -87,8 +87,10 @@ public class DbServiceImpl implements DbService {
     private String getCurStep(){
         SYS_DATE_STR = MyDateUtils.getSysDateShort();
         FIRST_RUN = toolService.ifTableNotExist("tmp_centlec");
-        if(FIRST_RUN)
+        if(FIRST_RUN){
+            logger.info("创建临时状态表 tmp_centlec");
             toolService.createTmpCentlec();
+        }
         int existNum = mysqlDao.queryTmpCentlec(SYS_DATE_STR);
         if(existNum == 1){
             String result = mysqlDao.queryCurStaus(SYS_DATE_STR);
