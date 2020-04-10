@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS mig_5_2;
+delimiter $$
+CREATE PROCEDURE mig_5_2()
+
 BEGIN
 
 	DECLARE var_consid VARCHAR(64); 			/* 对应用户id */
@@ -84,7 +88,8 @@ BEGIN
 
 END
 
-
+$$
+delimiter ;
 
 
 

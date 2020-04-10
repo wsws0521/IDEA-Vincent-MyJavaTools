@@ -38,7 +38,7 @@ C1A51E515CA15EC1E56A1C56A15C1A5
 国家代码：SA
 确认：y
 C:\Java\jdk1.8.0_181\bin\《server.jks》(实际名称0315_test.jks)
-## 2-从server的keystore中导出server的证书（其中包括server的公钥）【cer添加到浏览器“受信任的根证书颁发机构”证书，很骚，不安全，不是必须的】
+## 2-从server的keystore中导出server的证书（其中包括server的公钥）【cer添加到浏览器“受信任的根证书颁发机构”证书，很骚，不安全，不是必须的，奇怪的是该证书是第二天生效】
 文件名《server_cert.cer》
 >>keytool -export -alias tomcat_server -keystore c:\_cert\catserver.keystore   -storepass 123456 -file c:\_cert\server_cert.cer
 >>keytool -export -alias tomcat_server -keystore c:\_cert\server.jks           -storepass 123456 -file c:\_cert\server_cert.cer
@@ -122,7 +122,7 @@ keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 12
      </SSLHostConfig>
 </Connector>`
 
-## Tomcat/webapp/WEB-INFO，追加，强制跳转8443
+## Tomcat/webapp/WEB-INFO，追加，强制跳转8443。（但是互相换着浏览器马上访问就是不跳转，需要等一会儿/手动访问8443？之后再访问8030才会自动跳转8443，不知为何，后来发现路劲输错成是 https:8030了，所以不跳转）
 `<login-config>
  		<auth-method>CLIENT-CERT</auth-method>
  		<realm-name>Client Cert Users-only Area</realm-name>

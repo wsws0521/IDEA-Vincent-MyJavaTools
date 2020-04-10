@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS mig_9;
+delimiter $$
+CREATE PROCEDURE mig_9()
+
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -46,6 +50,8 @@ BEGIN
 	SELECT t_error, msg;
 END
 
+$$
+delimiter ;
 -- -----------------------------------tmp_user_org  自动建表语句-----------------------------------------
 -- CREATE TABLE `tmp_user_org` (
 --   `mainkey` varchar(128) NOT NULL AUTO_INCREMENT,

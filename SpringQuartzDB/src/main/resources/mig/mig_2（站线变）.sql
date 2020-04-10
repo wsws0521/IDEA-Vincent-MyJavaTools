@@ -1,26 +1,6 @@
-
--------------------------------------tmp_zxb  自动建表语句-----------------------------------------
-CREATE TABLE `tmp_zxb` (
-  `object_id` varchar(128) NOT NULL,
-  `OBJECT_TYPE` varchar(128) DEFAULT NULL,
-  `FatherId` varchar(128) DEFAULT NULL,
-  `OBJECT_NAME` varchar(128) DEFAULT NULL,
-  `NEWID` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--------------------------刷新导入【192.168.108.11,1433】，sqlserver数据源获取(613)--------------------
-
-select  cast(OBJECT_ID as varchar) as 'object_id',
-        OBJECT_TYPE,
-        (case when o.LINE_ID>-1 then o.LINE_ID when o.POWER_SUPPLYER>-1 then o.POWER_SUPPLYER
-            when o.REGION_ID>-1 then o.REGION_ID else o.GRID_ID end) as 'FatherId',
-        rtrim(replace(OBJECT_NAME,',','-')) as 'OBJECT_NAME',
-        '' as 'NEWID'
- from IPARA_OBJECT o
-where OBJECT_TYPE > 1 order by OBJECT_NAME,FatherId
-
--------------------------------------存储过程------------------------------------------
-
+DROP PROCEDURE IF EXISTS mig_2;
+delimiter $$
+CREATE PROCEDURE mig_2()
 
 BEGIN
 	DECLARE done INT DEFAULT 0; 			/* 结束标识 */
@@ -123,8 +103,8 @@ BEGIN
 	END IF;
 	SELECT t_error, msg;
 END
-
-
+$$
+delimiter ;
 
 
 

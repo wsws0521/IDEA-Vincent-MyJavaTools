@@ -1,4 +1,8 @@
 -- -----------------------------重复的操作员账号：nthabiseng-----------------------------------------
+DROP PROCEDURE IF EXISTS mig_8;
+delimiter $$
+CREATE PROCEDURE mig_8()
+
 BEGIN
 	DECLARE done INT DEFAULT 0; 			/* 结束标识 */
 	DECLARE mainKey VARCHAR(64); 			/* 游标所取的字段值 */
@@ -88,3 +92,5 @@ BEGIN
 	SELECT t_error, msg;
 END
 
+$$
+delimiter ;

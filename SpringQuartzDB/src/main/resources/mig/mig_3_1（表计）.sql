@@ -1,4 +1,8 @@
---------------------------先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
+------先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
+DROP PROCEDURE IF EXISTS mig_3_1;
+delimiter $$
+CREATE PROCEDURE mig_3_1()
+
 BEGIN
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -98,7 +102,8 @@ BEGIN
 	END IF;
 	SELECT t_error, msg;
 END
-
+$$
+delimiter ;
 
 
 

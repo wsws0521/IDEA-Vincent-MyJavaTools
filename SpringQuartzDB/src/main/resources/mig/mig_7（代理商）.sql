@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS mig_7;
+delimiter $$
+CREATE PROCEDURE mig_7()
+
 BEGIN
 	DECLARE done INT DEFAULT 0; 					/* 结束标识 */
 	DECLARE mainKey VARCHAR(64); 					/* 游标所取的字段值 */
@@ -93,3 +97,5 @@ BEGIN
 	SELECT t_error, msg;
 END
 
+$$
+delimiter ;

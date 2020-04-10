@@ -1,3 +1,7 @@
+DROP PROCEDURE IF EXISTS mig_0;
+delimiter $$
+CREATE PROCEDURE mig_0()
+
 BEGIN
     DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
@@ -711,3 +715,5 @@ BEGIN
 	SELECT t_error, msg;
 
 END
+$$
+delimiter ;
