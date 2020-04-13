@@ -9,7 +9,7 @@
 
 ## [客户端]C盘下创建文件夹：xmlvend
 ## 3-创建client的keystore文件【pfx/p12添加到浏览器“个人”证书】
->>keytool -genkeypair -alias vincent_client     -keyalg RSA -keysize 1024 -sigalg sha256withrsa  -keypass 123456 -storetype pkcs12 -keystore c:\xmlvend\vincent.pfx  -storepass 123456 -dname "CN=vincent,  OU=vincent, O=vincent,  L=vincent,  ST=vincent, c=SA" -validity 365
+>>keytool -genkeypair -alias vincent_client     -keyalg RSA -keysize 1024 -sigalg sha256withrsa  -keypass 123456 -storetype pkcs12 -keystore c:\xmlvend\vincent.pfx  -storepass 123456 -dname "CN=vincent,  OU=vincent, O=vincent,  L=vincent,  ST=vincent, c=SA" -validity 2
 [Easypay.net]
 >>keytool -genkeypair -alias easypay_client     -keyalg RSA -keysize 1024 -sigalg sha256withrsa  -keypass 123456 -storetype pkcs12 -keystore c:\xmlvend\easypay.pfx  -storepass 123456 -dname "CN=Easypay,  OU=Easypay, O=Easypay,  L=Easypay,  ST=Easypay, c=SA" -validity 365
 [R&A.net]

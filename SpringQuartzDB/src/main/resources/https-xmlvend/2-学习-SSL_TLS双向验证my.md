@@ -44,7 +44,11 @@ C:\Java\jdk1.8.0_181\bin\《server.jks》(实际名称0315_test.jks)
 >>keytool -export -alias tomcat_server -keystore c:\_cert\server.jks           -storepass 123456 -file c:\_cert\server_cert.cer
 >>keytool -export -alias tomcat_server -keystore c:\_cert\server.keystore      -storepass 123456 -file c:\_cert\server_cert.cer
 
-## 3-创建client的keystore文件【pfx/p12添加到浏览器“个人”证书】
+## 3-创建client的keystore文件【pfx/p12添加到浏览器“个人”证书】【注意拷贝时因为PC时差引起的证书起止时间变化，如果尚未生效则浏览器死活不会用的，soupUI和postman倒是没那么挑剔，无视未生效，直接可以用】
+> 问题：【Winserver-JDK1.8.0_181替win7-JDK1.8.0_131生成keystore&cert，拷贝至win7的浏览器不认其pfx，但是soupUI&Postman是认的。
+>> 反之，win7-JDK1.8.0_131生成的客户端pfx，是公认的，可以给Winserver-JDK1.8.0_181浏览器用】
+>>> 后来发现原因：同一个证书文件，貌似会根据拷贝电脑的时区，自动变更起止时间。如果Client.pfx个人证书的起始时间未至，那么浏览器就是不会选择那个证书！手动修改PC时区是无效的，不知为何
+
 同样需要指定keystore的密码和密钥对的密码。
 >>keytool -genkey        -alias vincent_client   -keyalg dsa       -keysize 512 -sigalg sha1withdsa -keypass 123456                    -keystore c:\xmlvend\foxclient.keystore -storepass 123456
 >>keytool -genkeypair    -alias vincent_client   -keyalg RSA       -keysize 1024 -sigalg sha256withrsa               -storetype pkcs12 -keystore c:\xmlvend\vincent.pfx        -storepass 123456 -dname "CN=vincent,OU=vincent,O=vincent,L=vincent,ST=vincent,c=SA"
@@ -98,11 +102,12 @@ Server:E:\tomcat.keystore----E:\tomcat.cer
 
 Client:E:\mykey.p12----E:\mykey.cer
 
-
+## 9---格式转换
 keytool -importkeystore -srckeystore c:\xmlvend\client_truststore -srcstorepass 123456 -destkeystore c:\xmlvend\client_truststore.pfx -deststoretype pkcs12 -deststorepass 123456
 keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 123456 -destkeystore c:\_cert\server_truststore.p12 -deststoretype pkcs12 -deststorepass 123456
 keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 123456 -destkeystore c:\_cert\server_truststore.jks -deststoretype jks -deststorepass 123456
 默认 alias是mykey
+keytool -importkeystore -srckeystore c:\xmlvend\easypay_prod.pfx -srcstorepass 123456 -destkeystore c:\xmlvend\easypay_prod.p12 -deststoretype pkcs12 -deststorepass 123456
 
 
 ## Tomcat/conf/server.xml
@@ -122,7 +127,7 @@ keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 12
      </SSLHostConfig>
 </Connector>`
 
-## Tomcat/webapp/WEB-INFO，追加，强制跳转8443。（但是互相换着浏览器马上访问就是不跳转，需要等一会儿/手动访问8443？之后再访问8030才会自动跳转8443，不知为何，后来发现路劲输错成是 https:8030了，所以不跳转）
+## Tomcat/webapp/WEB-INFO，追加，强制跳转8443。（所以不跳转8443？发现是路径输错成 https:8030了）
 `<login-config>
  		<auth-method>CLIENT-CERT</auth-method>
  		<realm-name>Client Cert Users-only Area</realm-name>
@@ -138,10 +143,18 @@ keytool -importkeystore -srckeystore c:\_cert\server_truststore -srcstorepass 12
 </security-constraint>`
 
 ## SoupUI
-0、（传说soupui不认pfx，需要转成jks？槽）
-keytool -importkeystore -srckeystore c:\xmlvend\vincent.pfx -srcstoretype pkcs12 -srcstorepass 123456 -destkeystore c:\xmlvend\vincent.jks -deststoretype jks -deststorepass 123456
-1、右击项目文件夹:Show Project View>>WS-Security Configurations>>[Keystores]vincent.pfx,[Truststores]client_truststore
-2、点选Request1，左下角Properties>>SSL KeyStore>>vincent.pfx
+* 0、（传说soupui不认pfx，需要转成jks？并无此事，pfx一样好使）
+> keytool -importkeystore -srckeystore c:\xmlvend\vincent.pfx -srcstoretype pkcs12 -srcstorepass 123456 -destkeystore c:\xmlvend\vincent.jks -deststoretype jks -deststorepass 123456
+* 1、右击项目文件夹:Show Project View>>WS-Security Configurations>>[Keystores]vincent.pfx,[Truststores]client_truststore（此项非必须）
+* 2、点选Request1，左下角Properties>>SSL KeyStore>>vincent.pfx
+## Postman
+* 1、为https地址指定client证书文件（vincent.pfx）
+> 右上角扳手》》Settings》》General标签页》》REQUEST 关闭 SSL certificate verification （因为咱用的是自签名的SSL）
+>> Certificates标签页》》CA保持off（如果打开则必须添加服务器公钥证书？请求成功后再打开此项为空，依旧成功...），仅需添加 Client Certificates》》 Host=192.168.81.2:8443，PFX file=C:\xmlvend\vincent.pfx，Passphrase=123456
+>>> 任何一步错误都会导致：Could not get any response
+* 2、请求头 Content-Type = text/xml;charset=utf-8（否则报500，parse错误）
+* 3、请求URL：https://192.168.81.2:8443/xmlvend/xmlvend.wsdl
+> （GET）https://192.168.81.2:8443/xmlvend/xmlvend.wsdl相当于浏览器中打开（有时傻逼浏览器不知道切换选择证书，可以使用此招postman认证）
 
 
 ## JDK中keytool 常用命令: 
@@ -178,5 +191,6 @@ keytool -importkeystore -srckeystore c:\xmlvend\vincent.pfx -srcstoretype pkcs12
 -keystore 用户宿主目录中名为 .keystore 的文件
 
 -file 读时为标准输入，写时为标准输出 
+
 
 
