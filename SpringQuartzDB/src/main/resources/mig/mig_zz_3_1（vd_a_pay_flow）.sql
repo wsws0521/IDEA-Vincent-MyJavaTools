@@ -52,7 +52,7 @@ BEGIN
 		NULL, -- 付款账号
 		NULL, -- 付款银行
 		NULL, -- 收款账号
-		sdjl.tv, -- 手动插入TV字段，应用于分区（该值不应为空）
+		sdjl.OD_DATE, -- 手动插入TV字段，应用于分区（该值不应为空）
 		NULL, -- 渠道
 		sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
 	FROM tmp_sdjl_2015 partition(P201501) sdjl
@@ -90,7 +90,7 @@ BEGIN
 		NULL, -- 付款账号
 		NULL, -- 付款银行
 		NULL, -- 收款账号
-		sdjl.tv, -- 手动插入TV字段，应用于分区（该值不应为空）
+		sdjl.OD_DATE, -- 手动插入TV字段，应用于分区（该值不应为空）
 		NULL, -- 渠道
 		sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
 	FROM tmp_sdjl_2015 partition(P201501) sdjl

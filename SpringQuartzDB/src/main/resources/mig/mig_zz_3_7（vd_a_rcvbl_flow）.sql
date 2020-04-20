@@ -50,7 +50,7 @@ BEGIN
 		flow.org_id, -- ORG_ID 用户的单位id
 		NULL, -- BUS_FROM_OBJ 业务来源对象
 		NULL, -- BUS_FROM_OBJ_ID 业务来源标识
-		sdjl.tv, -- TV 分区字段
+		sdjl.OD_DATE, -- TV 分区字段
 		flow.orderid -- 临时造的关联字段
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
@@ -85,7 +85,7 @@ BEGIN
 		flow.org_id, -- ORG_ID 用户的单位id
 		NULL, -- BUS_FROM_OBJ 业务来源对象
 		NULL, -- BUS_FROM_OBJ_ID 业务来源标识
-		sdjl.tv, -- TV 分区字段
+		sdjl.OD_DATE, -- TV 分区字段
 		flow.orderid -- 临时造的关联字段
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
@@ -120,7 +120,7 @@ BEGIN
 		flow.org_id, -- ORG_ID 用户的单位id
 		NULL, -- BUS_FROM_OBJ 业务来源对象
 		NULL, -- BUS_FROM_OBJ_ID 业务来源标识
-		sdjl.tv, -- TV 分区字段
+		sdjl.OD_DATE, -- TV 分区字段
 		flow.orderid -- 临时造的关联字段
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
@@ -155,7 +155,7 @@ BEGIN
 		flow.org_id, -- ORG_ID 用户的单位id
 		NULL, -- BUS_FROM_OBJ 业务来源对象
 		NULL, -- BUS_FROM_OBJ_ID 业务来源标识
-		sdjl.tv, -- TV 分区字段
+		sdjl.OD_DATE, -- TV 分区字段
 		flow.orderid -- 临时造的关联字段
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
@@ -190,7 +190,7 @@ BEGIN
 		flow.org_id, -- ORG_ID 用户的单位id
 		NULL, -- BUS_FROM_OBJ 业务来源对象
 		NULL, -- BUS_FROM_OBJ_ID 业务来源标识
-		sdjl.tv, -- TV 分区字段
+		sdjl.OD_DATE, -- TV 分区字段
 		flow.orderid -- 临时造的关联字段
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID

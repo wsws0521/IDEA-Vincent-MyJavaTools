@@ -48,7 +48,7 @@ BEGIN
 		NULL, -- KEYNO
 		NULL, -- TID
 		NULL, -- CARD_WF 写卡标识
-		sdjl.tv, -- TV  分区字段
+		sdjl.OD_DATE, -- TV  分区字段
 		NULL, -- VER_ID 费率版本ID
 		NULL -- BARL
 	FROM vd_a_pay_flow_2015 flow
@@ -84,7 +84,7 @@ BEGIN
 		NULL, -- KEYNO
 		NULL, -- TID
 		NULL, -- CARD_WF 写卡标识
-		sdjl.tv, -- TV  分区字段
+		sdjl.OD_DATE, -- TV  分区字段
 		NULL, -- VER_ID 费率版本ID
 		NULL -- BARL
 	FROM vd_a_pay_flow_2015 flow
