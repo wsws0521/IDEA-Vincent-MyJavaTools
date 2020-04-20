@@ -20,7 +20,7 @@ BEGIN
 		(`LESSEE_ID`, `RCVED_DEBT_ID`, `RCVBL_DEBT_ID`, `RCVED_AMT_ID`, `THIS_RCVED_AMT`, `REMARK`, `ORG_ID`, `TV`)
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_DEBT'), -- RCVED_DEBT_ID PK
-        rcvbldebt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 撤单是找不到该ID的吧？+++++++++++++++++++++++++++++++++++++++++++++++
+        rcvbldebt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 正常/撤单都是定位到了正常应收/债务ID
         rcvedflow.RCVED_AMT_ID, -- RCVED_AMT_ID
         rcvbldebt.RCVED_AMT, -- THIS_RCVED_AMT 此处只包含债务
         'migrate OCD_DEBT', -- REMARK

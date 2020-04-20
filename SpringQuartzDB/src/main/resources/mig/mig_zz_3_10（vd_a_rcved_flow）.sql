@@ -47,7 +47,7 @@ BEGIN
     SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'), -- RCVED_AMT_ID PK
 		flow.charge_id, -- CHARGE_ID
-        NULL, -- RCVBL_AMT_ID 应收表的主键++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键 共用【非撤单】那笔的应收
         flow.obj_no, -- CONS_NO 用户编号
         flow.meter_id, -- METER_ID 表计标识
         flow.meter_no, -- ASSET_NO 表号
@@ -62,6 +62,7 @@ BEGIN
 		flow.orderid -- orderid 临时存储
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND flow.charge_remark = 'migrate normal' -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.OCD_MONEY > 0 -- 【撤单1】-电价电费
 
 	UNION ALL
@@ -69,7 +70,7 @@ BEGIN
     SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'), -- RCVED_AMT_ID PK
 		flow.charge_id, -- CHARGE_ID
-        NULL, -- RCVBL_AMT_ID 应收表的主键++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键 共用【非撤单】那笔的应收
         flow.obj_no, -- CONS_NO 用户编号
         flow.meter_id, -- METER_ID 表计标识
         flow.meter_no, -- ASSET_NO 表号
@@ -84,6 +85,7 @@ BEGIN
 		flow.orderid -- orderid 临时存储
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND flow.charge_remark = 'migrate normal' -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.FP_VAL3 > 0 -- 【撤单2】-计费项
 
 	UNION ALL
@@ -91,7 +93,7 @@ BEGIN
     SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'), -- RCVED_AMT_ID PK
 		flow.charge_id, -- CHARGE_ID
-        NULL, -- RCVBL_AMT_ID 应收表的主键++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键 共用【非撤单】那笔的应收
         flow.obj_no, -- CONS_NO 用户编号
         flow.meter_id, -- METER_ID 表计标识
         flow.meter_no, -- ASSET_NO 表号
@@ -106,6 +108,7 @@ BEGIN
 		flow.orderid -- orderid 临时存储
 	FROM vd_a_pay_flow_2015 flow
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND flow.charge_remark = 'migrate normal' -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.OCD_DEBT > 0 -- 【撤单3】-债务
 
 	UNION ALL
@@ -113,7 +116,7 @@ BEGIN
     SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'), -- RCVED_AMT_ID PK
 		flow.charge_id, -- CHARGE_ID
-        NULL, -- RCVBL_AMT_ID 应收表的主键++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键 共用【非撤单】那笔的应收
         flow.obj_no, -- CONS_NO 用户编号
         flow.meter_id, -- METER_ID 表计标识
         flow.meter_no, -- ASSET_NO 表号
@@ -127,7 +130,8 @@ BEGIN
 		flow.tv, -- 分区字段
 		flow.orderid -- orderid 临时存储
 	FROM vd_a_pay_flow_2015 flow
-	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid
+	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND flow.charge_remark = 'migrate normal' AND rcvblflow.RCVBL_AMT > 0 -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 1 AND sdjl.OCD_MONEY > 0 -- 【撤单4】-FBE{-OCD_MONEY}
 
 	UNION ALL
@@ -135,7 +139,7 @@ BEGIN
     SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_FLOW'), -- RCVED_AMT_ID PK
 		flow.charge_id, -- CHARGE_ID
-        NULL, -- RCVBL_AMT_ID 应收表的主键++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键 共用【非撤单】那笔的应收
         flow.obj_no, -- CONS_NO 用户编号
         flow.meter_id, -- METER_ID 表计标识
         flow.meter_no, -- ASSET_NO 表号
@@ -149,7 +153,8 @@ BEGIN
 		flow.tv, -- 分区字段
 		flow.orderid -- orderid 临时存储
 	FROM vd_a_pay_flow_2015 flow
-	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid
+	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND flow.charge_remark = 'migrate normal' AND rcvblflow.RCVBL_AMT < 0 -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 1 AND sdjl.OCD_MONEY > 0; -- 【撤单5】-FBE{+OCD_MONEY}
 
 

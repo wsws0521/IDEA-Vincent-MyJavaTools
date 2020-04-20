@@ -55,8 +55,8 @@ BEGIN
 		sdjl.tv, -- 手动插入TV字段，应用于分区（该值不应为空）
 		NULL, -- 渠道
 		sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
-	FROM tmp_sdjl partition(P201501) sdjl
-	LEFT JOIN vd_a_daily_flow daily ON sdjl.BANKINGNO = daily.DS_NO
+	FROM tmp_sdjl_2015 partition(P201501) sdjl
+	LEFT JOIN vd_a_daily_flow daily ON sdjl.BANKINGNO = daily.DS_NO AND sdjl.DELFLAG = 1
 	LEFT JOIN a_consumer cons ON CONCAT('CN_', sdjl.CUSTOMER_ID) = cons.cons_no
 	LEFT JOIN a_equip_meter meter ON sdjl.MT_COMM_ADDR = meter.assetno
 	LEFT JOIN uap_user uapuser ON sdjl.operator = uapuser.no
@@ -93,8 +93,8 @@ BEGIN
 		sdjl.tv, -- 手动插入TV字段，应用于分区（该值不应为空）
 		NULL, -- 渠道
 		sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
-	FROM tmp_sdjl partition(P201501) sdjl
-	LEFT JOIN vd_a_daily_flow daily ON sdjl.BANKINGNO = daily.DS_NO
+	FROM tmp_sdjl_2015 partition(P201501) sdjl
+	LEFT JOIN vd_a_daily_flow daily ON sdjl.BANKINGNO = daily.DS_NO AND sdjl.DELFLAG = 1
 	LEFT JOIN a_consumer cons ON CONCAT('CN_', sdjl.CUSTOMER_ID) = cons.cons_no
 	LEFT JOIN a_equip_meter meter ON sdjl.MT_COMM_ADDR = meter.assetno
 	LEFT JOIN uap_user uapuser ON sdjl.operator = uapuser.no

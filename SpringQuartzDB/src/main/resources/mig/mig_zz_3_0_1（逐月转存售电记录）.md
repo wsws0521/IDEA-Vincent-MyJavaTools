@@ -1,40 +1,39 @@
 -- 建表语句（近5年按月分区）
 ```sql
 CREATE TABLE `tmp_sdjl_2015` (
-  `ORDERSID` varchar(128) NOT NULL,
-  `MT_COMM_ADDR` varchar(128) DEFAULT NULL,
-  `OD_DATE` DATETIME DEFAULT NULL,
-  `ISFREE` int(11) DEFAULT NULL,
-  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
-  `SGC_OLD` varchar(128) DEFAULT NULL,
-  `TI_OLD` int(11) DEFAULT NULL,
-  `KEYVERSIONID_OLD` int(11) DEFAULT NULL,
-  `KEYEXPIRY_OLD` int(11) DEFAULT NULL,
-  `SGC` varchar(128) DEFAULT NULL,
-  `TI` int(11) DEFAULT NULL,
-  `KEYVERSIONID` int(11) DEFAULT NULL,
-  `KEYEXPIRY` int(11) DEFAULT NULL,
-  `OCD_TOKEN` varchar(128) DEFAULT NULL,
-  `KEYTOKEN1` varchar(128) DEFAULT NULL,
-  `KEYTOKEN2` varchar(128) DEFAULT NULL,
+  `ORDERSID` varchar(32) NOT NULL,
+  `MT_COMM_ADDR` varchar(32) DEFAULT NULL,
+  `OD_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ISFREE` TINYINT UNSIGNED,
+  `CUSTOMER_ID` MEDIUMINT UNSIGNED,
+  `SGC_OLD` varchar(8) DEFAULT NULL,
+  `TI_OLD` TINYINT UNSIGNED,
+  `KEYVERSIONID_OLD` TINYINT UNSIGNED,
+  `KEYEXPIRY_OLD` TINYINT UNSIGNED,
+  `SGC` varchar(8) DEFAULT NULL,
+  `TI` TINYINT UNSIGNED,
+  `KEYVERSIONID` TINYINT UNSIGNED,
+  `KEYEXPIRY` TINYINT UNSIGNED,
+  `OCD_TOKEN` varchar(32) DEFAULT NULL,
+  `KEYTOKEN1` varchar(32) DEFAULT NULL,
+  `KEYTOKEN2` varchar(32) DEFAULT NULL,
   `OCD_ENERGY` decimal(18,2) DEFAULT NULL,
   `OCD_MONEY` decimal(18,2) DEFAULT NULL,
-  `PAYTYPE` int(11) DEFAULT NULL,
+  `PAYTYPE` TINYINT UNSIGNED,
   `FP_VAL3` decimal(18,2) DEFAULT NULL,
   `OCD_DEBT` decimal(18,2) DEFAULT NULL,
   `DEBT_BLC` decimal(18,2) DEFAULT NULL,
   `OCD_PAYMONEY` decimal(18,2) DEFAULT NULL,
-  `operator` varchar(128) DEFAULT NULL,
-  `TE_NAME` varchar(128) DEFAULT NULL,
-  `DELFLAG` int(11) DEFAULT NULL,
-  `canceler` varchar(128) DEFAULT NULL,
+  `operator` varchar(32) DEFAULT NULL,
+  `TE_NAME` varchar(64) DEFAULT NULL,
+  `DELFLAG` TINYINT UNSIGNED,
+  `canceler` varchar(32) DEFAULT NULL,
   `cancelDate` DATETIME DEFAULT NULL,
-  `cancelReason` varchar(16) DEFAULT NULL,
-  `BANKINGNO` varchar(128) DEFAULT NULL,
-  `TV` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ORDERSID`, `TV`)
+  `cancelReason` ENUM('00','01','02','03','04') DEFAULT '00',
+  `BANKINGNO` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`ORDERSID`, `OD_DATE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
     PARTITION P201500 VALUES LESS THAN (TO_DAYS('2015-01-01')) ENGINE = InnoDB,
     PARTITION P201501 VALUES LESS THAN (TO_DAYS('2015-02-01')) ENGINE = InnoDB,
     PARTITION P201502 VALUES LESS THAN (TO_DAYS('2015-03-01')) ENGINE = InnoDB,
@@ -52,7 +51,7 @@ PARTITION BY RANGE (TO_DAYS(TV))(
 );
 
 
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
     PARTITION P201601 VALUES LESS THAN (TO_DAYS('2016-02-01')) ENGINE = InnoDB,
     PARTITION P201602 VALUES LESS THAN (TO_DAYS('2016-03-01')) ENGINE = InnoDB,
     PARTITION P201603 VALUES LESS THAN (TO_DAYS('2016-04-01')) ENGINE = InnoDB,
@@ -68,7 +67,7 @@ PARTITION BY RANGE (TO_DAYS(TV))(
     PARTITION PMAX VALUES LESS THAN (MAXVALUE)
 );
 
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
     PARTITION P201701 VALUES LESS THAN (TO_DAYS('2017-02-01')) ENGINE = InnoDB,
     PARTITION P201702 VALUES LESS THAN (TO_DAYS('2017-03-01')) ENGINE = InnoDB,
     PARTITION P201703 VALUES LESS THAN (TO_DAYS('2017-04-01')) ENGINE = InnoDB,
@@ -84,7 +83,7 @@ PARTITION BY RANGE (TO_DAYS(TV))(
     PARTITION PMAX VALUES LESS THAN (MAXVALUE)
 );
 
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
     PARTITION P201801 VALUES LESS THAN (TO_DAYS('2018-02-01')) ENGINE = InnoDB,
     PARTITION P201802 VALUES LESS THAN (TO_DAYS('2018-03-01')) ENGINE = InnoDB,
     PARTITION P201803 VALUES LESS THAN (TO_DAYS('2018-04-01')) ENGINE = InnoDB,
@@ -100,7 +99,7 @@ PARTITION BY RANGE (TO_DAYS(TV))(
     PARTITION PMAX VALUES LESS THAN (MAXVALUE)
 );
 
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
     PARTITION P201901 VALUES LESS THAN (TO_DAYS('2019-02-01')) ENGINE = InnoDB,
     PARTITION P201902 VALUES LESS THAN (TO_DAYS('2019-03-01')) ENGINE = InnoDB,
     PARTITION P201903 VALUES LESS THAN (TO_DAYS('2019-04-01')) ENGINE = InnoDB,
@@ -116,7 +115,7 @@ PARTITION BY RANGE (TO_DAYS(TV))(
     PARTITION PMAX VALUES LESS THAN (MAXVALUE)
 );
 
-PARTITION BY RANGE (TO_DAYS(TV))(
+PARTITION BY RANGE (TO_DAYS(OD_DATE))(
   PARTITION P202001 VALUES LESS THAN (TO_DAYS('2020-02-01')) ENGINE = InnoDB,
   PARTITION P202002 VALUES LESS THAN (TO_DAYS('2020-03-01')) ENGINE = InnoDB,
   PARTITION P202003 VALUES LESS THAN (TO_DAYS('2020-04-01')) ENGINE = InnoDB,
@@ -133,8 +132,8 @@ PARTITION BY RANGE (TO_DAYS(TV))(
 );
 ```
 
-
--- SQLSERVER 查询语句（hxdb20200416备份版本）（当月数据少注意是不是 网络中断 unsuccessfully）
+-- select count(1) from tmp_sdjl_2015 where tv >= '2015-10-01 00:00:00'
+-- SQLSERVER 查询语句（hxdb20200416备份版本）（当月数据少注意是不是 网络中断 unsuccessfully，需要删除对应月份已插部分数据，重新导入）
 -- 2015-01：946146 数据，导入耗时 1006（81.6）
 -- 2015-02：828346 数据，导入耗时 956
 -- 2015-03：929386 数据，导入耗时 928
@@ -196,7 +195,54 @@ left join ORDER_REVERSED rv on rv.ORDERSID=t.ORDERSID
 left join IAUDIT_USER u2 on u2.USER_ID=rv.OPERATORID
 where year(t.OD_DATE)=2015 and month(t.od_date) = 1
 ```
-
+```sql
+-- 自己先四舍五入+优化字段
+select  t.ORDERSID,                                         -- 主键，票据编号
+        m.MT_COMM_ADDR,                                     -- 表号
+        t.OD_DATE as OD_DATE,                               -- 购电时间
+        t.ISFREE,                                           -- 是否免费：0=正常购电；1=免费购电；
+        t.USER_ID as CUSTOMER_ID,                           -- 户号
+        ISNULL(RIGHT('000000'+CAST(om.SGCID_OLD as varchar(10)),6),'00') as SGC_OLD,  -- 变更密钥前SGC
+        ISNULL(om.TI_OLD,0) as TI_OLD,                            -- 变更密钥前TI
+        ISNULL(om.KEYVERSIONID_OLD,0) as KEYVERSIONID_OLD,        -- 变更密钥前KRN
+        ISNULL(om.KEYEXPIRY_OLD,0) as KEYEXPIRY_OLD,              -- 变更密钥前KEN 255
+        RIGHT('000000'+CAST(t.SGCID as varchar(10)),6) as SGC,  -- 变更密钥后SGC
+        t.TI,                                                   -- 变更密钥后TI
+        t.KEYVERSIONID,                                         -- 变更密钥后KRN
+        t.KEYEXPIRY,                                            -- 变更密钥后KEN 255
+        t.OCD_TOKEN,                            -- Credit Token
+        ISNULL(om.MAN_TOKEN1,'00') as KEYTOKEN1,     -- KEY Token 1
+        ISNULL(om.MAN_TOKEN2,'00') as KEYTOKEN2,     -- KEY Token 2
+        round(t.OCD_ENERGY,2) as OCD_ENERGY,       -- 资源量
+        round(t.OCD_MONEY,2)  as OCD_MONEY,        -- 资源量金额
+        t.PAYTYPE,          -- 支付方式：0=现金；1=信用卡；2=支票；3=第三方购电，采用现金；
+        round(t.FP_VAL3,2) as FP_VAL3,          -- 百分比税金额
+        round(t.OCD_DEBT,2) as OCD_DEBT,         -- 还债金额
+        round(t.DEBT_BLC,2) as DEBT_BLC,         -- 交易后剩余债务
+        round(t.OCD_PAYMONEY,2) as OCD_PAYMONEY,     -- 支付金额
+        u.USER_ACCOUNT as operator,         -- 售电员
+        ltrim(rtrim(cdu.TE_NAME)) as TE_NAME,  -- 代理商名称
+        t.DELFLAG,                              -- 是否撤单
+        ISNULL(u2.USER_ACCOUNT,'') as canceler, -- 撤单操作员
+        rv.OD_DATE as cancelDate,               -- 撤单时间
+        (CASE rv.remark 
+            WHEN 'WRONG TARIF CODE(SGC)' THEN '01' 
+            WHEN 'WRONG AMOUNT ALLOCATION' THEN '02' 
+            WHEN 'TEST TOKEN' THEN '04' ELSE '03' END) as cancelReason,     -- 撤单原因，和系统VD_ORDER_CANCEL_RSN的code值匹配
+        (select top 1 ob.BANKINGNO
+            from ORDER_BANKING ob
+            where ob.BATCHNO=0 and t.OD_DATE>=ob.STARTTIME
+            and t.OD_DATE<=ob.ENDTIME and ob.CDUID=t.CDUID) as BANKINGNO    -- 所属日结单编号
+from ORDER_TRN t
+inner join IPARA_MTRPOINT m on t.METERID=m.MTRPOINT_ID
+inner join IPARA_RESIDENT r on r.CUSTOMER_ID=t.USER_ID
+inner join IAUDIT_USER u on u.USER_ID=t.OPERATORID
+inner join IPARA_CDUSTATION cdu on cdu.TERRITORYID=t.CDUID
+left join ORDER_MANAGE om on om.ORDERSID=t.ORDERSID
+left join ORDER_REVERSED rv on rv.ORDERSID=t.ORDERSID
+left join IAUDIT_USER u2 on u2.USER_ID=rv.OPERATORID
+where year(t.OD_DATE)=2015 and month(t.od_date) = 1
+```
 
 ------------------作废---------------------
 ```sql

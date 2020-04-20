@@ -21,7 +21,7 @@ BEGIN
 	SELECT
 		2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_AMT'), -- RCVED_DETAIL_ID PK
 		rcvedflow.RCVED_AMT_ID, -- RCVED_AMT_ID
-        rcvblamt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 撤单是找不到该ID的吧？+++++++++++++++++++++++++++++++++++++++++++++++
+        rcvblamt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 正常/撤单都是定位到了正常应收/明细ID
         rcvedflow.ORG_ID, -- ORG_ID
         'migrate OCD_MONEY', -- REMARK
         rcvedflow.THIS_RCVED_AMT, -- THIS_RCVED_AMT 此处只包含电价电费
