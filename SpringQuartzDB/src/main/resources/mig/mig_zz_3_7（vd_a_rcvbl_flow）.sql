@@ -40,7 +40,7 @@ BEGIN
 		NULL, -- RCVBL_PENALTY 应收违约金
 		NULL, -- RCVED_PENALTY 实收违约金
 		NULL, -- STATUS_CODE 收取过程的状态，包括非锁定、锁定(代扣在途)、锁定(走收在途)、锁定(托收在途)。
-		'03', -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清
+		IF(sdjl.DELFLAG=0,'03','05'), -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清 未撤单就是03结清，否则就是05作废
 		NULL, -- PENALTY_BGN_DATE 违约金起算日期
 		NULL, -- RELEASE_DATE 发行日期
 		NULL, -- RELATE_ID 关联标识
@@ -75,7 +75,7 @@ BEGIN
 		NULL, -- RCVBL_PENALTY 应收违约金
 		NULL, -- RCVED_PENALTY 实收违约金
 		NULL, -- STATUS_CODE 收取过程的状态，包括非锁定、锁定(代扣在途)、锁定(走收在途)、锁定(托收在途)。
-		'03', -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清
+		IF(sdjl.DELFLAG=0,'03','05'), -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清 未撤单就是03结清，否则就是05作废
 		NULL, -- PENALTY_BGN_DATE 违约金起算日期
 		NULL, -- RELEASE_DATE 发行日期
 		NULL, -- RELATE_ID 关联标识
@@ -110,7 +110,7 @@ BEGIN
 		NULL, -- RCVBL_PENALTY 应收违约金
 		NULL, -- RCVED_PENALTY 实收违约金
 		NULL, -- STATUS_CODE 收取过程的状态，包括非锁定、锁定(代扣在途)、锁定(走收在途)、锁定(托收在途)。
-		'03', -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清
+		IF(sdjl.DELFLAG=0,'03','05'), -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清 未撤单就是03结清，否则就是05作废
 		NULL, -- PENALTY_BGN_DATE 违约金起算日期
 		NULL, -- RELEASE_DATE 发行日期
 		NULL, -- RELATE_ID 关联标识
@@ -145,7 +145,7 @@ BEGIN
 		NULL, -- RCVBL_PENALTY 应收违约金
 		NULL, -- RCVED_PENALTY 实收违约金
 		NULL, -- STATUS_CODE 收取过程的状态，包括非锁定、锁定(代扣在途)、锁定(走收在途)、锁定(托收在途)。
-		'03', -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清
+		IF(sdjl.DELFLAG=0,'03','05'), -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清 未撤单就是03结清，否则就是05作废
 		NULL, -- PENALTY_BGN_DATE 违约金起算日期
 		NULL, -- RELEASE_DATE 发行日期
 		NULL, -- RELATE_ID 关联标识
@@ -180,7 +180,7 @@ BEGIN
 		NULL, -- RCVBL_PENALTY 应收违约金
 		NULL, -- RCVED_PENALTY 实收违约金
 		NULL, -- STATUS_CODE 收取过程的状态，包括非锁定、锁定(代扣在途)、锁定(走收在途)、锁定(托收在途)。
-		'03', -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清
+		IF(sdjl.DELFLAG=0,'03','05'), -- SETTLE_FLAG 结清状态：单笔售电+还债记录认为结清 未撤单就是03结清，否则就是05作废
 		NULL, -- PENALTY_BGN_DATE 违约金起算日期
 		NULL, -- RELEASE_DATE 发行日期
 		NULL, -- RELATE_ID 关联标识

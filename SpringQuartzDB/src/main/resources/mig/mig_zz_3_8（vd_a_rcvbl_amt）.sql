@@ -29,7 +29,7 @@ BEGIN
         NULL, -- CALC_AMT_ID 电费计算明细标识+++++++++++++++++++VD_E_BILL_PKG_VER_DETAIL+++++++++++++++++++++++++++
         rcvblflow.tv -- TV 分区字段
 	FROM vd_a_rcvbl_flow_2015 rcvblflow
-	WHERE rcvblflow.AMT_TYPE = '01';
+	WHERE rcvblflow.AMT_TYPE IN ('01','02'); -- 包括01 电费 02免费电费
 
     IF t_error = 1 THEN
 		ROLLBACK;

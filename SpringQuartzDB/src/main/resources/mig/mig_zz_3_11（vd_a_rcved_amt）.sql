@@ -28,7 +28,7 @@ BEGIN
         rcvedflow.tv -- 分区字段
 	FROM vd_a_rcved_flow_2015 rcvedflow
 	LEFT JOIN vd_a_rcvbl_amt_2015 rcvblamt ON rcvedflow.RCVBL_AMT_ID = rcvblamt.RCVBL_AMT_ID
-	WHERE rcvedflow.AMT_TYPE = '01'; -- 理应可以确定唯一的rcvblamt记录
+	WHERE rcvedflow.AMT_TYPE IN ('01','02)'; -- -- 包括01 电费 02免费电费，包括撤单，理应可以确定唯一的rcvblamt记录
 
     IF t_error = 1 THEN
 		ROLLBACK;
