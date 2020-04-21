@@ -61,13 +61,13 @@ BEGIN
     if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVBL_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
         CALL PR_MOD_COL('VD_A_RCVBL_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
     end if;
-    # 准备关联字段（vd_a_rcvbl_flow）-ORDERID
+    # 准备关联字段（vd_a_rcved_flow）-ORDERID
 --     if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVED_FLOW' AND COLUMN_NAME = 'DEBTID') = 0 then
 --         CALL PR_MOD_COL('VD_A_RCVED_FLOW','ADD','DEBTID','VARCHAR(64)','NULL','NULL','');
 --     end if;
-    if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVED_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
-        CALL PR_MOD_COL('VD_A_RCVED_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
-    end if;
+--     if (select COUNT(1) from information_schema.COLUMNS WHERE TABLE_NAME = 'VD_A_RCVED_FLOW' AND COLUMN_NAME = 'ORDERID') = 0 then
+--         CALL PR_MOD_COL('VD_A_RCVED_FLOW','ADD','ORDERID','VARCHAR(128)','NULL','NULL','');
+--     end if;
 
 
     # 打开游标

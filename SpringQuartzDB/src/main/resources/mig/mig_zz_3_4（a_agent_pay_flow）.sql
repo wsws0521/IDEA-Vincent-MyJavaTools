@@ -26,7 +26,7 @@ BEGIN
 		agt.AGENT_ID, -- CONS_ID 用户/代理商标识
         flow.tv -- 手动插入TV字段，应用于分区（该值不应为空）
 	FROM vd_a_pay_flow_2015 flow -- 与 vd_a_pay_flow 一一对应
-	LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
 	LEFT JOIN VD_AGT_AGENT agt ON sdjl.TE_NAME = agt.AGENT_NAME;
 
     IF t_error = 1 THEN

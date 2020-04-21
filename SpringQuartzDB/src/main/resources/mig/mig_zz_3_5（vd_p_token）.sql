@@ -52,8 +52,8 @@ BEGIN
 		NULL, -- VER_ID 费率版本ID
 		NULL -- BARL
 	FROM vd_a_pay_flow_2015 flow
-	LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
-	WHERE flow.charge_remark = 'migrate normal' and sdjl.KEYTOKEN1 <> '' -- 冲正记录没必要再插一遍对应Token，有改秘钥则先插入
+	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
+	WHERE flow.charge_remark = 'migrate normal' and sdjl.KEYTOKEN1 <> '00' -- 冲正记录没必要再插一遍对应Token，有改秘钥则先插入
 
     UNION ALL
 
@@ -71,7 +71,7 @@ BEGIN
 		CASE WHEN sdjl.ISFREE=1 THEN '0103' ELSE '0101' END, -- TOKEN_TYPE
 		sdjl.OCD_TOKEN, -- TOKEN
 		NULL, -- RTN_TOKEN 注销返回码
-		IF(sdjl.KEYTOKEN1 IS NULL OR sdjl.KEYTOKEN1='', 1, 2), -- SORT 排序码
+		IF(sdjl.KEYTOKEN1='00', 1, 2), -- SORT 排序码
 		IF(sdjl.DELFLAG=1, '01', '02'), -- EXECUTE_STATUS 执行状态 01-未知 02-执行成功
 		ROUND(sdjl.OCD_ENERGY, 2), -- RECHARGE_AMOUNT 一次侧充值量
 		ROUND(sdjl.OCD_ENERGY, 2), -- TOKEN_AMOUNT 二次侧充值量
