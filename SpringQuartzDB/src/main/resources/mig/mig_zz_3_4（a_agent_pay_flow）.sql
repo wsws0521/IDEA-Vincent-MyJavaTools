@@ -21,7 +21,7 @@ BEGIN
 		ALTER table a_agent_pay_flow_2015 DROP INDEX IDX_AGT_PAY_FLOW_LOGID;
 	END IF;
 
-    # 1-循环插入 代理商收费记录 -- 与 vd_a_pay_flow 一一对应
+    # 1-循环插入 代理商收费记录 -- 与 vd_a_pay_flow 一一对应 (2h32min)
 	while start_line < total do
         SET @strsql = CONCAT('INSERT INTO a_agent_pay_flow_2015
                                     (`LESSEE_ID`, `AGENT_CHARGE_ID`, `LOG_ID`, `CHARGE_ID`, `CONS_ID`, `TV`)

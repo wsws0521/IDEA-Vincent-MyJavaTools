@@ -58,6 +58,13 @@ BEGIN
 -- 	DELETE FROM VD_A_RCVBL_DEBT;
 -- 	DELETE FROM VD_A_RCVBL_FLOW WHERE DEBTID IS NOT NULL OR ORDERID IS NOT NULL;
 
+-- 同上
+
+-- select * from vd_a_rcvbl_flow where amt_type = '11'; -- 73834
+-- select * from vd_a_rcvbl_debt; -- 73834
+-- select * from vd_a_pay_flow where type_code = '10'; -- 73834
+-- select * from vd_a_rcved_flow where amt_type = '11'; -- 73834
+-- select * from vd_a_rcved_debt; -- 73834
 	# 1-插入 应收表
 	INSERT INTO vd_a_rcvbl_flow
 		(lessee_id, rcvbl_amt_id, calc_id, amt_type, rcvbl_ym, obj_type, obj_id, obj_no, meter_id, meter_no,

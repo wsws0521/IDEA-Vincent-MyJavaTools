@@ -16,17 +16,17 @@ BEGIN
 	end;
 
 
-    # 1-循环插入 预付费计费参数(与收费明细一对一)
+    # 1-循环插入 预付费计费参数(与收费明细一对一)（1h8min）
 	while start_line < total do
         SET @strsql = CONCAT('INSERT INTO vd_e_calc_pp_parm_2015
-                                    (`LESSEE_ID`, `CALC_ID`, `RECHARGE_TYPE`, `AMOUNT`, `TV`, ORDERID)
+                                    (`LESSEE_ID`, `CALC_ID`, `RECHARGE_TYPE`, `AMOUNT`, `TV`, chargeid)
                                 SELECT
                                     2,
                                     AMI_GET_SEQUENCE(''SEQ_VD_E_CALC_PP_PARM''), -- PK 计算标识
                                     ''01'', -- RECHARGE_TYPE 充值方式 01-金额
                                     flow.rcvd_amt, -- 数量
                                     flow.tv, -- 分区字段
-                                    flow.orderid -- 临时造的关联字段
+                                    flow.charge_id -- 临时造的关联字段
                                 FROM vd_a_pay_flow_2015 flow
                                 INNER JOIN (select charge_id from vd_a_pay_flow_2015 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id;');
         PREPARE stmt FROM @strsql;
@@ -35,6 +35,9 @@ BEGIN
         -- 翻页
         set start_line = start_line + offset;
     end while;
+
+    # 重建索引
+    ALTER table vd_e_calc_pp_parm_2015 ADD INDEX idx_vd_e_calc_pp_parm_chargeid(chargeid); -- 5min
 
     SELECT t_error, msg;
 END

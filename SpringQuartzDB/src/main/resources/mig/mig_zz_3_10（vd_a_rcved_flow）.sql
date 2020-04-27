@@ -7,7 +7,7 @@ BEGIN
 	DECLARE msg text;
 	DECLARE start_line int default 0;
 	DECLARE offset int default 200000; -- 一次最多插35W，否则就报3100，所以只能分页插，20W耗时59s
-	DECLARE total int default 60000000; -- 必须是offset的倍数（待定）
+	DECLARE total int default 26000000; -- 必须是offset的倍数（待定）
 	# 定义SQL异常时将t_error置为1
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	begin
@@ -19,34 +19,37 @@ BEGIN
 	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcved_flow_2015' AND index_name='IDX_RCVED_FLOW_CHARGE_ID') THEN
 		ALTER table vd_a_rcved_flow_2015 DROP INDEX IDX_RCVED_FLOW_CHARGE_ID;
 	END IF;
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcved_flow_2015' AND index_name='IDX_RCVED_FLOW_AMTTYPE') THEN
+		ALTER table vd_a_rcved_flow_2015 DROP INDEX IDX_RCVED_FLOW_AMTTYPE;
+	END IF;
 
     # 一条【正常收费】记录可能分为：{电价电费应收}+{计费项应收}+{债务应收}，一条【FBE收费】记录必须分为{+OCD_MONEY}和{-OCD_MONEY}两条应收。
     # 【撤单冲正】在此体现，即再额外生成符号相反的冲正记录
 
-    # 1-插入 实收
+    # 1-插入 实收 3h12min 24596265
     while start_line < total do
-	    -- 【非撤单】-完全拷贝应收
+	    -- 【非撤单】-完全拷贝应收 24596213
         SET @strsql = CONCAT('INSERT INTO vd_a_rcved_flow_2015
-                                    (`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
-                                    `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
-                                SELECT
-                                    2, AMI_GET_SEQUENCE(''SEQ_VD_A_RCVED_FLOW''), -- RCVED_AMT_ID PK
-                                    flow.charge_id, -- CHARGE_ID
-                                    rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键
-                                    rcvblflow.OBJ_NO, -- CONS_NO 用户编号
-                                    rcvblflow.METER_ID, -- METER_ID 表计标识
-                                    rcvblflow.METER_NO, -- ASSET_NO 表号
-                                    DATE_FORMAT(flow.charge_date,''%Y%m%d''), -- RCVED_DATE 注意此处格式：20200122
-                                    rcvblflow.RCVBL_YM, -- RCVBL_YM
-                                    rcvblflow.RCVED_AMT, -- THIS_RCVED_AMT 实收金额（电价电费/计费项/债务）
-                                    NULL, -- THIS_PENALTY 实收违约金
-                                    rcvblflow.AMT_TYPE, -- AMT_TYPE 按产生应收的来源分类，包括01 电费 02免费电费 11 债务 21 佣金 31 费率费用 32免费费率费用 41 业务费
-                                    NULL, -- OWE_AMT 销账前实收金额
-                                    rcvblflow.ORG_ID, -- ORG_ID 用户所属单位
-                                    rcvblflow.tv, -- 分区字段
-                                    rcvblflow.orderid -- orderid 临时存储
-                                FROM vd_a_rcvbl_flow_2015 rcvblflow INNER JOIN (select RCVBL_AMT_ID from vd_a_rcvbl_flow_2015 limit ', start_line, ',', offset, ') tmprcvblflow ON rcvblflow.RCVBL_AMT_ID = tmprcvblflow.RCVBL_AMT_ID
-	                            LEFT JOIN vd_a_pay_flow_2015 flow ON rcvblflow.orderid = flow.orderid AND flow.charge_remark = ''migrate normal'';');
+                (`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
+                `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
+            SELECT
+                2, AMI_GET_SEQUENCE(''SEQ_VD_A_RCVED_FLOW''), -- RCVED_AMT_ID PK
+                flow.charge_id, -- CHARGE_ID
+                rcvblflow.RCVBL_AMT_ID, -- RCVBL_AMT_ID 应收表的主键
+                rcvblflow.OBJ_NO, -- CONS_NO 用户编号
+                rcvblflow.METER_ID, -- METER_ID 表计标识
+                rcvblflow.METER_NO, -- ASSET_NO 表号
+                DATE_FORMAT(flow.charge_date,''%Y%m%d''), -- RCVED_DATE 注意此处格式：20200122
+                rcvblflow.RCVBL_YM, -- RCVBL_YM
+                rcvblflow.RCVED_AMT, -- THIS_RCVED_AMT 实收金额（电价电费/计费项/债务）
+                NULL, -- THIS_PENALTY 实收违约金
+                rcvblflow.AMT_TYPE, -- AMT_TYPE 按产生应收的来源分类，包括01 电费 02免费电费 11 债务 21 佣金 31 费率费用 32免费费率费用 41 业务费
+                NULL, -- OWE_AMT 销账前实收金额
+                rcvblflow.ORG_ID, -- ORG_ID 用户所属单位
+                rcvblflow.tv, -- 分区字段
+                rcvblflow.orderid -- orderid 临时存储
+            FROM vd_a_rcvbl_flow_2015 rcvblflow INNER JOIN (select RCVBL_AMT_ID from vd_a_rcvbl_flow_2015 limit ', start_line, ',', offset, ') tmprcvblflow ON rcvblflow.RCVBL_AMT_ID = tmprcvblflow.RCVBL_AMT_ID
+            LEFT JOIN vd_a_pay_flow_2015 flow ON rcvblflow.orderid = flow.orderid AND flow.charge_remark = ''migrate normal'';');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放
@@ -54,7 +57,7 @@ BEGIN
         set start_line = start_line + offset;
     end while;
 
-    -- 【撤单1】-电价电费
+    -- 【撤单1】-电价电费 26
     INSERT INTO vd_a_rcved_flow_2015
         (`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
         `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
@@ -78,7 +81,7 @@ BEGIN
     LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
     LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND rcvblflow.AMT_TYPE = '01' -- 理应能查到唯一的一笔【电费】应收
     WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.OCD_MONEY > 0;
-    -- 【撤单2】-计费项
+    -- 【撤单2】-计费项 26
     INSERT INTO vd_a_rcved_flow_2015
 		(`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
         `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
@@ -102,7 +105,7 @@ BEGIN
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
 	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND rcvblflow.AMT_TYPE = '31' -- 理应能查到唯一的一笔【计费项】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.FP_VAL3 > 0;
-    -- 【撤单3】-债务
+    -- 【撤单3】-债务 0
     INSERT INTO vd_a_rcved_flow_2015
 		(`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
         `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
@@ -126,7 +129,7 @@ BEGIN
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
 	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND rcvblflow.AMT_TYPE = '11' -- 理应能查到唯一的一笔【债务】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 0 AND sdjl.OCD_DEBT > 0;
-    -- 【撤单4】-FBE{-OCD_MONEY}
+    -- 【撤单4】-FBE{-OCD_MONEY} 0
     INSERT INTO vd_a_rcved_flow_2015
 		(`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
         `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
@@ -150,7 +153,7 @@ BEGIN
 	LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
 	LEFT JOIN vd_a_rcvbl_flow_2015 rcvblflow ON flow.orderid = rcvblflow.orderid AND rcvblflow.AMT_TYPE = '02' AND rcvblflow.RCVBL_AMT > 0 -- 理应能查到唯一的一笔【非撤单】应收
 	WHERE flow.charge_remark = 'migrate reversal' AND sdjl.ISFREE= 1 AND sdjl.OCD_MONEY > 0;
-    -- 【撤单5】-FBE{+OCD_MONEY}
+    -- 【撤单5】-FBE{+OCD_MONEY} 0
 	INSERT INTO vd_a_rcved_flow_2015
 		(`LESSEE_ID`, `RCVED_AMT_ID`, `CHARGE_ID`, `RCVBL_AMT_ID`, `CONS_NO`, `METER_ID`, `ASSET_NO`, `RCVED_DATE`, `RCVBL_YM`,
         `THIS_RCVED_AMT`, `THIS_PENALTY`, `AMT_TYPE`, `OWE_AMT`, `ORG_ID`, `TV`, orderid)
@@ -177,6 +180,7 @@ BEGIN
 
     # 重建索引
     ALTER table vd_a_rcved_flow_2015 ADD INDEX IDX_RCVED_FLOW_CHARGE_ID(CHARGE_ID);
+    ALTER table vd_a_rcved_flow_2015 ADD INDEX IDX_RCVED_FLOW_AMTTYPE(AMT_TYPE); -- 147s 为了插实收小弟
 
     SELECT t_error, msg;
 END

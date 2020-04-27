@@ -7,7 +7,7 @@ BEGIN
 	DECLARE msg text;
 	DECLARE start_line int default 0;
 	DECLARE offset int default 200000; -- 一次最多插35W，否则就报3100，所以只能分页插，20W耗时59s
-	DECLARE total int default 60000000; -- 必须是offset的倍数（待定）
+	DECLARE total int default 26000000; -- 必须是offset的倍数（待定）
 	# 定义SQL异常时将t_error置为1
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	begin
@@ -15,22 +15,22 @@ BEGIN
 		set t_error = 1;
 	end;
 
-    # 1-插入 电费实收明细
+
+    # 1-插入 电费实收明细 1h22min 12527534 = 12058724（电价电费应收） + 234392*2（FBE应收*2） + 26（电价电费撤单） + 0 （FBE撤单）
     while start_line < total do
 	    -- 【非撤单】-完全拷贝应收
         SET @strsql = CONCAT('INSERT INTO vd_a_rcved_amt_2015
-                                    (`LESSEE_ID`, `RCVED_DETAIL_ID`, `RCVED_AMT_ID`, `RCVBL_DETAIL_ID`, `ORG_ID`, `REMARK`, `THIS_RCVED_AMT`, `TV`)
-                                SELECT
-                                    2, AMI_GET_SEQUENCE(''SEQ_VD_A_RCVED_AMT''), -- RCVED_DETAIL_ID PK
-                                    rcvedflow.RCVED_AMT_ID, -- RCVED_AMT_ID
-                                    rcvblamt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 正常/撤单都是定位到了正常应收/明细ID
-                                    rcvedflow.ORG_ID, -- ORG_ID
-                                    ''migrate OCD_MONEY'', -- REMARK
-                                    rcvedflow.THIS_RCVED_AMT, -- THIS_RCVED_AMT 此处只包含电价电费
-                                    rcvedflow.tv -- 分区字段
-                                FROM vd_a_rcved_flow_2015 rcvedflow INNER JOIN (select RCVED_AMT_ID from vd_a_rcved_flow_2015 limit ', start_line, ',', offset, ') tmprcvedflow ON rcvedflow.RCVED_AMT_ID = tmprcvedflow.RCVED_AMT_ID
-                                LEFT JOIN vd_a_rcvbl_amt_2015 rcvblamt ON rcvedflow.RCVBL_AMT_ID = rcvblamt.RCVBL_AMT_ID
-                                WHERE rcvedflow.AMT_TYPE IN (''01'',''02)''; -- -- 包括01 电费 02免费电费，包括撤单，理应可以确定唯一的rcvblamt记录');
+                (`LESSEE_ID`, `RCVED_DETAIL_ID`, `RCVED_AMT_ID`, `RCVBL_DETAIL_ID`, `ORG_ID`, `REMARK`, `THIS_RCVED_AMT`, `TV`)
+            SELECT
+                2, AMI_GET_SEQUENCE(''SEQ_VD_A_RCVED_AMT''), -- RCVED_DETAIL_ID PK
+                rcvedflow.RCVED_AMT_ID, -- RCVED_AMT_ID
+                rcvblamt.RCVBL_DETAIL_ID, -- RCVBL_DETAIL_ID 正常/撤单都是定位到了正常应收/明细ID
+                rcvedflow.ORG_ID, -- ORG_ID
+                ''migrate OCD_MONEY'', -- REMARK
+                rcvedflow.THIS_RCVED_AMT, -- THIS_RCVED_AMT 此处只包含电价电费
+                rcvedflow.tv -- 分区字段
+            FROM vd_a_rcved_flow_2015 rcvedflow INNER JOIN (select RCVED_AMT_ID from vd_a_rcved_flow_2015 where AMT_TYPE IN (''01'',''02'') limit ', start_line, ',', offset, ') tmprcvedflow ON rcvedflow.RCVED_AMT_ID = tmprcvedflow.RCVED_AMT_ID
+            LEFT JOIN vd_a_rcvbl_amt_2015 rcvblamt ON rcvedflow.RCVBL_AMT_ID = rcvblamt.RCVBL_AMT_ID; -- -- 包括01 电费 02免费电费，包括撤单，理应可以确定唯一的rcvblamt记录');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放

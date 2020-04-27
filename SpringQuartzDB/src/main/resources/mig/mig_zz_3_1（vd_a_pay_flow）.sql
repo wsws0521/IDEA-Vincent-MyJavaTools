@@ -28,6 +28,12 @@ BEGIN
 	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_pay_flow_2015' AND index_name='IDX_PAY_FLOW_OBJ_ID') THEN
 		ALTER table vd_a_pay_flow_2015 DROP INDEX IDX_PAY_FLOW_OBJ_ID;
 	END IF;
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_pay_flow_2015' AND index_name='IDX_PAY_FLOW_ORDERID') THEN
+		ALTER table vd_a_pay_flow_2015 DROP INDEX IDX_PAY_FLOW_ORDERID;
+	END IF;
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_pay_flow_2015' AND index_name='IDX_PAY_FLOW_1234') THEN
+		ALTER table vd_a_pay_flow_2015 DROP INDEX IDX_PAY_FLOW_1234;
+	END IF;
 
 	# 1-循环插入 收费明细(正常)
 	while start_line < total do
@@ -36,7 +42,7 @@ BEGIN
                                     charge_ym, charge_date, acct_ym, type_code, rcv_amt, change_amt, rcvd_amt,
                                     charge_oper, settle_mode, settle_note_no, settle_bank_code, dept_id, rcv_org_id,
                                     charge_remark, relate_id, src, org_id, pay_bank_acc, rcv_bank, rcv_bank_acc,
-                                    tv, channel, orderid)
+                                    tv, channel, orderid, ISFREE, OCD_MONEY, FP_VAL3, OCD_DEBT)
                                 SELECT
                                     2, AMI_GET_SEQUENCE(''SEQ_VD_A_PAY_FLOW''),
                                     daily.DS_ID, -- 日结标识
@@ -64,7 +70,8 @@ BEGIN
                                     NULL, -- 收款账号
                                     sdjl.OD_DATE, -- 手动插入TV字段，应用于分区（该值不应为空）
                                     NULL, -- 渠道
-                                    sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
+                                    sdjl.ORDERSID, -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
+                                    sdjl.ISFREE, sdjl.OCD_MONEY, sdjl.FP_VAL3, sdjl.OCD_DEBT -- 临时存储，用来 提升应收/实收 关联查询效率
                                 FROM tmp_sdjl_2015 sdjl
                                 INNER JOIN (select ORDERSID from tmp_sdjl_2015 limit ', start_line, ',', offset, ') tmpsdjl ON sdjl.ORDERSID = tmpsdjl.ORDERSID
                                 LEFT JOIN vd_a_daily_flow daily ON sdjl.BANKINGNO = daily.DS_NO AND sdjl.DELFLAG = 0 -- 撤单的日结标识为NULL
@@ -86,7 +93,7 @@ BEGIN
         charge_ym, charge_date, acct_ym, type_code, rcv_amt, change_amt, rcvd_amt,
         charge_oper, settle_mode, settle_note_no, settle_bank_code, dept_id, rcv_org_id,
         charge_remark, relate_id, src, org_id, pay_bank_acc, rcv_bank, rcv_bank_acc,
-        tv, channel, orderid)
+        tv, channel, orderid, ISFREE, OCD_MONEY, FP_VAL3, OCD_DEBT)
     SELECT
         2, AMI_GET_SEQUENCE('SEQ_VD_A_PAY_FLOW'),
         NULL, -- 撤单的日结标识为NULL
@@ -114,7 +121,8 @@ BEGIN
         NULL, -- 收款账号
         sdjl.OD_DATE, -- 手动插入TV字段，应用于分区（该值不应为空）
         NULL, -- 渠道
-        sdjl.ORDERSID -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
+        sdjl.ORDERSID, -- 临时存储该次偿还在老系统的订单编号（可能存在一个order对应多个debt）
+        sdjl.ISFREE, sdjl.OCD_MONEY, sdjl.FP_VAL3, sdjl.OCD_DEBT -- 临时存储，用来 提升应收/实收 关联查询效率
     FROM tmp_sdjl_2015 sdjl
     LEFT JOIN a_consumer cons ON CONCAT('CN_', sdjl.CUSTOMER_ID) = cons.cons_no
     LEFT JOIN a_equip_meter meter ON sdjl.MT_COMM_ADDR = meter.assetno
@@ -128,6 +136,9 @@ BEGIN
     ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_DS_ID(DS_ID); -- 75s
     ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_ORG_ID(ORG_ID); -- 82s
     ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_OBJ_ID(OBJ_ID); -- 2min
+    ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_ORDERID(orderid); -- 2min
+    -- ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_REMARK(charge_remark); -- 148s 没啥效果
+    ALTER table vd_a_pay_flow_2015 ADD INDEX IDX_PAY_FLOW_1234(charge_remark,isfree,OCD_MONEY,FP_VAL3,OCD_DEBT); -- 244s提升 应收实收查询效率 70s至30s
 
     SELECT t_error, msg;
 END

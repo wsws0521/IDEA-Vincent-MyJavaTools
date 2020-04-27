@@ -15,7 +15,7 @@ BEGIN
 		set t_error = 1;
 	end;
 
-    # 1-插入 票据（每三十万的插入与更新需要4min左右）40组*4min=2h
+    # 1-插入 票据（每三十万的插入与更新需要4min左右）40组*4min=2h-3h
 	while start_line < total do
 	    -- 插入 每组
         SET @strsql = CONCAT('INSERT INTO vd_a_inv_2015
@@ -43,6 +43,11 @@ BEGIN
         -- 翻页
         set start_line = start_line + offset;
     end while;
+
+    # vd_a_inv_2015.CHARGEID
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_inv_2015' AND index_name='index_vd_a_inv_chargeid') THEN
+		ALTER table vd_a_inv_2015 ADD INDEX index_vd_a_inv_chargeid(CHARGEID); -- 71s 插异常申请表时需要用到
+	END IF;
 
     SELECT t_error, msg;
 END

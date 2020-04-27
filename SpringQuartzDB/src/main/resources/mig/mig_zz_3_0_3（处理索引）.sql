@@ -18,6 +18,13 @@ BEGIN
 	END IF;
 
 	ALTER table tmp_sdjl_2015 ADD INDEX tmp_sdjl_2015_delflag(delflag); -- 12293116 记录需要 215s
+	ALTER table tmp_sdjl_2015 ADD INDEX tmp_sdjl_2015_keytoken1(KEYTOKEN1); -- 12293116 记录需要 245s 分开插秘钥Token正常Token时需要
+	ALTER table tmp_sdjl_2015 ADD INDEX tmp_sdjl_2015_isfree(isfree); -- 12293116 记录需要 217s 分开插秘钥Token正常Token时需要
+-- 	ALTER table tmp_sdjl_2015 ADD INDEX tmp_sdjl_2015_ocdmoney(OCD_MONEY); -- 12293116 记录需要 218 分开插秘钥Token正常Token时需要
+    ALTER table tmp_sdjl_2015 ADD INDEX tmp_sdjl_2015_isfree_123(isfree,OCD_MONEY,FP_VAL3,OCD_DEBT);  -- 292 应收实收 需要
+
+
+
 
 END
 $$
