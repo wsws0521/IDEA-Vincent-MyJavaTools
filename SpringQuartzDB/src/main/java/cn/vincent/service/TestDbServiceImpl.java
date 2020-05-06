@@ -73,6 +73,11 @@ public class TestDbServiceImpl implements TestDbService {
     public void mysqlDropProc() {
         testMysqlDao.dropProc();
     }
+
+    @Override
+    public int queryDwAmt(String orgNo) {
+        return testMysqlDao.queryDwAmt(orgNo);
+    }
 //
 //    @Override
 //    public void mysqlCreateProc() {

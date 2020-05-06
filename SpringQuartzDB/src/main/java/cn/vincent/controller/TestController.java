@@ -29,6 +29,11 @@ public class TestController {
     public int dbsize(){
         return testDbService.queryMysqlPthirdParty().size();
     }
+    @GetMapping("/dw")
+    public int queryDwAmt(){
+        String orgNo = "001";
+        return testDbService.queryDwAmt(orgNo);
+    }
     @GetMapping("/mysql/proc")
     public void mysqlProc(){
 //        testDbService.mysqlDropProc();

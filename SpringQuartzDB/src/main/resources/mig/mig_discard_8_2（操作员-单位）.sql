@@ -64,7 +64,9 @@ BEGIN
 		INSERT INTO vd_agt_agent_operator
 			(lessee_id, rel_id, agent_id, opt_id, status, bind_time, unbind_time)
 		SELECT
-			2, AMI_GET_SEQUENCE('S_AMI_FILE'), b.AGENT_ID, var_userId, '11', SYSDATE(), NULL
+			2, AMI_GET_SEQUENCE('S_AMI_FILE'), b.AGENT_ID, var_userId, '11',
+			'2013-08-01 00:00:00', -- 很多业务要求绑定时间必须早于某些业务时间，这里先统一设置成最早时间
+			NULL
 		FROM tmp_czy a, VD_AGT_AGENT b
 		WHERE a.user_id = mainKey AND a.CDUName = b.AGENT_NAME;
 	END IF;

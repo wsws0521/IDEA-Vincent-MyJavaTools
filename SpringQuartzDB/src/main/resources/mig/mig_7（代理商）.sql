@@ -57,7 +57,7 @@ BEGIN
 			INSERT INTO VD_AGT_AGENT
 				(LESSEE_ID, AGENT_ID, AGENT_NO, AGENT_NAME, MIN_CREDIT_LIMIT, CLIENTID, CLIENTID_PWD, ORG_ID, RESU_TYPE, ADDR, STATUS, AGENT_TYPE)
 			SELECT
-				2, var_agentId, CONCAT('AG', LPAD(var_agentId, 6, '0')), te_name, -500000, LPAD(var_agentId, 13, '0'),'vCH7kRwjttcRWl2gl1hUaxGmTgJDw9gdUoiFAyDFWpk64m5yB+aijQ==', var_orgId, '01', TE_ADDRESS, '01', var_agentType
+				2, var_agentId, CONCAT('AG', LPAD(var_agentId, 6, '0')), te_name, 1000, LPAD(var_agentId, 13, '0'),'vCH7kRwjttcRWl2gl1hUaxGmTgJDw9gdUoiFAyDFWpk64m5yB+aijQ==', var_orgId, '01', TE_ADDRESS, '02', var_agentType
 			FROM tmp_dls where te_name = mainKey;
 			# 新增第三方代理商的账本 VD_A_ACCOUNT
 			INSERT INTO VD_A_ACCOUNT
@@ -71,7 +71,7 @@ BEGIN
 				(LESSEE_ID, AGENT_ID, AGENT_NO, AGENT_NAME, MIN_CREDIT_LIMIT, CLIENTID, CLIENTID_PWD, ORG_ID, RESU_TYPE, ADDR, STATUS, AGENT_TYPE)
 			SELECT
 				-- 2, var_agentId, var_orgNo, var_orgName, -500000, NULL,NULL, var_orgId, '01', TE_ADDRESS, '01', var_agentType
-				2, var_agentId, CONCAT('AG', LPAD(var_agentId, 6, '0')), te_name, -500000, NULL,NULL, var_orgId, '01', TE_ADDRESS, '01', var_agentType
+				2, var_agentId, CONCAT('AG', LPAD(var_agentId, 6, '0')), te_name, 1000, NULL,NULL, var_orgId, '01', TE_ADDRESS, '02', var_agentType
 			FROM tmp_dls where te_name = mainKey;
 			# 新增自营代理商的账本 VD_A_ACCOUNT
 			INSERT INTO VD_A_ACCOUNT

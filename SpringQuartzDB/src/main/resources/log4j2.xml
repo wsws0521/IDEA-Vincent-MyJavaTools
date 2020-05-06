@@ -69,7 +69,7 @@
         <logger name="org.mybatis" level="INFO"></logger>
         <logger name="org.apache.ibatis" level="INFO"></logger>
         <root level="all">
-            <appender-ref ref="Console" level="INFO"/>
+            <appender-ref ref="Console" level="debug"/>
             <Appender-ref ref="mergeLog" level="INFO" />
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>

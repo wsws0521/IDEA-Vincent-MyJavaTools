@@ -23,5 +23,7 @@ public interface TestDbService {
 
     void mysqlDropProc();
 
+    int queryDwAmt(String orgNo);
+
 //    void mysqlCreateProc();
 }

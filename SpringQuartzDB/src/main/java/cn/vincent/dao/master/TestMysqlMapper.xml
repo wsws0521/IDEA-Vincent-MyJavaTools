@@ -21,6 +21,9 @@
         #{error_code,mode=OUT,jdbcType=INTEGER},
         #{error_msg,mode=OUT,jdbcType=VARCHAR})}
     </select>
+    <select id="queryDwAmt" resultType="java.lang.Integer">
+        select count(1) from uap_organization where no like '${orgNo}%'
+    </select>
 
     <insert id="insertTempInsert" parameterType="java.util.List">
         insert into tmp_insert (

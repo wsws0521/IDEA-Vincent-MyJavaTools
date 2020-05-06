@@ -16,6 +16,7 @@ BEGIN
 	end;
 
     # 1-插入 票据（每三十万的插入与更新需要4min左右）40组*4min=2h-3h
+    set total = (select count(charge_id) from vd_a_pay_flow_2015);
 	while start_line < total do
 	    -- 插入 每组
         SET @strsql = CONCAT('INSERT INTO vd_a_inv_2015

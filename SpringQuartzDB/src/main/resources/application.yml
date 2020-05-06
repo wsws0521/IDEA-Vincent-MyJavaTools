@@ -63,7 +63,7 @@ spring:
       max-open-prepared-statements: 20
     other:
       # DB-1
-      url: jdbc:sqlserver://192.168.108.11:1433;DatabaseName=hxdb
+      url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb
       username: pns
       password: pnssnp
       # DB-2

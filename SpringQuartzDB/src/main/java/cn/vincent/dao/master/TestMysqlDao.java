@@ -4,6 +4,7 @@ import cn.vincent.pojo.ProcessParam;
 import cn.vincent.pojo.PthirdParty;
 import cn.vincent.pojo.TmpBj;
 import cn.vincent.pojo.TmpInsert;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ public interface TestMysqlDao {
     int insertTmpBjCopy(List<TmpBj> bjlist);
 
     void dropProc();
+
+    int queryDwAmt(@Param("orgNo") String orgNo);
 
 //    void createProc();
 }

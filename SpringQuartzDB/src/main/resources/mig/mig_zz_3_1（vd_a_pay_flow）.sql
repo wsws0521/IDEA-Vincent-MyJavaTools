@@ -35,7 +35,8 @@ BEGIN
 		ALTER table vd_a_pay_flow_2015 DROP INDEX IDX_PAY_FLOW_1234;
 	END IF;
 
-	# 1-循环插入 收费明细(正常)
+	# 1-循环插入 收费明细(正常) 3h24min
+	set total = (select count(ordersid) from tmp_sdjl_2015);
 	while start_line < total do
         SET @strsql = CONCAT('INSERT INTO vd_a_pay_flow_2015
                                     (lessee_id, charge_id, ds_id, obj_type, obj_id, obj_no, meter_id, meter_no,
