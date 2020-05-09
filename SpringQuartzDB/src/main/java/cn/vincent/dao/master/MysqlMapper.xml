@@ -424,4 +424,126 @@
         where  t.TOKEN_TYPE in ('0101', '0103') and TO_DAYS(t.CREATE_TIME) = TO_DAYS(#{cumuDate})
     </select>
 
+    <insert id="insertTmpSdjl" parameterType="java.util.List">
+        insert into tmp_sdjl (`ORDERSID`, `MT_COMM_ADDR`, `OD_DATE`, `ISFREE`,
+            `CUSTOMER_ID`, `SGC_OLD`, `TI_OLD`, `KEYVERSIONID_OLD`, `KEYEXPIRY_OLD`,
+            `SGC`, `TI`, `KEYVERSIONID`, `KEYEXPIRY`, `OCD_TOKEN`, `KEYTOKEN1`, `KEYTOKEN2`,
+            `OCD_ENERGY`, `OCD_MONEY`, `PAYTYPE`, `FP_VAL3`, `OCD_DEBT`, `DEBT_BLC`,
+            `OCD_PAYMONEY`, `operator`, `TE_NAME`, `DELFLAG`, `canceler`,
+            `cancelDate`, `cancelReason`, `BANKINGNO`)
+        values
+        <foreach collection="list" item="item" index="index" separator =",">
+            (
+                #{item.ORDERSID,jdbcType=VARCHAR},
+                #{item.MT_COMM_ADDR,jdbcType=VARCHAR},
+                #{item.OD_DATE,jdbcType=datetime},
+                #{item.ISFREE,jdbcType=tinyint},
+                #{item.CUSTOMER_ID,jdbcType=mediumint},
+                #{item.SGC_OLD,jdbcType=VARCHAR},
+                #{item.TI_OLD,jdbcType=tinyint},
+                #{item.KEYVERSIONID_OLD,jdbcType=tinyint},
+                #{item.KEYEXPIRY_OLD,jdbcType=tinyint},
+                #{item.SGC,jdbcType=VARCHAR},
+                #{item.TI,jdbcType=tinyint},
+                #{item.KEYVERSIONID,jdbcType=tinyint},
+                #{item.KEYEXPIRY,jdbcType=tinyint},
+                #{item.OCD_TOKEN,jdbcType=VARCHAR},
+                #{item.KEYTOKEN1,jdbcType=VARCHAR},
+                #{item.KEYTOKEN2,jdbcType=VARCHAR},
+                #{item.OCD_ENERGY,jdbcType=decimal},
+                #{item.OCD_MONEY,jdbcType=decimal},
+                #{item.PAYTYPE,jdbcType=tinyint},
+                #{item.FP_VAL3,jdbcType=decimal},
+                #{item.OCD_DEBT,jdbcType=decimal},
+                #{item.DEBT_BLC,jdbcType=decimal},
+                #{item.OCD_PAYMONEY,jdbcType=decimal},
+                #{item.operator,jdbcType=VARCHAR},
+                #{item.TE_NAME,jdbcType=VARCHAR},
+                #{item.DELFLAG,jdbcType=tinyint},
+                #{item.canceler,jdbcType=VARCHAR},
+                #{item.cancelDate,jdbcType=datetime},
+                #{item.cancelReason,jdbcType=enum},
+                #{item.BANKINGNO,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <select id="executeScript_zz_3_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_1(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_2" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_2(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_3" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_3(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_4" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_4(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_5" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_5(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_6" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_6(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_7" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_7(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_8" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_8(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_9" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_9(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_10" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_10(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_11" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_11(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_12" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_12(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+    <select id="executeScript_zz_3_13" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_zz_3_13(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
+
 </mapper>

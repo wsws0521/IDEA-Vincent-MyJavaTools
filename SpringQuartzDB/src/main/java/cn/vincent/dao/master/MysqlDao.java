@@ -106,4 +106,19 @@ public interface MysqlDao {
 //
     List<TmpLjz> queryVdPtokenAsLjz(@Param(value = "cumuDate") String cumuDate);
 
+    void insertTmpSdjl(List<TmpSdjl> part);
+
+    ProcessParam executeScript_zz_3_1(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_2(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_3(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_4(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_5(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_6(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_7(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_8(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_9(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_10(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_11(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_12(ProcessParam processParam);
+    ProcessParam executeScript_zz_3_13(ProcessParam processParam);
 }

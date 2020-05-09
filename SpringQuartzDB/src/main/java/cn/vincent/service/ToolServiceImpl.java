@@ -91,6 +91,14 @@ public class ToolServiceImpl implements ToolService {
     }
 
     /**
+     * 创建售电记录同步临时表
+     */
+    @Override
+    public void createTmpSdjl() {
+        mysqlToolDao.updateCreateTmpSdjl();
+    }
+
+    /**
      * 创建同步存储过程 syn**.proc
      */
 //    @Override

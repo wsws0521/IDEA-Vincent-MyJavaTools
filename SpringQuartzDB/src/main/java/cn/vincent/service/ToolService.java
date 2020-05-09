@@ -31,6 +31,11 @@ public interface ToolService {
     String getTmpLjz1DateName();
 
     /**
+     * 创建售电记录同步临时表
+     */
+    void createTmpSdjl();
+
+    /**
      * 创建同步存储过程 syn**.proc
      */
 //    void createSynProcess();

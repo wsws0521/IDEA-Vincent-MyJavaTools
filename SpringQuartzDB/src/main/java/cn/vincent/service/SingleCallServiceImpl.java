@@ -3,7 +3,9 @@ package cn.vincent.service;
 import cn.vincent.dao.master.MysqlDao;
 import cn.vincent.dao.master.MysqlToolDao;
 import cn.vincent.dao.other.SqlserverDao;
+import cn.vincent.pojo.ProcessParam;
 import cn.vincent.pojo.TmpLjz;
+import cn.vincent.pojo.TmpSdjl;
 import cn.vincent.utils.MyDateUtils;
 import cn.vincent.utils.StepConstant;
 import org.slf4j.Logger;
@@ -66,11 +68,103 @@ public class SingleCallServiceImpl implements SingleCallService {
         logger.info("取" + cumuDate + "当天的累计值");
         List<TmpLjz> tmpljzList = mysqlDao.queryVdPtokenAsLjz(cumuDate);
         logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
-        if(tmpljzList.size() > 0)
+        if(tmpljzList.size() > 0){
             logger.info("执行往新库同步..............暂时不动");
 //                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
+        }
         logger.info("手动同步当天累计值至sqlserver完成----------");
         return tmpljzList.size();
+    }
+
+
+    @Override
+    public int callSynSdjl2Mysql() {
+        if(toolService.ifTableNotExist("tmp_sdjl")){
+            logger.info("创建临时售电记录表 tmp_sdjl");
+            toolService.createTmpSdjl();
+        }
+        logger.info("调用售电记录同步动作，从 sqlserver 至 mysql-------------------");
+        String maxSynedTv = mysqlToolDao.queryMaxSynTvFromPayFlow();
+        logger.info("售电记录上次同步至：" + maxSynedTv);
+        List<String> odDatePoints = MyDateUtils.getDateTimeStringListForSdjl(maxSynedTv);
+        logger.info("售电记录即将同步天数：" + odDatePoints.size());
+        if(odDatePoints.size() >= 2){
+            for (int i = 1; i < odDatePoints.size(); i++) {
+                logger.info("售电记录即将同步至：" + odDatePoints.get(i));
+                List<TmpSdjl> tmpSdjlList = sqlserverDao.queryTmpSdjlByDateStr(odDatePoints.get(i - 1), odDatePoints.get(i));
+                importSdjlIntoMysql(tmpSdjlList);
+                logger.info("售电记录已同步至：" + odDatePoints.get(i) + "，共计" + tmpSdjlList.size() + "笔");
+            }
+        }
+
+        return 0;
+    }
+
+    private void importSdjlIntoMysql(List<TmpSdjl> tmpSdjlList) {
+        logger.info("清除并导入 tmp_sdjl 表");
+        mysqlDao.deleteTmpData("tmp_sdjl");
+        int listSize = tmpSdjlList.size();
+        List<TmpSdjl> part = new ArrayList<TmpSdjl>(LIMIT);
+        for (int i = 0; i < listSize; i++) {
+            part.add(tmpSdjlList.get(i));
+            if(LIMIT == part.size() || i == listSize - 1){
+                mysqlDao.insertTmpSdjl(part);
+                part.clear();
+            }
+        }
+        ProcessParam processParam = new ProcessParam();
+        logger.info("导入 vd_a_pay_flow");
+        mysqlDao.executeScript_zz_3_1(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_inv");
+        mysqlDao.executeScript_zz_3_2(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_charge_inv_rel");
+        mysqlDao.executeScript_zz_3_3(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 a_agent_pay_flow");
+        mysqlDao.executeScript_zz_3_4(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_p_token");
+        mysqlDao.executeScript_zz_3_5(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_e_calc_pp_parm");
+        mysqlDao.executeScript_zz_3_6(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcvbl_flow");
+        mysqlDao.executeScript_zz_3_7(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcvbl_amt");
+        mysqlDao.executeScript_zz_3_8(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcvbl_debt");
+        mysqlDao.executeScript_zz_3_9(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcved_flow");
+        mysqlDao.executeScript_zz_3_10(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcved_amt");
+        mysqlDao.executeScript_zz_3_11(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_a_rcved_debt");
+        mysqlDao.executeScript_zz_3_12(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
+        logger.info("导入 vd_s_cancel_app");
+        mysqlDao.executeScript_zz_3_3(processParam);
+        if(processParam.getError_code() != 0)
+            throw new RuntimeException(processParam.getError_msg());
     }
 
     private void importTmpLjzByDateStr(String cumuDateStr) {

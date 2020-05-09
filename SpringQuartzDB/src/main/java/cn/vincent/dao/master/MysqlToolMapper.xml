@@ -50,6 +50,44 @@
         select max(lastvenddate) from tmp_ljz1
     </select>
     <select id="queryTmpLjzIsToday" resultType="java.lang.Integer">
-        select max(lastvenddate) is null OR max(lastvenddate) = CURRENT_DATE from tmp_ljz
+        select max(lastvenddate) is null OR max(lastvenddate) > CURRENT_DATE from tmp_ljz
     </select>
+    <select id="queryMaxSynTvFromPayFlow" resultType="java.lang.String">
+        SELECT MAX(tv) FROM vd_a_pay_flow WHERE charge_remark LIKE 'migrate%'
+    </select>
+    <update id="updateCreateTmpSdjl">
+        CREATE TABLE `tmp_sdjl` (
+          `ORDERSID` varchar(32) NOT NULL,
+          `MT_COMM_ADDR` varchar(32) DEFAULT NULL,
+          `OD_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          `ISFREE` TINYINT UNSIGNED,
+          `CUSTOMER_ID` MEDIUMINT UNSIGNED,
+          `SGC_OLD` varchar(8) DEFAULT NULL,
+          `TI_OLD` TINYINT UNSIGNED,
+          `KEYVERSIONID_OLD` TINYINT UNSIGNED,
+          `KEYEXPIRY_OLD` TINYINT UNSIGNED,
+          `SGC` varchar(8) DEFAULT NULL,
+          `TI` TINYINT UNSIGNED,
+          `KEYVERSIONID` TINYINT UNSIGNED,
+          `KEYEXPIRY` TINYINT UNSIGNED,
+          `OCD_TOKEN` varchar(32) DEFAULT NULL,
+          `KEYTOKEN1` varchar(32) DEFAULT NULL,
+          `KEYTOKEN2` varchar(32) DEFAULT NULL,
+          `OCD_ENERGY` decimal(18,2) DEFAULT NULL,
+          `OCD_MONEY` decimal(18,2) DEFAULT NULL,
+          `PAYTYPE` TINYINT UNSIGNED,
+          `FP_VAL3` decimal(18,2) DEFAULT NULL,
+          `OCD_DEBT` decimal(18,2) DEFAULT NULL,
+          `DEBT_BLC` decimal(18,2) DEFAULT NULL,
+          `OCD_PAYMONEY` decimal(18,2) DEFAULT NULL,
+          `operator` varchar(32) DEFAULT NULL,
+          `TE_NAME` varchar(64) DEFAULT NULL,
+          `DELFLAG` TINYINT UNSIGNED,
+          `canceler` varchar(32) DEFAULT NULL,
+          `cancelDate` DATETIME DEFAULT NULL,
+          `cancelReason` ENUM('00','01','02','03','04') DEFAULT '00',
+          `BANKINGNO` varchar(32) DEFAULT NULL,
+          PRIMARY KEY (`ORDERSID`, `OD_DATE`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    </update>
 </mapper>

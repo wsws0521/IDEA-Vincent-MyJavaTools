@@ -17,4 +17,8 @@ public interface MysqlToolDao {
     String queryMaxLastVendDateFromLjz1();
 
     int queryTmpLjzIsToday();
+
+    String queryMaxSynTvFromPayFlow();
+
+    void updateCreateTmpSdjl();
 }

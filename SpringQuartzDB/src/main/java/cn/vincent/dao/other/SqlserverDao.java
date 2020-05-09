@@ -25,4 +25,12 @@ public interface SqlserverDao {
     int updateTmpLjz0();
     int updateIparaMtrPoint1();
     int updateTmpLjz1();
+
+    /**
+     * 查询 (startdate, enddate] 之间的订单
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<TmpSdjl> queryTmpSdjlByDateStr(@Param(value = "startDate") String startDate, @Param(value = "endDate") String endDate);
 }

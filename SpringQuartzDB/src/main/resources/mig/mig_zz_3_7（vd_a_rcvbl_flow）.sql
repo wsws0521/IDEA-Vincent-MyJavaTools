@@ -149,7 +149,7 @@ BEGIN
     FROM vd_a_pay_flow_2015 flow
     LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
     LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.charge_id = pp.chargeid
-    WHERE flow.charge_remark = 'migrate normal';
+    WHERE flow.charge_remark = 'migrate normal' and flow.ISFREE= 0 and flow.OCD_DEBT > 0;
 
     -- 4-【FBE收费】{+OCD_MONEY}-234392
     INSERT INTO vd_a_rcvbl_flow_2015

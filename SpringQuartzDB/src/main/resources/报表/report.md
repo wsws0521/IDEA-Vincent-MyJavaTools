@@ -24,7 +24,7 @@
 >> Sale Summary Report---------（销售总结报表）~~
 >>> 按-月-查询
 
->> CDU Charge------------------（代理商充值明细）+++
+>> CDU Charge------------------（代理商充值明细）+++----------------------/VendingReport/financialData/rechargeDetailController------/queryRechargeDetail
 >>> 按-代理商-查询
 
 -----
@@ -44,7 +44,7 @@
 >> Power Purchase Abnormal Customer--（购电异常用户）
 >>> 汇总对象 【正常】【免费】
 
->> Meter Without Purchase------------（未购电表计）
+>> Meter Without Purchase------------（未购电表计）---------cn.hexing.vending.VendingReport.dao.meterWithoutPurchase.MeterWithoutPurchaseDao
 >>> 按-时间-单位-查询
 
 >> Token Statistics------------------（Token统计）
@@ -53,7 +53,7 @@
 >> Vendor Operating Time Details-----（工时明细）
 >>> 汇总对象 【销售单位】【自营·代理商】
 
->> Vendor Operating Time Summary-----（工时统计）
+>> Vendor Operating Time Summary-----（工时统计）-----------/VendingReport/workTimeStatistics/WorkTimeStaController-----/queryWorkTimeData -----WorkTimeStatisticsdaoMapper.xml
 >>> 汇总对象 【销售单位】【自营·代理商】
 
 >> Charge Correct Details------------（纠正记录）+++国际化
@@ -64,7 +64,7 @@
 
 -----
 > Engineering
->> Meter Management Status---（表计管理状态）
+>> Meter Management Status---（表计管理状态）--------------/VendingReport/meterStatusReportController------/queryMeterStatusReport------MeterStatusReportMapper.xml
 >>> 汇总对象 【管理单位】【厂家】
 
 >> FBE Report----------------（表计免费额度）

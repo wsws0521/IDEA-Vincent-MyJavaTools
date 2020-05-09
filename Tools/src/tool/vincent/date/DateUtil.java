@@ -5,137 +5,31 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DateUtil {
+    private final static SimpleDateFormat SDF_DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
     private final static SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
     private final static SimpleDateFormat SDF_DATE_CUMU = new SimpleDateFormat("yyyy-MM-dd");
     public static void main(String[] args) {
-        System.out.println(getStartDate("2020-02-08"));
-        try {
-            System.out.println(SDF_DATE_CUMU.parse("2020-03-08"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(getDuringDateStrListOpen("2020-02-08 11:11:11"));
-//        List<String> datesOpen = getDuringDateStr("2020-02-17");
-//        System.out.println(datesOpen);
-//        List<String> datesClose = getDuringDateStrListClose("2020-02-17");
-//        System.out.println(datesClose);
-//
-//        System.out.println(getShortDateFromString("2020-02-07 16:52:18"));
-//        System.out.println(getDateFromString("2020-02-06 19:30:17"));
+        System.out.println(getDateTimeStringListForSdjl("2020-05-01 23:58:59"));
     }
-    public static List<String> getDuringDateStrListOpen(String maxVendDateStr){
+    public static List<String> getDateTimeStringListForSdjl(String maxSynedTv){
         List<String> result = new ArrayList<String>();
-        if(maxVendDateStr == null)
-            return result;
+        result.add(maxSynedTv);
         try {
-            Date startDate = getStartDate(maxVendDateStr);
-
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(new Date());
-            calendar.add(calendar.DATE, -1);
-            String yesterdayStr = SDF_DATE_CUMU.format(calendar.getTime());
-            Date endDate = SDF_DATE_CUMU.parse(yesterdayStr);
-
-            Calendar calBegin = Calendar.getInstance();
-            calBegin.setTime(startDate);
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endDate);
-            while (endDate.after(calBegin.getTime())) {
-                // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
-                calBegin.add(Calendar.DAY_OF_MONTH, 1);
-                result.add(SDF_DATE_CUMU.format(calBegin.getTime()));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-    public static Date getStartDate(String inputStartDateStr){
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 0);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        try {
-            Date monthFirst = SDF_DATE_CUMU.parse(SDF_DATE_CUMU.format(calendar.getTime()));
-            Date inputStartDate = SDF_DATE_CUMU.parse(inputStartDateStr);
-            if(inputStartDate.after(monthFirst)){
-                return inputStartDate;
-            }else{
-                return monthFirst;
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-//    public static String getSysDateYestoday(){
-//        Date now = new Date();
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.setTime(now);
-//        calendar.add(calendar.DATE, -1);
-//        return sdfDate.format(calendar.getTime());
-//    }
-//    public static String getDateFromString(String dateTimeStr) {
-//        Date inputDate = null;
-//        try {
-//            inputDate = sdfDateCumu.parse(dateTimeStr);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return sdfDateCumu.format(inputDate);
-//    }
-    public static List<String> getDuringDateStr(String maxVendDateStr) {
-        List<String> result = new ArrayList<String>();
-        try {
-            Date startDate = SDF_DATE_CUMU.parse(maxVendDateStr);
-
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(new Date());
-            calendar.add(calendar.DATE, -1);
-            String yesterdayStr = SDF_DATE_CUMU.format(calendar.getTime());
-            Date endDate = SDF_DATE_CUMU.parse(yesterdayStr);
-
-            Calendar calBegin = Calendar.getInstance();
-            calBegin.setTime(startDate);
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(endDate);
-            while (endDate.after(calBegin.getTime())) {
-                // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
-                calBegin.add(Calendar.DAY_OF_MONTH, 1);
-                result.add(SDF_DATE_CUMU.format(calBegin.getTime()));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    public static String getShortDateFromString(String dateTimeStr) {
-        Date inputDate = null;
-        try {
-            inputDate = SDF_DATE_CUMU.parse(dateTimeStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return sdfDate.format(inputDate);
-    }
-    public static List<String> getDuringDateStrListClose(String maxVendDateStr){
-        List<String> result = new ArrayList<String>();
-        try {
-            Date startDate = SDF_DATE_CUMU.parse(maxVendDateStr);
-            result.add(SDF_DATE_CUMU.format(startDate));
-            // 截止日期去除时分秒，只保留年月日
+            // 开始 年-月-日
+            Date startDate = SDF_DATE_CUMU.parse(maxSynedTv);
+            // 今天 年-月-日
             String today = SDF_DATE_CUMU.format(new Date());
             Date endDate = SDF_DATE_CUMU.parse(today);
-
+            // 放入日历
             Calendar calBegin = Calendar.getInstance();
             calBegin.setTime(startDate);
             Calendar calEnd = Calendar.getInstance();
             calEnd.setTime(endDate);
+            // 循环
             while (endDate.after(calBegin.getTime())) {
                 // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
                 calBegin.add(Calendar.DAY_OF_MONTH, 1);
-                result.add(SDF_DATE_CUMU.format(calBegin.getTime()));
+                result.add(SDF_DATETIME.format(calBegin.getTime()));
             }
         } catch (ParseException e) {
             e.printStackTrace();
