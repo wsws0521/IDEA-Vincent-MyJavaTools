@@ -20,6 +20,9 @@ BEGIN
     IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_agt_agent' AND index_name='INDEX_vd_agt_agent_agentname') THEN
         ALTER table vd_agt_agent ADD INDEX INDEX_vd_agt_agent_agentname(AGENT_NAME);
     end if;
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_daily_flow' AND index_name='INDEX_vd_a_daily_flow_dsno') THEN
+        ALTER table vd_a_daily_flow ADD INDEX INDEX_vd_a_daily_flow_dsno(DS_NO);
+    end if;
 
     # 开启事务
     START TRANSACTION;
@@ -69,6 +72,7 @@ BEGIN
 
     # 删除索引
     ALTER table vd_agt_agent DROP INDEX INDEX_vd_agt_agent_agentname;
+    ALTER table vd_a_daily_flow DROP INDEX INDEX_vd_a_daily_flow_dsno;
 
     SELECT t_error, msg;
 
@@ -76,7 +80,7 @@ END
 $$
 delimiter ;
 
-
+CALL mig_zz_2_2();
 
 ------------------------------------<queryBalanceDetail>-------------------------------------------
 /*SELECT 	CASE WHEN TYPE_CODE='10' AND BOOK_SUBJECT IN ('13','23') THEN AMI_WEB_GET_P_CODE_VALUE('11','agentChargeType', 'zh_CN')

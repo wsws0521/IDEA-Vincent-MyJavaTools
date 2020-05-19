@@ -3,11 +3,13 @@ delimiter $$
 CREATE PROCEDURE mig_zz_3_7()
 
 BEGIN
+    DECLARE start_year int default 2016;    /* ++++++根据执行库的年份修改，脚本必须在指定库上执行++++++ */
+    DECLARE db_name VARCHAR(16);
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
 	DECLARE start_line int default 0;
-	DECLARE offset int default 200000; -- 一次最多插35W，否则就报3100，所以只能分页插，20W耗时59s
-	DECLARE total int default 14000000; -- 必须是offset的倍数
+	DECLARE offset int default 50000; -- 一次最多插35W，否则就报3100，所以只能分页插，20W耗时59s，又4实例一起插为防止爆缓存池应除以4，慢了1/5
+	DECLARE total int default 14000000;
 	# 定义SQL异常时将t_error置为1
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	begin
@@ -16,20 +18,22 @@ BEGIN
 	end;
 
     # 删除被插表索引
-	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcvbl_flow_2015' AND index_name='IDX_RCVBL_FLOW_OBJ_ID') THEN
-		ALTER table vd_a_rcvbl_flow_2015 DROP INDEX IDX_RCVBL_FLOW_OBJ_ID;
+    SET db_name = (select CONCAT('centlec', start_year));
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = db_name AND table_name='vd_a_rcvbl_flow' AND index_name='IDX_RCVBL_FLOW_OBJ_ID') THEN
+		ALTER table vd_a_rcvbl_flow DROP INDEX IDX_RCVBL_FLOW_OBJ_ID;
 	END IF;
-	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcvbl_flow_2015' AND index_name='IDX_RCVBL_FLOW_ORDERID') THEN
-		ALTER table vd_a_rcvbl_flow_2015 DROP INDEX IDX_RCVBL_FLOW_ORDERID;
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = db_name AND table_name='vd_a_rcvbl_flow' AND index_name='IDX_RCVBL_FLOW_ORDERID') THEN
+		ALTER table vd_a_rcvbl_flow DROP INDEX IDX_RCVBL_FLOW_ORDERID;
 	END IF;
 
     # 一条【正常收费】记录可能分为：{电价电费应收}+{计费项应收}+{债务应收}，一条【FBE收费】记录必须分为{+OCD_MONEY}和{-OCD_MONEY}两条应收。
     # 撤单冲正不在应收体现，在实收再额外生成符号相反的冲正记录
 
-    # 1-插入应收-共计：24596213（8.5h）
+    # 1-插入应收-共计：24596213（10h）
+    set total = (select count(charge_id) from vd_a_pay_flow where charge_remark = 'migrate normal');
     while start_line < total do
 	    -- 1-【正常收费】{电价电费应收}-12058724
-        SET @strsql = CONCAT('INSERT INTO vd_a_rcvbl_flow_2015
+        SET @strsql = CONCAT('INSERT INTO vd_a_rcvbl_flow
                                     (`LESSEE_ID`, `RCVBL_AMT_ID`, `CALC_ID`, `AMT_TYPE`, `RCVBL_YM`, `OBJ_TYPE`, `OBJ_ID`, `OBJ_NO`,
                                     `METER_ID`, `METER_NO`, `RCVBL_AMT`, `RCVED_AMT`, `RCVBL_PENALTY`, `RCVED_PENALTY`, `STATUS_CODE`,
                                     `SETTLE_FLAG`, `PENALTY_BGN_DATE`, `RELEASE_DATE`, `RELATE_ID`, `RELATE_FLAG`, `SRC`, `RES_QUAN`, `ORG_ID`,
@@ -62,14 +66,14 @@ BEGIN
                                     NULL, -- BUS_FROM_OBJ_ID 业务来源标识
                                     sdjl.OD_DATE, -- TV 分区字段
                                     flow.orderid -- 临时造的关联字段
-                                FROM vd_a_pay_flow_2015 flow INNER JOIN (select charge_id from vd_a_pay_flow_2015 where charge_remark = ''migrate normal'' and ISFREE= 0 and OCD_MONEY > 0 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id
-                                LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-                                LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.orderid = pp.chargeid;');
+                                FROM vd_a_pay_flow flow INNER JOIN (select charge_id from vd_a_pay_flow where charge_remark = ''migrate normal'' and ISFREE= 0 and OCD_MONEY > 0 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id
+                                LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+                                LEFT JOIN vd_e_calc_pp_parm pp ON flow.charge_id = pp.chargeid;');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放
         -- 2-【正常收费】{计费项应收}-12058687
-        SET @strsql = CONCAT('INSERT INTO vd_a_rcvbl_flow_2015
+        SET @strsql = CONCAT('INSERT INTO vd_a_rcvbl_flow
                                     (`LESSEE_ID`, `RCVBL_AMT_ID`, `CALC_ID`, `AMT_TYPE`, `RCVBL_YM`, `OBJ_TYPE`, `OBJ_ID`, `OBJ_NO`,
                                     `METER_ID`, `METER_NO`, `RCVBL_AMT`, `RCVED_AMT`, `RCVBL_PENALTY`, `RCVED_PENALTY`, `STATUS_CODE`,
                                     `SETTLE_FLAG`, `PENALTY_BGN_DATE`, `RELEASE_DATE`, `RELATE_ID`, `RELATE_FLAG`, `SRC`, `RES_QUAN`, `ORG_ID`,
@@ -102,9 +106,9 @@ BEGIN
                                     NULL, -- BUS_FROM_OBJ_ID 业务来源标识
                                     sdjl.OD_DATE, -- TV 分区字段
                                     flow.orderid -- 临时造的关联字段
-                                FROM vd_a_pay_flow_2015 flow INNER JOIN (select charge_id from vd_a_pay_flow_2015 where charge_remark = ''migrate normal'' and ISFREE= 0 and FP_VAL3 > 0 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id
-                                LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-                                LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.orderid = pp.chargeid;');
+                                FROM vd_a_pay_flow flow INNER JOIN (select charge_id from vd_a_pay_flow where charge_remark = ''migrate normal'' and ISFREE= 0 and FP_VAL3 > 0 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id
+                                LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+                                LEFT JOIN vd_e_calc_pp_parm pp ON flow.charge_id = pp.chargeid;');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放
@@ -113,7 +117,7 @@ BEGIN
     end while;
 
     -- 3-【正常收费】{债务应收}-10018
-    INSERT INTO vd_a_rcvbl_flow_2015
+    INSERT INTO vd_a_rcvbl_flow
         (`LESSEE_ID`, `RCVBL_AMT_ID`, `CALC_ID`, `AMT_TYPE`, `RCVBL_YM`, `OBJ_TYPE`, `OBJ_ID`, `OBJ_NO`,
         `METER_ID`, `METER_NO`, `RCVBL_AMT`, `RCVED_AMT`, `RCVBL_PENALTY`, `RCVED_PENALTY`, `STATUS_CODE`,
         `SETTLE_FLAG`, `PENALTY_BGN_DATE`, `RELEASE_DATE`, `RELATE_ID`, `RELATE_FLAG`, `SRC`, `RES_QUAN`, `ORG_ID`,
@@ -146,13 +150,13 @@ BEGIN
         NULL, -- BUS_FROM_OBJ_ID 业务来源标识
         sdjl.OD_DATE, -- TV 分区字段
         flow.orderid -- 临时造的关联字段
-    FROM vd_a_pay_flow_2015 flow
-    LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-    LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.charge_id = pp.chargeid
+    FROM vd_a_pay_flow flow
+    LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+    LEFT JOIN vd_e_calc_pp_parm pp ON flow.charge_id = pp.chargeid
     WHERE flow.charge_remark = 'migrate normal' and flow.ISFREE= 0 and flow.OCD_DEBT > 0;
 
     -- 4-【FBE收费】{+OCD_MONEY}-234392
-    INSERT INTO vd_a_rcvbl_flow_2015
+    INSERT INTO vd_a_rcvbl_flow
         (`LESSEE_ID`, `RCVBL_AMT_ID`, `CALC_ID`, `AMT_TYPE`, `RCVBL_YM`, `OBJ_TYPE`, `OBJ_ID`, `OBJ_NO`,
         `METER_ID`, `METER_NO`, `RCVBL_AMT`, `RCVED_AMT`, `RCVBL_PENALTY`, `RCVED_PENALTY`, `STATUS_CODE`,
         `SETTLE_FLAG`, `PENALTY_BGN_DATE`, `RELEASE_DATE`, `RELATE_ID`, `RELATE_FLAG`, `SRC`, `RES_QUAN`, `ORG_ID`,
@@ -185,13 +189,13 @@ BEGIN
         NULL, -- BUS_FROM_OBJ_ID 业务来源标识
         sdjl.OD_DATE, -- TV 分区字段
         flow.orderid -- 临时造的关联字段
-    FROM vd_a_pay_flow_2015 flow
-    LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-    LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.orderid = pp.chargeid
+    FROM vd_a_pay_flow flow
+    LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+    LEFT JOIN vd_e_calc_pp_parm pp ON flow.charge_id = pp.chargeid
     WHERE flow.charge_remark = 'migrate normal' AND flow.ISFREE= 1 AND flow.OCD_MONEY > 0;
 
     -- 5-【FBE收费】{-OCD_MONEY}-234392
-    INSERT INTO vd_a_rcvbl_flow_2015
+    INSERT INTO vd_a_rcvbl_flow
         (`LESSEE_ID`, `RCVBL_AMT_ID`, `CALC_ID`, `AMT_TYPE`, `RCVBL_YM`, `OBJ_TYPE`, `OBJ_ID`, `OBJ_NO`,
         `METER_ID`, `METER_NO`, `RCVBL_AMT`, `RCVED_AMT`, `RCVBL_PENALTY`, `RCVED_PENALTY`, `STATUS_CODE`,
         `SETTLE_FLAG`, `PENALTY_BGN_DATE`, `RELEASE_DATE`, `RELATE_ID`, `RELATE_FLAG`, `SRC`, `RES_QUAN`, `ORG_ID`,
@@ -224,18 +228,18 @@ BEGIN
         NULL, -- BUS_FROM_OBJ_ID 业务来源标识
         sdjl.OD_DATE, -- TV 分区字段
         flow.orderid -- 临时造的关联字段
-    FROM vd_a_pay_flow_2015 flow
-    LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-    LEFT JOIN vd_e_calc_pp_parm_2015 pp ON flow.orderid = pp.chargeid
+    FROM vd_a_pay_flow flow
+    LEFT JOIN tmp_sdjl sdjl ON flow.orderid = sdjl.ORDERSID
+    LEFT JOIN vd_e_calc_pp_parm pp ON flow.charge_id = pp.chargeid
     WHERE flow.charge_remark = 'migrate normal' AND flow.ISFREE= 1 AND flow.OCD_MONEY > 0;
 
 
     # 重建索引
-    ALTER table vd_a_rcvbl_flow_2015 ADD INDEX IDX_RCVBL_FLOW_ORDERID(ORDERID); -- 236s 插实收里的撤单记录时需要关联
-    ALTER table vd_a_rcvbl_flow_2015 ADD INDEX IDX_RCVBL_FLOW_OBJ_ID(OBJ_ID, METER_ID, SETTLE_FLAG); -- 108s
-    # vd_a_rcvbl_flow_2015.AMT_TYPE
-    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_a_rcvbl_flow_2015' AND index_name='index_vd_a_rcvbl_flow_amttype') THEN
-		ALTER table vd_a_rcvbl_flow_2015 ADD INDEX index_vd_a_rcvbl_flow_amttype(AMT_TYPE); -- 167s 插应收小弟需要用到
+    ALTER table vd_a_rcvbl_flow ADD INDEX IDX_RCVBL_FLOW_ORDERID(ORDERID); -- 236s 插实收里的撤单记录时需要关联
+    ALTER table vd_a_rcvbl_flow ADD INDEX IDX_RCVBL_FLOW_OBJ_ID(OBJ_ID, METER_ID, SETTLE_FLAG); -- 108s
+    # vd_a_rcvbl_flow.AMT_TYPE
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = db_name AND table_name='vd_a_rcvbl_flow' AND index_name='index_vd_a_rcvbl_flow_amttype') THEN
+		ALTER table vd_a_rcvbl_flow ADD INDEX index_vd_a_rcvbl_flow_amttype(AMT_TYPE); -- 167s 插应收小弟需要用到
 	END IF;
 
     SELECT t_error, msg;

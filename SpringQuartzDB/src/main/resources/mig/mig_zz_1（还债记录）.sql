@@ -1,3 +1,63 @@
+
+-- -----------------------------------tmp_hzjl  自动建表语句-----------------------------------------
+CREATE TABLE `tmp_hzjl` (
+  `orderid` varchar(128) NOT NULL,
+  `DEBTID` varchar(128) NOT NULL,
+  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
+  `MT_COMM_ADDR` varchar(128) DEFAULT NULL,
+  `paymoney` decimal(18, 2) DEFAULT NULL,
+  `payedBalance` decimal(18, 2) DEFAULT NULL,
+  `paydate` DATETIME DEFAULT NULL,
+--   `operator` varchar(128) DEFAULT NULL,
+--   `payType` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`orderid`,`DEBTID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------sqlserver数据源获取, 72319条-------------------------------------------
+-- 作废，将还债记录与售电记录一起迁移
+-- select * from (
+-- select cast(od.ORDERSID as varchar) orderid,od.DEBTID, od.USER_ID as CUSTOMER_ID,m.MT_COMM_ADDR,
+-- od.DE_AMOUNT paymoney,od.DE_BANLANCE as payedBalance,od.DE_DATE paydate,u.USER_ACCOUNT as operator
+-- , 0 payType
+-- from ORDER_DEBTS od
+-- LEFT JOIN IPARA_MTRPOINT m on od.METERID=m.MTRPOINT_ID
+-- LEFT JOIN ORDER_TRN o on o.ORDERSID=od.ORDERSID
+-- LEFT JOIN IAUDIT_USER u on u.USER_ID=o.OPERATORID
+-- where o.DELFLAG = 0 --order by od.USER_ID,od.METERID,od.DE_DATE
+-- and exists(select * from ipara_debt d where d.debtid=od.debtid)
+-- union all
+-- select '' as orderid, d.DEBTID, d.CUSTOMER_ID,m.MT_COMM_ADDR as MT_COMM_ADDR,
+-- d.CURENTBLC paymoney, 0 payedBalance,d.OPERATE_DATE paydate, u.USER_ACCOUNT as operator
+-- , 1 payType
+--  from IPARA_DEBT d
+--  LEFT JOIN IPARA_MTRPOINT m on d.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
+--  LEFT JOIN IAUDIT_USER u on u.USER_ID = d.OPERATOR_ID
+--  where d.OKFLAG<>0 and d.CURENTBLC<>0
+-- ) t
+-- order by t.CUSTOMER_ID,t.paydate
+
+-- 需要重新整理 订单号1-n还债记录 关系
+select  cast(od.ORDERSID as varchar) orderid, -- 订单号
+        od.DEBTID, -- 老债务ID
+        od.USER_ID as CUSTOMER_ID, -- 老用户号
+        m.MT_COMM_ADDR, -- 表号
+        cast(ROUND(od.DE_AMOUNT,2) as numeric(18,2)) paymoney, -- 还债金额
+        cast(ROUND(od.DE_BANLANCE,2)as numeric(18,2)) as payedBalance, -- 还债之后剩余债务
+        od.DE_DATE paydate -- 还债日期
+from ORDER_DEBTS od
+LEFT JOIN IPARA_MTRPOINT m on od.METERID=m.MTRPOINT_ID
+where exists(select * from ipara_debt d where d.debtid=od.debtid)
+order by od.USER_ID,od.DE_DATE
+-- -----------------------------------在分库 分别导入tmp_hzjl-----------------------------------------
+CREATE TABLE centlec2016.tmp_hzjl LIKE centlec.tmp_hzjl;
+INSERT INTO centlec2016.tmp_hzjl SELECT * FROM centlec.tmp_hzjl;
+CREATE TABLE centlec2017.tmp_hzjl LIKE centlec.tmp_hzjl;
+INSERT INTO centlec2017.tmp_hzjl SELECT * FROM centlec.tmp_hzjl;
+CREATE TABLE centlec2018.tmp_hzjl LIKE centlec.tmp_hzjl;
+INSERT INTO centlec2018.tmp_hzjl SELECT * FROM centlec.tmp_hzjl;
+CREATE TABLE centlec2019.tmp_hzjl LIKE centlec.tmp_hzjl;
+INSERT INTO centlec2019.tmp_hzjl SELECT * FROM centlec.tmp_hzjl;
+-- ------------------------------------------------------------------------------------------------------
 DROP PROCEDURE IF EXISTS mig_zz_1;
 delimiter $$
 CREATE PROCEDURE mig_zz_1()
@@ -205,52 +265,3 @@ BEGIN
 END
 $$
 delimiter ;
-------------------------------------sqlserver数据源获取, 72319条-------------------------------------------
--- 作废，将还债记录与售电记录一起迁移
--- select * from (
--- select cast(od.ORDERSID as varchar) orderid,od.DEBTID, od.USER_ID as CUSTOMER_ID,m.MT_COMM_ADDR,
--- od.DE_AMOUNT paymoney,od.DE_BANLANCE as payedBalance,od.DE_DATE paydate,u.USER_ACCOUNT as operator
--- , 0 payType
--- from ORDER_DEBTS od
--- LEFT JOIN IPARA_MTRPOINT m on od.METERID=m.MTRPOINT_ID
--- LEFT JOIN ORDER_TRN o on o.ORDERSID=od.ORDERSID
--- LEFT JOIN IAUDIT_USER u on u.USER_ID=o.OPERATORID
--- where o.DELFLAG = 0 --order by od.USER_ID,od.METERID,od.DE_DATE
--- and exists(select * from ipara_debt d where d.debtid=od.debtid)
--- union all
--- select '' as orderid, d.DEBTID, d.CUSTOMER_ID,m.MT_COMM_ADDR as MT_COMM_ADDR,
--- d.CURENTBLC paymoney, 0 payedBalance,d.OPERATE_DATE paydate, u.USER_ACCOUNT as operator
--- , 1 payType
---  from IPARA_DEBT d
---  LEFT JOIN IPARA_MTRPOINT m on d.CUSTOMER_ID=m.ACTUAL_CUSTOMER_ID
---  LEFT JOIN IAUDIT_USER u on u.USER_ID = d.OPERATOR_ID
---  where d.OKFLAG<>0 and d.CURENTBLC<>0
--- ) t
--- order by t.CUSTOMER_ID,t.paydate
-
--- 需要重新整理 订单号1-n还债记录 关系
-select  cast(od.ORDERSID as varchar) orderid, -- 订单号
-        od.DEBTID, -- 老债务ID
-        od.USER_ID as CUSTOMER_ID, -- 老用户号
-        m.MT_COMM_ADDR, -- 表号
-        cast(ROUND(od.DE_AMOUNT,2) as numeric(18,2)) paymoney, -- 还债金额
-        cast(ROUND(od.DE_BANLANCE,2)as numeric(18,2)) as payedBalance, -- 还债之后剩余债务
-        od.DE_DATE paydate -- 还债日期
-from ORDER_DEBTS od
-LEFT JOIN IPARA_MTRPOINT m on od.METERID=m.MTRPOINT_ID
-where exists(select * from ipara_debt d where d.debtid=od.debtid)
-order by od.USER_ID,od.DE_DATE
-
--------------------------------------tmp_hzjl  自动建表语句-----------------------------------------
-CREATE TABLE `tmp_hzjl` (
-  `orderid` varchar(128) NOT NULL,
-  `DEBTID` varchar(128) NOT NULL,
-  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
-  `MT_COMM_ADDR` varchar(128) DEFAULT NULL,
-  `paymoney` decimal(18, 2) DEFAULT NULL,
-  `payedBalance` decimal(18, 2) DEFAULT NULL,
-  `paydate` DATETIME DEFAULT NULL,
---   `operator` varchar(128) DEFAULT NULL,
---   `payType` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`orderid`,`DEBTID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

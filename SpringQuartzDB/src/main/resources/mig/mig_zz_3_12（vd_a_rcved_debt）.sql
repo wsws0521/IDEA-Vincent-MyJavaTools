@@ -16,7 +16,7 @@ BEGIN
 	end;
 
     # 1-插入 债务实收明细 10019 = 10018（债务应收） + 0（债务撤单）（还债记录里面可能找不到sdjl里面的ordersid，一个ordersid有可能对应多种债务，所以记录数可能比应收债务数多，也可能少）
-    INSERT INTO vd_a_rcved_debt_2015
+    INSERT INTO vd_a_rcved_debt
         (`LESSEE_ID`, `RCVED_DEBT_ID`, `RCVBL_DEBT_ID`, `RCVED_AMT_ID`, `THIS_RCVED_AMT`, `REMARK`, `ORG_ID`, `TV`)
     SELECT
         2, AMI_GET_SEQUENCE('SEQ_VD_A_RCVED_DEBT'), -- RCVED_DEBT_ID PK
@@ -26,13 +26,13 @@ BEGIN
         'migrate OCD_DEBT', -- REMARK
         rcvedflow.ORG_ID, -- ORG_ID
         rcvedflow.tv -- 分区字段
-    FROM vd_a_rcved_flow_2015 rcvedflow
-    LEFT JOIN vd_a_rcvbl_debt_2015 rcvbldebt ON rcvedflow.RCVBL_AMT_ID = rcvbldebt.RCVBL_AMT_ID -- 一个售电订单可能偿还2种债务，从而有两个应收债务
+    FROM vd_a_rcved_flow rcvedflow
+    LEFT JOIN vd_a_rcvbl_debt rcvbldebt ON rcvedflow.RCVBL_AMT_ID = rcvbldebt.RCVBL_AMT_ID -- 一个售电订单可能偿还2种债务，从而有两个应收债务
     WHERE rcvedflow.AMT_TYPE = '11'; -- 可能确定不止一条rcvbldebt记录
 
 --     while start_line < total do
 -- 	    -- 【非撤单】-完全拷贝应收
---         SET @strsql = CONCAT('INSERT INTO vd_a_rcved_debt_2015
+--         SET @strsql = CONCAT('INSERT INTO vd_a_rcved_debt
 --                                     (`LESSEE_ID`, `RCVED_DEBT_ID`, `RCVBL_DEBT_ID`, `RCVED_AMT_ID`, `THIS_RCVED_AMT`, `REMARK`, `ORG_ID`, `TV`)
 --                                 SELECT
 --                                     2, AMI_GET_SEQUENCE(''SEQ_VD_A_RCVED_DEBT''), -- RCVED_DEBT_ID PK
@@ -42,8 +42,8 @@ BEGIN
 --                                     ''migrate OCD_DEBT'', -- REMARK
 --                                     rcvedflow.ORG_ID, -- ORG_ID
 --                                     rcvedflow.tv -- 分区字段
---                                 FROM vd_a_rcved_flow_2015 rcvedflow INNER JOIN (select RCVED_AMT_ID from vd_a_rcved_flow_2015 limit ', start_line, ',', offset, ') tmprcvedflow ON rcvedflow.RCVED_AMT_ID = tmprcvedflow.RCVED_AMT_ID
---                                 LEFT JOIN vd_a_rcvbl_debt_2015 rcvbldebt ON rcvedflow.RCVBL_AMT_ID = rcvbldebt.RCVBL_AMT_ID -- 一个售电订单可能偿还2种债务，从而有两个应收债务
+--                                 FROM vd_a_rcved_flow rcvedflow INNER JOIN (select RCVED_AMT_ID from vd_a_rcved_flow limit ', start_line, ',', offset, ') tmprcvedflow ON rcvedflow.RCVED_AMT_ID = tmprcvedflow.RCVED_AMT_ID
+--                                 LEFT JOIN vd_a_rcvbl_debt rcvbldebt ON rcvedflow.RCVBL_AMT_ID = rcvbldebt.RCVBL_AMT_ID -- 一个售电订单可能偿还2种债务，从而有两个应收债务
 --                                 WHERE rcvedflow.AMT_TYPE = ''11''; -- 可能确定不止一条rcvbldebt记录');
 --         PREPARE stmt FROM @strsql;
 --         EXECUTE stmt;

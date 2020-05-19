@@ -3,11 +3,13 @@ delimiter $$
 CREATE PROCEDURE mig_zz_3_5()
 
 BEGIN
+    DECLARE start_year int default 2016;    /* ++++++根据执行库的年份修改，脚本必须在指定库上执行++++++ */
+    DECLARE db_name VARCHAR(16);
 	DECLARE t_error INTEGER DEFAULT 0;
 	DECLARE msg text;
 	DECLARE start_line int default 0;
 	DECLARE offset int default 200000; -- 一次最多插35W，否则就报3100，所以只能分页插，20W耗时59s
-	DECLARE total int default 14000000; -- 必须是offset的倍数
+	DECLARE total int default 14000000;
 	# 定义SQL异常时将t_error置为1
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	begin
@@ -16,13 +18,14 @@ BEGIN
 	end;
 
     # 删除被插表索引
-	IF EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='vd_p_token_2015' AND index_name='VD_TOKEN_APPID') THEN
-		ALTER table vd_p_token_2015 DROP INDEX VD_TOKEN_APPID;
+    SET db_name = (select CONCAT('centlec', start_year));
+	IF EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = db_name AND table_name='vd_p_token' AND index_name='VD_TOKEN_APPID') THEN
+		ALTER table vd_p_token DROP INDEX VD_TOKEN_APPID;
 	END IF;
 
-    # 1-循环插入 Token表 （2h43min）
+    # 1-循环插入 Token表 （2h）
     -- 先插0203 改秘钥Token（一年也就7条）
-    INSERT INTO vd_p_token_2015
+    INSERT INTO vd_p_token
         (`LESSEE_ID`, `TOKEN_ID`, `KEY_CHG_ID`, `LOGOFFCHANGE_ID`, `BUSINESS_TYPE`, `APP_ID`,
         `ACCOUNT_NO`, `ACCOUNT_ID`, `METER_ID`, `METER_NO`, `TOKEN_TYPE`, `TOKEN`, `RTN_TOKEN`,
         `SORT`, `EXECUTE_STATUS`, `RECHARGE_AMOUNT`, `TOKEN_AMOUNT`, `CREATE_TIME`, `ORG_ID`,
@@ -57,13 +60,14 @@ BEGIN
         sdjl.OD_DATE, -- TV  分区字段
         NULL, -- VER_ID 费率版本ID
         NULL -- BARL
-    FROM vd_a_pay_flow_2015 flow
-    LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-    WHERE flow.charge_remark = 'migrate normal' and sdjl.KEYTOKEN1 <> '00'; -- 冲正记录没必要再插一遍对应Token，有改秘钥则先插入
+    FROM tmp_sdjl sdjl
+    LEFT JOIN vd_a_pay_flow flow ON sdjl.ORDERSID = flow.orderid AND flow.charge_remark = 'migrate normal' -- 确定唯一一条收费记录（LEFT冲正记录没必要再插一遍对应Token）
+    WHERE sdjl.KEYTOKEN1 <> '00'; -- ，有改秘钥则先插入
 
     -- 再插0101 充值Token
+    set total = (select count(ordersid) from tmp_sdjl);
 	while start_line < total do
-        SET @strsql = CONCAT('INSERT INTO vd_p_token_2015
+        SET @strsql = CONCAT('INSERT INTO vd_p_token
                                     (`LESSEE_ID`, `TOKEN_ID`, `KEY_CHG_ID`, `LOGOFFCHANGE_ID`, `BUSINESS_TYPE`, `APP_ID`,
                                     `ACCOUNT_NO`, `ACCOUNT_ID`, `METER_ID`, `METER_NO`, `TOKEN_TYPE`, `TOKEN`, `RTN_TOKEN`,
                                     `SORT`, `EXECUTE_STATUS`, `RECHARGE_AMOUNT`, `TOKEN_AMOUNT`, `CREATE_TIME`, `ORG_ID`,
@@ -98,10 +102,9 @@ BEGIN
                                     sdjl.OD_DATE, -- TV  分区字段
                                     NULL, -- VER_ID 费率版本ID
                                     NULL -- BARL
-                                FROM vd_a_pay_flow_2015 flow
-                                INNER JOIN (select charge_id from vd_a_pay_flow_2015 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id
-                                LEFT JOIN tmp_sdjl_2015 sdjl ON flow.orderid = sdjl.ORDERSID
-                                WHERE flow.charge_remark = ''migrate normal''; -- 冲正记录没必要再插一遍对应Token');
+                                FROM tmp_sdjl sdjl
+                                INNER JOIN (select ordersid from tmp_sdjl limit ', start_line, ',', offset, ') tmpsdjl ON sdjl.ordersid = tmpsdjl.ordersid
+                                LEFT JOIN vd_a_pay_flow flow ON sdjl.ORDERSID = flow.orderid AND flow.charge_remark = ''migrate normal''; -- 冲正记录没必要再插一遍对应Token');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放
@@ -110,7 +113,7 @@ BEGIN
     end while;
 
     # 重建索引
-    ALTER table vd_p_token_2015 ADD INDEX VD_TOKEN_APPID(APP_ID); -- 2min
+    ALTER table vd_p_token ADD INDEX VD_TOKEN_APPID(APP_ID); -- 2min
 
     SELECT t_error, msg;
 END

@@ -68,3 +68,5 @@ BEGIN
 END
 $$
 delimiter ;
+
+CALL mig_zz_2_3();

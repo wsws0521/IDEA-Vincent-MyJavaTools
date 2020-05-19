@@ -17,8 +17,9 @@ BEGIN
 
 
     # 1-循环插入 预付费计费参数(与收费明细一对一)（1h8min）
+    set total = (select count(charge_id) from vd_a_pay_flow);
 	while start_line < total do
-        SET @strsql = CONCAT('INSERT INTO vd_e_calc_pp_parm_2015
+        SET @strsql = CONCAT('INSERT INTO vd_e_calc_pp_parm
                                     (`LESSEE_ID`, `CALC_ID`, `RECHARGE_TYPE`, `AMOUNT`, `TV`, chargeid)
                                 SELECT
                                     2,
@@ -27,8 +28,8 @@ BEGIN
                                     flow.rcvd_amt, -- 数量
                                     flow.tv, -- 分区字段
                                     flow.charge_id -- 临时造的关联字段
-                                FROM vd_a_pay_flow_2015 flow
-                                INNER JOIN (select charge_id from vd_a_pay_flow_2015 limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id;');
+                                FROM vd_a_pay_flow flow
+                                INNER JOIN (select charge_id from vd_a_pay_flow limit ', start_line, ',', offset, ') tmpflow ON flow.charge_id = tmpflow.charge_id;');
         PREPARE stmt FROM @strsql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt; -- 释放
@@ -36,8 +37,8 @@ BEGIN
         set start_line = start_line + offset;
     end while;
 
-    # 重建索引
-    ALTER table vd_e_calc_pp_parm_2015 ADD INDEX idx_vd_e_calc_pp_parm_chargeid(chargeid); -- 5min
+    # 在辅助字段上新建辅助索引，在插应收/实收时需要用到
+    ALTER table vd_e_calc_pp_parm ADD INDEX idx_vd_e_calc_pp_parm_chargeid(chargeid); -- 5min
 
     SELECT t_error, msg;
 END
