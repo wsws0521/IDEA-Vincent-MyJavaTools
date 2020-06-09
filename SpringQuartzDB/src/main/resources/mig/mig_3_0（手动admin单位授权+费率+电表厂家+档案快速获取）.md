@@ -2,7 +2,7 @@
 
 ## 页面为MDCAdmin赋予所有单位权限
 MDCAdmin登录主站>>组织体系管理>>管理单位配置>>点根单位，
-选择MDCAdmin>>添加单位访问权限（UAP_USER_ORG_MANAGE）>>修改一页显示100个单位>>全选，添加全部单位；
+选择 MDCAdmin、CENTLECAdmin>>添加单位访问权限（UAP_USER_ORG_MANAGE）>>修改一页显示100个单位>>全选，添加全部单位；
 
 ## ① 手动创建：计费项（根单位, VAT, Regulation = 百分比, Value = 0.15, Base = 电量电费）
 > 计费项
@@ -416,7 +416,7 @@ CREATE TABLE `tmp_czy` (
   PRIMARY KEY (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
------------------sqlserver数据源获取（注意处理USER_ACCOUNT相同的记录，必须Unique！！！！）341---------------------------------
+-----------------sqlserver数据源获取（注意处理USER_ACCOUNT相同的记录，必须Unique！！！！）342---------------------------------
 -----------------如果uap_user里已经出现了重复no，，建议把610-nthabiseng后缀+1，目测610是离职人员-------------------------------
 /*select  cu.USER_ID,
         cu.USER_ACCOUNT,
@@ -482,7 +482,12 @@ replace(ADDRESS,',','.') as [address],replace(u.note,',','.') as [note],CREATE_T
  LEFT JOIN IPARA_CDUREGION mr2 on mr2.REGION_ID=mc2.REGIOINID
 order by cu.create_TIME desc
 ```
-
+（由于角色合并，需要再修改数据）
+```sql
+update tmp_czy set roleName = 'Maintenance' where roleName in ('Tariff_maintenance','CDU_Admin_Role');
+update tmp_czy set roleName = 'Call_Centre' where roleName = 'Customer_Care';
+update tmp_czy set roleName = 'Meter_Assistant' where roleName in ('Meter_Preload','Meter_Room');
+```
 
 
 

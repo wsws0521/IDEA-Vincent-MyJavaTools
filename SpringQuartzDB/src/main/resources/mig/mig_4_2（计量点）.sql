@@ -79,3 +79,5 @@ END
 
 $$
 delimiter ;
+
+CALL mig_4_2();

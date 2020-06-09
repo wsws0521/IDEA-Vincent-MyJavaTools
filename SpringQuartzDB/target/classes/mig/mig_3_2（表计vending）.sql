@@ -28,8 +28,6 @@ BEGIN
 		AND c.base_time = 1993
 		AND c.ms = '02';
 
-
-
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE
@@ -40,3 +38,5 @@ END
 
 $$
 delimiter ;
+
+CALL mig_3_2();

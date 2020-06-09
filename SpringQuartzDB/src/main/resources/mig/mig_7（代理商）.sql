@@ -99,3 +99,5 @@ END
 
 $$
 delimiter ;
+
+CALL mig_7();

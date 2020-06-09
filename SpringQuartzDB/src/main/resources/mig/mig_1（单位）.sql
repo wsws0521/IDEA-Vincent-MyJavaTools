@@ -174,3 +174,4 @@ END
 $$
 delimiter ;
 
+CALL mig_1();

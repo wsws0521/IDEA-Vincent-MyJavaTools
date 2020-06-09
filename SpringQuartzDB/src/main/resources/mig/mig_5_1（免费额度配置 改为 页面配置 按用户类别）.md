@@ -5,8 +5,8 @@
 -----Name: FBE
 -----Type: Free Credit
 -----Status: Normal
------Config Object: Electricity Type
------Accumulate: No
+-----Config Object: Category
+-----Accumulate: NO
 -----Effective Date: Tomorrow
 -----Expire Date: NULL
 -----File: 201-50

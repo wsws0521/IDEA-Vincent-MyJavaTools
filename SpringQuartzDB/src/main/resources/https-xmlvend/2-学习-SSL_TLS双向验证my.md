@@ -77,7 +77,7 @@ C:\Windows\System32\《client.pfx》
 >>keytool -importcert -alias tomcat_server -keystore c:\_cert\server_truststore       -storepass 123456      -file C:\_cert\clients\vincent_cert.cer
 >>keytool -importcert                      -keystore c:\_cert\server.jks              -storepass 123456      -file C:\_cert\clients\vincent_cert.cer
 
-## 6-创建client的truststore文件并导入server的证书【不是必须的，也就soupui用得到】（其中包括server的公钥）
+## 6-创建client的truststore文件并导入server的证书【不是必须的，也就soupui用得到。试过soupui不用此文件，貌似也可以】（其中包括server的公钥）
 >>keytool -import -alias tomcat_server  -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456      -file c:\xmlvend\server\catserver.cer
 >>keytool -import -alias vincent_client -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456      -file c:\xmlvend\foxclient.cer
 >>

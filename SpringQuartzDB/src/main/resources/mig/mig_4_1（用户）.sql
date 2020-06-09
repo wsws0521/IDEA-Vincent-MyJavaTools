@@ -70,3 +70,4 @@ $$
 delimiter ;
 
 
+CALL mig_4_1();

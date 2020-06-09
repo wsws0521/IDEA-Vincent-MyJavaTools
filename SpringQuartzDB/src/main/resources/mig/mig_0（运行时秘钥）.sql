@@ -717,3 +717,5 @@ BEGIN
 END
 $$
 delimiter ;
+
+CALL mig_0();

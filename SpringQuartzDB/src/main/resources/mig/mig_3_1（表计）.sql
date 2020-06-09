@@ -1,4 +1,4 @@
-------先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
+-- ----先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
 DROP PROCEDURE IF EXISTS mig_3_1;
 delimiter $$
 CREATE PROCEDURE mig_3_1()
@@ -14,10 +14,10 @@ BEGIN
 	end;
 
 	# 0-索引
-	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='tmp_bj' AND index_name='index_tmp_bj_cusid') THEN
+	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = 'centlec' AND table_name='tmp_bj' AND index_name='index_tmp_bj_cusid') THEN
 		ALTER table tmp_bj ADD INDEX index_tmp_bj_cusid(customer_id);
 	END IF;
-	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='tmp_bj' AND index_name='index_tmp_bj_meterno') THEN
+	IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = 'centlec' AND table_name='tmp_bj' AND index_name='index_tmp_bj_meterno') THEN
 		ALTER table tmp_bj ADD INDEX index_tmp_bj_meterno(MT_COMM_ADDR);
 	END IF;
 
@@ -105,6 +105,6 @@ END
 $$
 delimiter ;
 
-
+CALL mig_3_1();
 
 

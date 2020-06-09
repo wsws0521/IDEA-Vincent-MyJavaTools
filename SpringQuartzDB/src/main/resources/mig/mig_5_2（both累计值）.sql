@@ -92,4 +92,4 @@ $$
 delimiter ;
 
 
-
+CALL mig_5_2();

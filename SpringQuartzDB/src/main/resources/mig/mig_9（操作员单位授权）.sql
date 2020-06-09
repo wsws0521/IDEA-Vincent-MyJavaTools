@@ -52,6 +52,8 @@ END
 
 $$
 delimiter ;
+
+CALL mig_9();
 -- -----------------------------------tmp_user_org  自动建表语句-----------------------------------------
 -- CREATE TABLE `tmp_user_org` (
 --   `mainkey` varchar(128) NOT NULL AUTO_INCREMENT,

@@ -106,5 +106,4 @@ END
 $$
 delimiter ;
 
-
-
+CALL mig_2();

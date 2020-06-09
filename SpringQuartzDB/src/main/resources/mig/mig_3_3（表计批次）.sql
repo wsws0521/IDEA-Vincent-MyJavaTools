@@ -37,8 +37,45 @@ BEGIN
 		NULL, -- 预置金额
 		a.VALUE -- 起始值，表型对应的PCODE
 	FROM p_sys_code a, p_sys_code_language b
-	WHERE a.name = b.TEXT_ID AND CODE_TYPE = 'bjxh' AND b.LANG = 'en_US' and ISSHOW = 1
-		AND VALUE IN('1','29','11','17','30','75','16','13','8','12','18','20','19','9','10','28','27','26','6','7','14','22','21','4','2','3','15','5','24','25','23','76','74','71','72')
+	WHERE a.name = b.TEXT_ID AND a.CODE_TYPE = 'bjxh' AND b.LANG = 'en_US' and a.ISSHOW = 1
+	    AND a.VALUE IN (
+	    'Actaris Elec (1 Phase) Keypad (STS)',              -- 1
+	    'Plessey Elec (1 Phase) Keypad (Sequence P, R)',    -- 2
+	    'Plessey Elec (1 Phase) Keypad (Sequence T)',       -- 3
+	    'Plessey Elec (1 Phase) Keypad (PTS)',              -- 4
+	    'Plessey Elec (3 Phase) Keypad (PTS)',              -- 5
+	    'INHEMETER (STS)',                                  -- 6
+	    'L+G Elec (1 Phase) Keypad (EML Prop)',             -- 7
+	    'Conlog Elec (1 Phase) Magnetic (Conlog Prop)',     -- 8
+	    'Credit Electricity Meter',                         -- 9
+	    'Credit Water Meter',                               -- 10
+	    'Actaris Elec (1 Phase) Magnetic (STS)',            -- 11
+	    'Conlog Elec (1 Phase) Magnetic (STS)',             -- 12
+	    'Conlog Elec (1 Phase) Keypad (STS)',               -- 13
+	    'L+G Elec (1 Phase) Keypad (STS)',                  -- 14
+	    'Plessey Elec (1 Phase) Keypad (STS)',              -- 15
+	    'CBI Elec (1 Phase) Keypad (STS)',                  -- 16
+	    'Actaris Elec (3 Phase) Keypad (STS)',              -- 17
+	    'Conlog Elec (3 Phase) Keypad (STS)',               -- 18
+	    'Conlog Elec (3 Phase) Magnetic (STS)',             -- 19
+	    'Conlog Elec (3 Phase) Magnetic (Conlog Prop)',     -- 20
+	    'L+G Elec (3 Phase) Keypad (STS)',                  -- 21
+	    'L+G Elec (3 Phase) Keypad (EML Prop)',             -- 22
+	    'Plessey Elec (3 Phase) Keypad (STS)',              -- 23
+	    'Plessey Elec (3 Phase) Keypad (Sequence P, R)',    -- 24
+	    'Plessey Elec (3 Phase) Keypad (Sequence T)',       -- 25
+	    'INHEMETER (3 PHASE) (STS)',                        -- 26
+	    'HEXING34(3 PHASE)(STS)',                           -- 27
+	    'HEXING12(1 PHASE)(STS)',                           -- 28
+	    'Actaris Elec (1 Phase) Magnetic (AEG Prop)',       -- 29
+	    'Actaris Elec (3 Phase) SL7000',                    -- 30
+	    'Unique Mbane STS (1 Phase)',                       -- 71
+	    'Unique Mbane STS (3 Phase)',                       -- 72
+	    'SHANGHAI XIELIN(1 phase)',                         -- 74
+	    'Actom STS (1 Phase)',                              -- 75
+	    'Sanxing(1 Phase)'                                  -- 76
+	    )
+		-- AND VALUE IN('1','29','11','17','30','75','16','13','8','12','18','20','19','9','10','28','27','26','6','7','14','22','21','4','2','3','15','5','24','25','23','76','74','71','72')
 	ORDER BY a.VALUE;
 
 	/*
@@ -62,3 +99,5 @@ END
 
 $$
 delimiter ;
+
+CALL mig_3_3();

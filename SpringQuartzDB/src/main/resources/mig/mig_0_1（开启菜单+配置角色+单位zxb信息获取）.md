@@ -25,25 +25,26 @@ where sequence_name in ('roleId','roleMenuId','userOrgManageId','userRoleId');
 ## 三、启动主站，MDC Role权限 + Centlec角色
 MDCAdmin/MDCAdmin2019-登录vending8.0，系统设置 Setup>>权限管理 Authentication>>角色管理 Roles：
 ① MDC Role开启所有菜单权限
-② 手动新增Centlec角色。15个!!!!
+② 手动新增Centlec角色。1 + 10 = 11个!!!!
 > 角色类型：都是管理角色？
-[创建 00-CENTLEC_Admin 角色 + CENTLECAdmin操作员（并赋予该角色）]
-以 CENTLECAdmin/CENTLECAdmin2020- 操作员 身份登录并创建以下 15个角色
-* 01-Call_Centre
-* 02-Customer_Care
+[创建 00-CENTLEC_Admin 角色 + CENTLECAdmin 操作员（并赋予该角色）]
+以 CENTLECAdmin/CENTLECAdmin2020- 操作员 身份登录并创建以下 10 个角色（0608讨论确定的方案）
+* 01-IT
+* 02-Maintenance（Tariff_maintenance CDU_Admin_Role）
 * 03-Finance_Admin
 * 04-Finance_Credit
 * 05-Finance_Report
-* 06-IT
-* 07-Meter_Assistant
-* 08-Meter_Preload
-* 09-Meter_Room
-* 10-Tariff Approve
-* 11-Tariff_maintenance
-* 12-Maintenance
-* 13-Cashier
-* 14-CDU
-* 15-CDU_Admin_Role
+* 06-Call_Centre（包含原来的 Customer_Care）
+* 07-Meter_Assistant（包含原来的 Meter_Preload Meter_Room）
+* 08-Tariff Approve
+* 09-Cashier
+* 10-CDU
+> 在mig_3_0里面，导入数据后会update合并角色
+* 作废-Customer_Care
+* 作废-Meter_Preload
+* 作废-Meter_Room
+* 作废-Tariff_maintenance
+* 作废-CDU_Admin_Role
 
 ## 四、关闭主站，再进行一次Navicat备份（mig_0_1.psc）
 关闭定时任务等...

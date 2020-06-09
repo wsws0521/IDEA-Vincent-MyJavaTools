@@ -12,7 +12,7 @@ BEGIN
 		set t_error = 1;
 	end;
 
-    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE table_name='a_equip_meter' AND index_name='index_a_equip_meter_assetno') THEN
+    IF NOT EXISTS(SELECT * FROM information_schema.statistics WHERE TABLE_SCHEMA = 'centlec' AND table_name='a_equip_meter' AND index_name='index_a_equip_meter_assetno') THEN
 		ALTER table a_equip_meter ADD INDEX index_a_equip_meter_assetno(assetno);
 	END IF;
 
@@ -51,3 +51,5 @@ END
 
 $$
 delimiter ;
+
+CALL mig_4_3();
