@@ -1,0 +1,1 @@
+# 基于wsdl反解的 webservice 的RPC测试调用

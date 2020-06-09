@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.tangdi/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="HexingWsService" targetNamespace="http://service.ws.tangdi/">
+  <wsdl:message name="trans">
+    <wsdl:part name="arg0" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="arg1" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="transResponse">
+    <wsdl:part name="return" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HexingWs">
+    <wsdl:operation name="trans">
+      <wsdl:input message="tns:trans" name="trans">
+    </wsdl:input>
+      <wsdl:output message="tns:transResponse" name="transResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HexingWsServiceSoapBinding" type="tns:HexingWs">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="trans">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="trans">
+        <soap:body namespace="http://service.ws.tangdi/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="transResponse">
+        <soap:body namespace="http://service.ws.tangdi/" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HexingWsService">
+    <wsdl:port binding="tns:HexingWsServiceSoapBinding" name="HexingWsPort">
+      <soap:address location="http://172.16.41.119:9091/api/services/hexingws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
