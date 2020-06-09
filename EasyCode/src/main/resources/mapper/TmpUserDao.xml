@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vincent.easycode.dao.TmpUserDao">
+
+    <resultMap type="cn.vincent.easycode.entity.TmpUser" id="TmpUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="tv" column="tv" jdbcType="TIMESTAMP"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TmpUserMap">
+        select
+          id, tv, username, age
+        from vending20200303.tmp_user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TmpUserMap">
+        select
+          id, tv, username, age
+        from vending20200303.tmp_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TmpUserMap">
+        select
+          id, tv, username, age
+        from vending20200303.tmp_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="tv != null">
+                and tv = #{tv}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into vending20200303.tmp_user(username, age)
+        values (#{username}, #{age})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update vending20200303.tmp_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from vending20200303.tmp_user where id = #{id}
+    </delete>
+
+</mapper>
