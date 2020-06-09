@@ -1,0 +1,20 @@
+#SSL证书配置路径 服务证书、服务私钥、根证书  空表示不使用ssl
+#ssl.servercer=HEXING.pem
+#ssl.serverkey=hexing_eneo_cm.key
+#ssl.rootcer=MTNHROOT.pem
+#ssl.servercer=/SSL/server.crt
+#ssl.serverkey=/SSL/pkcs8_server.key
+#ssl.rootcer=/SSL/ca.crt
+
+#hexpay服务器路径
+#Hexaddress=http://172.16.101.220:9091/api/services/hexingws?wsdl
+#Hexaddress=http://115.238.36.165:9473/api/services/hexingws?wsdl
+#Hexaddress=http://192.168.6.54:9091/api/services/hexingws?wsdl
+Hexaddress=http://172.16.31.19:9091/api/services/hexingws?wsdl
+#http\https中转监听端口
+http.port=8891
+#微信支付宝回调端口
+notify.port=8990
+
+#peach webhook 密钥
+notify.peachkey=000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f
