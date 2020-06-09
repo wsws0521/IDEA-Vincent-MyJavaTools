@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="strutsqs" extends="struts-default" namespace="/">
+		<action name="GoLogin" class="com.action.GoLogin">
+			<result name="input">/Login.jsp</result>
+			<result name="success">/Index.jsp</result>
+		</action>
+<!-- 后台首页  -->		
+		<action name="Index" class="com.action.GoIndex">
+			<result name="input">/Login.jsp</result>
+			<result name="success">/Index.jsp</result>
+		</action>
+<!-- 一个临时任务  -->
+		<action name="ATempJob" class="com.action.InfoOfJT">
+			<result name="success">/ATempJob.jsp</result>
+		</action>
+		<action name="ATempJobExe" class="com.action.ATempJobExe"></action>
+		<action name="Cron5" class="com.action.Cron5"></action>
+<!-- 触发器管理  -->
+		<action name="TriggerManager" class="com.action.TriggerManager">
+			<result name="success">/TriggerManager.jsp</result>
+		</action>
+		<action name="TriggerDel" class="com.action.TriggerDel">
+		  <result name="success" type="chain">TriggerManager</result>
+		</action>
+<!-- 调度器状态  -->		
+		<action name="SchedulerState" class="com.action.SchedulerState"></action>		
+<!-- Simple 触发器  -->		
+		<action name="TriggerSimpleManager" class="com.action.TriggerSimpleManager">
+			<result name="success">/TriggerSimpleManager.jsp</result>
+		</action>
+		<action name="TriggerSimpleAdd" class="com.action.InfoOfJT">
+			<result name="success">/TriggerSimpleAdd.jsp</result>
+		</action>
+		<action name="TriggerSimpleAddExe" class="com.action.TriggerSimpleAddExe">
+			<result name="success">/TriggerSimpleManager.jsp</result>
+		</action>
+		<action name="TriggerSimpleDel" class="com.action.TriggerSimpleDel">
+		    <result name="success" type="chain">TriggerSimpleManager</result>			
+		</action>
+		<action name="TriggerSimpleUpdate" class="com.action.TriggerSimpleUpdate">
+			<result name="success">/TriggerSimpleUpdate.jsp</result>
+		</action>
+		<action name="TriggerSimpleUpdateSave" class="com.action.TriggerSimpleUpdateSave"></action>
+<!-- Cron 触发器  -->			
+		<action name="TriggerCronManager" class="com.action.TriggerCronManager">
+			<result name="success">/TriggerCronManager.jsp</result>
+		</action>
+		<action name="TriggerCronAdd" class="com.action.InfoOfJT">
+			<result name="success">/TriggerCronAdd.jsp</result>
+		</action>
+		<action name="TriggerCronAddExe" class="com.action.TriggerCronAddExe">
+			<result name="success">/TriggerCronManager.jsp</result>
+		</action>		
+		<action name="TriggerCronDel" class="com.action.TriggerCronDel">
+			<result name="success">/TriggerCronManager.jsp</result>
+		</action>	
+		<action name="TriggerCronUpdate" class="com.action.TriggerCronUpdate">
+			<result name="success">/TriggerCronUpdate.jsp</result>
+		</action>
+		<action name="TriggerCronUpdateSave" class="com.action.TriggerCronUpdateSave"></action>
+<!-- Fired 触发器  -->
+		<action name="TriggerFiredManager" class="com.action.TriggerFiredManager">
+			<result name="success">/TriggerFiredManager.jsp</result>
+		</action>
+<!-- Job 细节  -->		
+		<action name="JobDetailManager" class="com.action.JobDetailManager">
+			<result name="success">/JobDetailManager.jsp</result>
+		</action>
+		<action name="JobDetailAdd" class="com.action.InfoOfJT">
+			<result name="success">/JobDetailAdd.jsp</result>
+		</action>
+		<action name="JobDetailAddSave" class="com.action.JobDetailAddSave"></action>
+		<action name="JobDetailUpdate" class="com.action.JobDetailUpdate">
+		    <result name="success">/JobDetailUpdate.jsp</result>
+		</action>
+		<action name="JobDetailUpdateSave" class="com.action.JobDetailUpdateSave"></action>
+		<action name="JobDetailDel" class="com.action.JobDetailDel">
+		  <result name="success" type="chain">JobDetailManager</result>
+		</action>
+		
+		
+		
+<!-- Quartz参数配置 -->			
+		<action name="QuartzConfig" class="com.action.QuartzConfig">
+		    <result name="success">/QuartzConfig.jsp</result>
+		</action>
+		<action name="QuartzConfigSave" class="com.action.QuartzConfigSave"></action>
+<!-- 退出系统  -->			
+		<action name="Quit" class="com.action.Quit">
+			<result name="success">/Login.jsp</result>
+		</action>
+	</package>
+</struts>

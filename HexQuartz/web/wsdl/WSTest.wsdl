@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.com" xmlns:intf="http://service.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="desc">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="descResponse">
+    <complexType>
+     <sequence>
+      <element name="descReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="descResponse">
+
+      <wsdl:part element="impl:descResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="descRequest">
+
+      <wsdl:part element="impl:desc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="WSTest">
+
+      <wsdl:operation name="desc">
+
+         <wsdl:input message="impl:descRequest" name="descRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:descResponse" name="descResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="WSTestSoapBinding" type="impl:WSTest">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="desc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="descRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="descResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WSTestService">
+
+      <wsdl:port binding="impl:WSTestSoapBinding" name="WSTest">
+
+         <wsdlsoap:address location="http://localhost:8989/HexQuartz/services/WSTest"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
