@@ -2,7 +2,8 @@
 
 ## 页面为MDCAdmin赋予所有单位权限
 MDCAdmin登录主站>>组织体系管理>>管理单位配置>>点根单位，
-选择 MDCAdmin、CENTLECAdmin>>添加单位访问权限（UAP_USER_ORG_MANAGE）>>修改一页显示100个单位>>全选，添加全部单位；
+选择 MDCAdmin>>添加单位访问权限（UAP_USER_ORG_MANAGE）>>修改一页显示100个单位>>全选，添加全部单位；
+> 不要管CENTLECAdmin !!!  mig_9会为它授权
 
 ## ① 手动创建：计费项（根单位, VAT, Regulation = 百分比, Value = 0.15, Base = 电量电费）
 > 计费项
