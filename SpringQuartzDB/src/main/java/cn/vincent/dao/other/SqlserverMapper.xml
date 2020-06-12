@@ -182,7 +182,7 @@
         (select top 1 ob.BANKINGNO
         from ORDER_BANKING ob
         where ob.BATCHNO=0 and t.OD_DATE>=ob.STARTTIME
-        and t.OD_DATE<=ob.ENDTIME and ob.CDUID=t.CDUID) as BANKINGNO    -- 所属日结单编号
+        and t.OD_DATE &lt;= ob.ENDTIME and ob.CDUID=t.CDUID) as BANKINGNO    -- 所属日结单编号
         from ORDER_TRN t
         inner join IPARA_MTRPOINT m on t.METERID=m.MTRPOINT_ID
         inner join IPARA_RESIDENT r on r.CUSTOMER_ID=t.USER_ID
