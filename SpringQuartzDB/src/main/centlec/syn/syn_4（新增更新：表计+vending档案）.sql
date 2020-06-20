@@ -95,6 +95,15 @@ BEGIN
 				AND c.base_time=1993
 	WHERE a.meter_mode='02' AND NOT EXISTS(SELECT meterVk.METER_ID FROM a_equip_meter_vending meterVk WHERE meterVk.METER_ID=a.METER_ID);
 
+    # 3-更新表计管理状态
+    update a_equip_meter meter
+    inner join (select bj.mt_comm_addr, pc.value
+        from tmp_bj bj
+        inner join tmp_bj1 bj1 on bj.mt_comm_addr = bj1.mt_comm_addr and bj.meterstatus != bj1.meterstatus
+        LEFT JOIN p_sys_code_language pcl ON bj.meterstatus = pcl.text
+		LEFT JOIN p_sys_code pc ON pcl.text_ID = pc.name AND pc.code_type = 'meter_mgt_status' AND lang = 'en_US') tb on meter.assetno = tb.mt_comm_addr
+    set meter.mgt_status = tb.value;
+
 	IF t_error = 1 THEN
 		ROLLBACK;
 	ELSE

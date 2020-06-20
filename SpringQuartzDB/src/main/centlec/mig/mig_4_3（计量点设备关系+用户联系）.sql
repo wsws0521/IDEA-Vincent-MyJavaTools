@@ -36,7 +36,8 @@ BEGIN
 		replace(b.LINKMAN_PHONE, ' ', ''), replace(b.LINKMAN_PHONE, ' ', ''), b.US_EMAIL,
 		a.cons_id, 'Y', 'Y', IF(b.us_sex = 0,'01','02')
 	FROM a_consumer a, tmp_yh b
-	WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID) AND (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '');
+	WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID); -- 为每个用户都无差别插入联系方式
+	-- WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID) AND (b.LINKMAN_PHONE <> '' OR b.US_EMAIL <> '');
 
 	IF t_error = 1 THEN
 		ROLLBACK;

@@ -86,7 +86,7 @@ BEGIN
 	    cons.id_no = yh.US_IDNUM,
 	    cons.erf_stand = yh.StandNumber;
 
-	# 4-用户档案关键信息更新（租户换房，租户信息修改）（性别/联系方式）
+	# 4-更新之前的用户联系方式（租户换房，租户信息修改）（性别/联系方式）
     UPDATE a_consumer_contacts a
     INNER JOIN
         (SELECT b.CONS_ID "CONS_ID", c.LINKMAN_PHONE "LINKMAN_PHONE", c.US_EMAIL "US_EMAIL", c.us_sex "us_sex"
@@ -96,6 +96,17 @@ BEGIN
         a.TELEPHONENUMBER = replace(tmp.LINKMAN_PHONE, ' ', ''),
         a.EMAIL = tmp.US_EMAIL,
         a.GENDER = IF(tmp.us_sex = 0,'01','02');
+
+    # 5-插入新开户用户联系方式
+    INSERT INTO a_consumer_contacts
+		(contactsid, contacts_name, contacts_type, phone_number, telephonenumber, email, cons_id, status, is_recieve_mail, gender)
+	SELECT
+		AMI_GET_SEQUENCE('S_AMI_FILE'), b.customer_name, '03',
+		replace(b.LINKMAN_PHONE, ' ', ''), replace(b.LINKMAN_PHONE, ' ', ''), b.US_EMAIL,
+		a.cons_id, 'Y', 'Y', IF(b.us_sex = 0,'01','02')
+	FROM a_consumer a, tmp_yh b
+	WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID)
+	and not exists(select 1 from a_consumer_contacts c where c.CONS_ID = a.CONS_ID); -- 仅考虑新开户联系方式
 
 	IF t_error = 1 THEN
 		ROLLBACK;

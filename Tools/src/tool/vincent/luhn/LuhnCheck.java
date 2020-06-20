@@ -4,7 +4,7 @@ public class LuhnCheck {
 
     public static void main(String[] args) {
 //        String meterNo = "07055025361";
-        String meterNo = "14326600717";
+        String meterNo = "20200613113";
         System.out.println(check(meterNo));
     }
 
