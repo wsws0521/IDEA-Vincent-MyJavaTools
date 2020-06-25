@@ -1,3 +1,4 @@
+-- 耗时2min21s，第一次运行还持续转圈估计网络问题，，哎
 DROP PROCEDURE IF EXISTS mig_4_4;
 delimiter $$
 CREATE PROCEDURE mig_4_4()

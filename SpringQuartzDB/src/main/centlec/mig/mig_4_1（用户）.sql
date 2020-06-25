@@ -1,3 +1,4 @@
+-- ----sqlyog执行了3min-------------------------
 DROP PROCEDURE IF EXISTS mig_4_1;
 delimiter $$
 CREATE PROCEDURE mig_4_1()

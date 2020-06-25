@@ -1,4 +1,5 @@
 -- ----先检查PCODE表型脚本，乱减空格的问题是否已修复！！！！！！表型名称必须严格对应，否则必须执行TODO List里面的update脚本-------------------------
+-- ----最好停了主备服务先    sqlyog执行了11min49s-------------------------
 DROP PROCEDURE IF EXISTS mig_3_1;
 delimiter $$
 CREATE PROCEDURE mig_3_1()

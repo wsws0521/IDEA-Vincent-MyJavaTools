@@ -17,7 +17,37 @@ BEGIN
 	DECLARE msg text;
 
 	# 定义游标
-	DECLARE noCur CURSOR FOR SELECT te_name FROM tmp_dls;
+	DECLARE noCur CURSOR FOR SELECT te_name FROM tmp_dls where TE_NAME in (
+                                              'SL06 Geyser Supermarket',
+                                              'SL09 Reahola',
+                                              'SL20 R & B Motors',
+                                              'SL124 Inspan Reddersburg (Pty) Ltd',
+                                              'CS01 Civic Centre',
+                                              'SL106 Loopys Cafe',
+                                              'SL108 Batloung Supermarket',
+                                              'SL11 Bighi Investments',
+                                              'SL113 Vista Park Supermarket',
+                                              'SL112 Regional Office',
+                                              'SL114 Thaba-Nchu Municipality',
+                                              'SL118 HEIDEDAL',
+                                              'SL120 Simunye Motors',
+                                              'SL121 Poloko Trading',
+                                              'SL13 Bargain Box',
+                                              'SL17 Curie Park',
+                                              'SL 127 Capital Ship Trading',
+                                              'SL19 No Jokes Cash Store',
+                                              'SL51 K K General Dealer',
+                                              'SL27 Hi-Way Electricity',
+                                              'SL78 SOVS Motors',
+                                              'POWS Power Station',
+                                              'SL 126 Easy Pay',
+                                              'SL115 Cigicell Technologies',
+                                              'SL116 Homegrown',
+                                              'SL119 Itron',
+                                              'SL122 R & A Cellular'
+                                             )
+        union all
+        SELECT te_name FROM tmp_dls where CDUArea = 'ThirdParty';
 	# 定义循环结束done值改变逻辑
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 	# 定义SQL异常时将t_error置为1

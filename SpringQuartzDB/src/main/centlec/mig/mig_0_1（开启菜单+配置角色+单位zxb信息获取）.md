@@ -24,11 +24,11 @@ where sequence_name in ('roleId','roleMenuId','userOrgManageId','userRoleId');
 
 ## 三、启动主站，MDC Role权限 + Centlec角色
 MDCAdmin/MDCAdmin2019-登录vending8.0，系统设置 Setup>>权限管理 Authentication>>角色管理 Roles：
-① MDC Role开启所有菜单权限
-② 手动新增Centlec角色。1 + 10 = 11个!!!!
+### ① MDC Role开启所有菜单权限
+### ② 手动新增Centlec角色。1 + 10 = 11个!!!!
 > 角色类型：都是管理角色？
-[创建 00-CENTLEC_Admin 角色 + CENTLECAdmin 操作员（并赋予该角色）]
-以 CENTLECAdmin/CENTLECAdmin2020- 操作员 身份登录并创建以下 10 个角色（0608讨论确定的方案）
+[创建 00-CENT_Admin 角色 + CENTAdmin 操作员（并赋予该角色）]
+以 CENTAdmin/CENTAdmin2020- 操作员 身份登录并创建以下 10 个角色（0608讨论确定的方案）
 * 01-IT
 * 02-Maintenance（Tariff_maintenance CDU_Admin_Role）
 * 03-Finance_Admin
