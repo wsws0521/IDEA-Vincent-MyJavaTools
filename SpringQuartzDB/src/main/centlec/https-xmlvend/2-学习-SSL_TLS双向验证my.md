@@ -94,8 +94,9 @@ C:\Windows\System32\《client.pfx》
 >>keytool -list -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456
 >>keytool -list -keystore c:\xmlvend\vincent.pfx  -storepass 123456
 >>keytool -list -keystore c:\xmlvend\server.pfx  -storepass 123456
-## 8---删除(从没删过)
+## 8---删除
 >>keytool -delete -alias clientcert -keystore D:\key2\server.keystore -storepass 123456
+>>keytool -delete -alias ontec_server -keystore c:\_cert\server_truststore -storepass 123456
 
 
 Server:E:\tomcat.keystore----E:\tomcat.cer

@@ -17,7 +17,10 @@ BEGIN
 	DECLARE msg text;
 
 	# 定义游标
-	DECLARE noCur CURSOR FOR SELECT te_name FROM tmp_dls where TE_NAME in (
+	DECLARE noCur CURSOR FOR
+	SELECT te_name FROM tmp_dls where CDUArea = 'ThirdParty'
+	union all
+	SELECT te_name FROM tmp_dls where TE_NAME in (
                                               'SL06 Geyser Supermarket',
                                               'SL09 Reahola',
                                               'SL20 R & B Motors',
@@ -39,15 +42,8 @@ BEGIN
                                               'SL51 K K General Dealer',
                                               'SL27 Hi-Way Electricity',
                                               'SL78 SOVS Motors',
-                                              'POWS Power Station',
-                                              'SL 126 Easy Pay',
-                                              'SL115 Cigicell Technologies',
-                                              'SL116 Homegrown',
-                                              'SL119 Itron',
-                                              'SL122 R & A Cellular'
-                                             )
-        union all
-        SELECT te_name FROM tmp_dls where CDUArea = 'ThirdParty';
+                                              'POWS Power Station'
+                                             );
 	# 定义循环结束done值改变逻辑
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 	# 定义SQL异常时将t_error置为1
@@ -67,6 +63,8 @@ BEGIN
 	DELETE FROM VD_AGT_CHARGE_LIMT; -- 清除代理商售电金额限制
 	DELETE FROM VD_A_ACCOUNT WHERE ACCT_CATEGOTY IN ('02','03'); -- 清除代理商账户
 	DELETE FROM VD_AGT_AGENT; -- 清除代理商档案
+	delete from sequence where NAME = 'SEQ_VD_AGT_AGENT';
+	delete from sequence where NAME = 'SEQ_VD_A_ACCOUNT';
 	# 遍历表
 	REPEAT
 	FETCH noCur INTO mainKey;
