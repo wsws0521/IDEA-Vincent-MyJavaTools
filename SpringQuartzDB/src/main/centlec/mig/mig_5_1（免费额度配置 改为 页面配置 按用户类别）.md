@@ -1,6 +1,7 @@
 
 
 ## 启动主站 》》 Tariff Setting 》》 Discount Setting 》》 add
+> 好像只能次日生效，配完去到 VD_OFFER_SET 查看，将EFFECTIVE_DATE改为当天或之前
 
 -----Name: FBE
 -----Type: Free Credit

@@ -1,3 +1,10 @@
+## 官方学习资料：
+http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html
+http://docs.oracle.com/javase/7/docs/technotes/tools/windows/keytool.html
+http://docs.oracle.com/javase/8/docs/technotes/tools/windows/keytool.html
+## Java代码集成示例：
+http://www.ibm.com/developerworks/cn/java/j-lo-socketkeytool/index.html?ca=drs
+## 野生的博客
 https://blog.csdn.net/fw0124/article/details/41013333
 https://my.oschina.net/u/2336787/blog/1826615
 http://www.5ec8.com/seker/650.html
@@ -26,7 +33,7 @@ C1A51E515CA15EC1E56A1C56A15C1A5
 项目如果是IP方式访问用-ext SAN=ip:192.168.1.111，
 如果是域名用 -ext SAN=dns:www.abc.com，
 注意“您的名字与姓氏是什么?”就是你的IP或域名根据实际情况做必要的修改，
-其中需要注意的是：服务端的密钥库参数“CN”必须与服务端的IP地址相同，否则会报错（也不一定），客户端的任意。
+其中需要注意的是：服务端的密钥库参数“CN”必须与服务端的IP地址相同，否则会报错（也不一定），客户端的任意。【【【validity过期了无法安装到浏览器，但是能通过postman/soupUI请求！可能需要代码里处理？】】】
 >>keytool -genkey     -alias tomcat_server -keyalg rsa -keysize 1024 -sigalg sha256withrsa -keypass 123456 -keystore c:\_cert\catserver.keystore -storepass 123456
 >>keytool -genkeypair -alias tomcat_server -keyalg RSA -keysize 1024 -sigalg sha256withrsa -keypass 123456 -keystore c:\_cert\server.jks         -storepass 123456 -ext SAN=ip:192.168.80.37 -validity 3650 -v  -dname "CN=192.168.80.37,OU=xmlvend,O=xmlvend,L=xmlvend,ST=xmlvend,c=SA"
 >>keytool -genkey     -alias tomcat_server -keyalg RSA                                     -keypass 123456 -keystore c:\_cert\server.keystore    -storepass 123456 -ext SAN=ip:192.168.80.37 -validity 3650 -v  -dname "CN=192.168.80.37,OU=xmlvend,O=xmlvend,L=xmlvend,ST=xmlvend,c=SA"
@@ -91,6 +98,8 @@ C:\Windows\System32\《client.pfx》
 >>keytool -list -keystore c:\_cert\catservertrust.keystore   -storepass 123456
 >>keytool -list -keystore c:\_cert\server.jks   -storepass 123456
 >>keytool -list -keystore c:\_cert\server_truststore   -storepass 123456
+>>>   keytool -list -v -keystore c:\_cert\server_truststore -storepass 123456
+>>>   keytool -list -v -alias vincent1 -keystore c:\_cert\server_truststore -storepass 123456 | grep "Valid from:"
 >>keytool -list -keystore c:\xmlvend\foxclienttrust.keystore -storepass 123456
 >>keytool -list -keystore c:\xmlvend\vincent.pfx  -storepass 123456
 >>keytool -list -keystore c:\xmlvend\server.pfx  -storepass 123456
