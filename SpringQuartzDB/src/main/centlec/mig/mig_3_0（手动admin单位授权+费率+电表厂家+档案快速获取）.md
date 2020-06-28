@@ -512,241 +512,289 @@ update tmp_czy set USER_ID = USER_ID + 100000;
 3：备用代理商管理员*/
 -- SL06 Geyser Supermarket
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '101', 'sharon', 'Sharon Booysen', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '101', 'Sharon', 'Sharon Booysen', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL06 Geyser Supermarket';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '102', 'evodio', 'Evodio Swartz', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '102', 'Evodio', 'Evodio Swartz', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL06 Geyser Supermarket';
 -- SL09 Reahola
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '201', 'potlaki', 'Potlaki', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '201', 'Potlaki', 'Potlaki', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL09 Reahola';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '202', 'audrey', 'Audrey Tsie', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '202', 'Audrey', 'Audrey Tsie', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL09 Reahola';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '203', 'nthabiseng', 'Nthabiseng Banyane', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '203', 'Nthabiseng', 'Nthabiseng Banyane', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL09 Reahola';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '204', 'rosa', 'Rosa Thamae', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '204', 'Rosa', 'Rosa Thamae', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL09 Reahola';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '205', 'victor', 'Victor Koloi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '205', 'Victor', 'Victor Koloi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL09 Reahola';
 -- SL20 R & B Motors
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '301', '301', '301', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '301', 'Richard', 'Richard Fadduk', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '302', '302', '302', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '302', 'Liza', 'Liza witbooi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '303', 'Dianne', 'Dianne Maasdorp', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '304', 'Isaac', 'Isaac job', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '305', 'Lerato.T', 'Lerato Tladi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '306', 'Nandipha', 'Nandipha PHILI', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '307', 'mARlon', 'mARlon Kuduka', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '308', 'Babalwa', 'Babalwa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '309', 'thulang', 'thulang Tsotetsi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '310', 'Diketseng', 'Diketseng Makala', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '311', 'Tankiso', 'Tankiso Mahludi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL20 R & B Motors';
 -- SL124 Inspan Reddersburg (Pty) Ltd
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '401', 'dimakatso', 'Dimakatso Mohlohi', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '401', 'Dimakatso', 'Dimakatso Mohlohi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL124 Inspan Reddersburg (Pty) Ltd';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '402', 'elisa', 'Elisa Sehloboko', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '402', 'Elisa', 'Elisa Sehloboko', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL124 Inspan Reddersburg (Pty) Ltd';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '403', 'patricia', 'Patricia Moloi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '403', 'Patricia', 'Patricia Moloi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL124 Inspan Reddersburg (Pty) Ltd';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '404', 'thenjiwe', 'Thenjiwe Laope', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '404', 'Thenjiwe', 'Thenjiwe Laope', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL124 Inspan Reddersburg (Pty) Ltd';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '405', 'verronica', 'Verronica May', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '405', 'Verronica', 'Verronica May', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL124 Inspan Reddersburg (Pty) Ltd';
 -- CS01 Civic Centre
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '501', 'andronelle', 'Andronelle', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '501', 'Andronelle', 'Andronelle', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '502', 'elvis', 'Elvis Sekonyela', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '502', 'Elvis', 'Elvis Sekonyela', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '503', 'jenine', 'Jenine Sia', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '503', 'Jenine', 'Jenine Sia', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '504', 'brenda', 'Brenda Malefane', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '504', 'Brenda', 'Brenda Malefane', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '505', 'mohau', 'Mohau Sentuli', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '505', 'Mohau', 'Mohau Sentuli', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '506', 'violet', 'Violet Khetshekile', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '506', 'Violet', 'Violet Khetshekile', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '507', 'vuyiswa', 'Vuyiswa Zityebile', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '507', 'Vuyiswa', 'Vuyiswa Zityebile', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'CS01 Civic Centre';
 -- SL106 Loopys Cafe
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '601', '601', '601', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL106 Loopys Cafe';
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '602', '602', '602', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL106 Loopys Cafe';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '601', '601', '601', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL106 Loopys Cafe';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '602', '602', '602', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL106 Loopys Cafe';
 -- SL108 Batloung Supermarket
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '701', '701', '701', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL108 Batloung Supermarket';
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '702', '702', '702', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL108 Batloung Supermarket';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '701', '701', '701', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL108 Batloung Supermarket';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '702', '702', '702', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL108 Batloung Supermarket';
 -- SL11 Bighi Investments
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '801', 'vuyelwa', 'Vuyelwa Belelwa Dwaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '801', 'Vuyelwa', 'Vuyelwa Belelwa Dwaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '802', 'hopelang', 'Hopelang Maponopo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '802', 'Hopelang', 'Hopelang Maponopo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '803', 'motshidisi', 'Motshidisi Margaret Ditshaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '803', 'Motshidisi', 'Motshidisi Margaret Ditshaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '804', 'tumelo', 'Tumelo Molefi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '804', 'Tumelo', 'Tumelo Molefi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '805', 'lerato', 'Lerato Dwaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '805', 'Lerato.D', 'Lerato Dwaba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '806', 'wisdom', 'Wisdom Rubatika', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '806', 'Wisdom', 'Wisdom Rubatika', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '807', 'edwin', 'Edwin Msipa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '807', 'Edwin', 'Edwin Msipa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '808', 'tawanda', 'Tawanda Ndebengwa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '808', 'Tawanda', 'Tawanda Ndebengwa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL11 Bighi Investments';
 -- SL113 Vista Park Supermarket
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '901', 'khumo', 'Khumo', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '901', 'Khumo', 'Khumo', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL113 Vista Park Supermarket';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
 SELECT '902', 'keneuwe', 'keneuwe Letlatsa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL113 Vista Park Supermarket';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '903', 'segametsi', 'Segametsi Mokotedi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '903', 'Segametsi', 'Segametsi Mokotedi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL113 Vista Park Supermarket';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '904', 'nombulelo', 'Nombulelo Nku', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '904', 'Nombulelo', 'Nombulelo Nku', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL113 Vista Park Supermarket';
 -- SL112 Regional Office
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1001', 'martha', 'Martha Ntlola', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1001', 'Serona', 'Serona Motse', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL112 Regional Office';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1002', 'lebona', 'Lebona Lolo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1002', 'Martha', 'Martha Ntlola', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL112 Regional Office';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1003', 'Lebona', 'Lebona Lolo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL112 Regional Office';
 -- SL114 Thaba-Nchu Municipality
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1101', '1101', '1101', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL114 Thaba-Nchu Municipality';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '1101', '1101', '1101', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL114 Thaba-Nchu Municipality';
 -- SL118 HEIDEDAL
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1201', '1201', '1201', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1201', 'Johan', 'Johan Horn', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL118 HEIDEDAL';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1202', 'Vida', 'Vida Johnson', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL118 HEIDEDAL';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1203', 'Xuma', 'Xuma Mosidi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL118 HEIDEDAL';
 -- SL120 Simunye Motors
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
 SELECT '1301', 'tommy', 'tommy', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1302', 'helen', 'Helen Stiemann', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1302', 'Helen', 'Helen Stiemann', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1303', 'esther', 'Esther McDonald', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1303', 'Esther', 'Esther McDonald', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1304', 'doctor', 'Doctor Segapotsa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1304', 'Doctor', 'Doctor Segapotsa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1305', 'mieta', 'Mieta Claasen', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1305', 'Mieta', 'Mieta Claasen', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1306', 'daniel', 'Daniel Lebone', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1306', 'Daniel.L', 'Daniel Lebone', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1307', 'paul', 'Paul Kennedy', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1307', 'Paul', 'Paul Kennedy', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL120 Simunye Motors';
 -- SL121 Poloko Trading
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1401', 'suzen', 'Suzen Mothobi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1401', 'Suzen', 'Suzen Mothobi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL121 Poloko Trading';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1402', 'thembi', 'Thembi Pata', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1402', 'Thembi', 'Thembi Pata', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL121 Poloko Trading';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1403', 'joyce', 'joyce jeje', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1403', 'joyce.j', 'joyce jeje', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL121 Poloko Trading';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1404', 'hlekiwe', 'Hlekiwe Novas', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1404', 'Hlekiwe', 'Hlekiwe Novas', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL121 Poloko Trading';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1405', 'lebo', 'Lebo Molosi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1405', 'Lebo', 'Lebo Molosi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL121 Poloko Trading';
 -- SL13 Bargain Box
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1501', '1501', '1501', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL13 Bargain Box';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '1501', '1501', '1501', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL13 Bargain Box';
 -- SL17 Curie Park
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1601', '1601', '1601', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL17 Curie Park';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '1601', '1601', '1601', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL17 Curie Park';
 -- SL 127 Capital Ship Trading
-INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1701', '1701', '1701', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
-FROM tmp_dls dls WHERE dls.TE_NAME = 'SL 127 Capital Ship Trading';
+-- INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+-- SELECT '1701', '1701', '1701', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+-- FROM tmp_dls dls WHERE dls.TE_NAME = 'SL 127 Capital Ship Trading';
 -- SL19 No Jokes Cash Store
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1801', '1801', '1801', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1801', 'Senoko1', 'Senoko', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL19 No Jokes Cash Store';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1802', 'Ntebohelen', 'Ntebohelen Justina Posholi', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL19 No Jokes Cash Store';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1803', 'Emily', 'Emily Lope Makhoba', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL19 No Jokes Cash Store';
 -- SL51 K K General Dealer
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '1901', '1901', '1901', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '1901', 'Senoko2', 'Senoko2', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL51 K K General Dealer';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1902', 'Tefo.P', 'Tefo Pascallies Masiloane', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+FROM tmp_dls dls WHERE dls.TE_NAME = 'SL51 K K General Dealer';
+INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
+SELECT '1903', 'Fusi', 'Fusi Christopher', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL51 K K General Dealer';
 -- SL27 Hi-Way Electricity
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2001', 'roy', 'Roy', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
+SELECT '2001', 'Roy', 'Roy', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL27 Hi-Way Electricity';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2002', 'cathrine', 'Cathrine Ntsabo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2002', 'Cathrine', 'Cathrine Ntsabo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL27 Hi-Way Electricity';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2003', 'angelina', 'Angelina Ntshabo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2003', 'Angelina', 'Angelina Ntshabo', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL27 Hi-Way Electricity';
 -- SL78 SOVS Motors
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2101', 'enerst', 'Enerst', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2101', 'Enerst', 'Enerst', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2102', 'joseph', 'Joseph', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2102', 'Joseph', 'Joseph', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2103', 'fransica', 'Fransica', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2103', 'Fransica', 'Fransica', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2104', 'joyce', 'Joyce', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2104', 'Joyce', 'Joyce', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2105', 'betty', 'Betty', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2105', 'Betty1', 'Betty', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2106', 'paulina', 'Paulina', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2106', 'Paulina', 'Paulina', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'SL78 SOVS Motors';
 -- POWS Power Station
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
 SELECT '2201', 'Lerata', 'Lerata', '1', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'CDU', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'POWS Power Station';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2202', 'margaret', 'Margaret Mvubu', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2202', 'Margaret', 'Margaret Mvubu', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'POWS Power Station';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2203', 'elizabeth', 'Elizabeth Lekgoele', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2203', 'Elizabeth', 'Elizabeth Lekgoele', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'POWS Power Station';
 INSERT INTO `centlec`.`tmp_czy` (`USER_ID`, `USER_ACCOUNT`, `USER_NAME`, `user_type`, `TELEPHONE`, `MOBILE_TELEPHONE`, `EMAIL`, `address`, `note`, `CREATE_TIME`, `CREATE_END`, `CDUArea`, `CDUName`, `roleName`, `roles`)
-SELECT '2204', 'mammui', 'Mammui Monaisa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
+SELECT '2204', 'Mammui', 'Mammui Monaisa', '2', '', '', '', dls.TE_ADDRESS, '', '2020-06-01 00:00:00', '2030-06-01 00:00:00', dls.CDUArea, dls.TE_NAME, 'Cashier', ''
 FROM tmp_dls dls WHERE dls.TE_NAME = 'POWS Power Station';
 ```
-（处理USER_ACCOUNT重复的记录）
+【略】（处理USER_ACCOUNT重复的记录）
 ```sql
 SELECT user_account from tmp_czy GROUP BY user_account HAVING COUNT(1) > 1;
 select * from tmp_czy where USER_ACCOUNT = 'joyce';
@@ -754,6 +802,11 @@ update tmp_czy set USER_ACCOUNT = concat(USER_ACCOUNT, USER_ID) where USER_ID = 
 update tmp_czy set USER_ACCOUNT = concat(USER_ACCOUNT, USER_ID) where USER_ID = 100076;
 update tmp_czy set USER_ACCOUNT = concat(USER_ACCOUNT, USER_ID) where USER_ID = 100204;
 update tmp_czy set USER_ACCOUNT = concat(USER_ACCOUNT, USER_ID) where USER_ID = 1403;
+select * from tmp_czy cc where cc.USER_ACCOUNT = 'daniel';
+select * from tmp_czy cc where cc.USER_ACCOUNT = 'betty';
+select * from tmp_czy cc where cc.USER_ACCOUNT = 'tefo';
+select * from tmp_czy cc where cc.USER_ACCOUNT = 'joyce';
+select * from tmp_czy cc where cc.USER_ACCOUNT = 'Lerato';
 ```
 
 ## 关闭主站，先检查表型，再进行一次Navicat备份（mig_3_0.psc）（带tmp表）
