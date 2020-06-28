@@ -39,6 +39,8 @@ MDCAdmin/MDCAdmin2019-登录vending8.0，系统设置 Setup>>权限管理 Authen
 * 08-Tariff Approve
 * 09-Cashier
 * 10-CDU
+* 11-Finance_Debt（Mafis追加的角色）
+* 12-Finance_Basic（Mafis追加的角色）
 > 在mig_3_0里面，导入数据后会update合并角色
 * 作废-Customer_Care
 * 作废-Meter_Preload
