@@ -6,6 +6,23 @@ DELETE FROM vd_pre_model;
 ### ② 手动跑 V2_0_104__VD_PRE_MODEL_DATA.sql 脚本；
 
 
+### ③ 开启所有模板：
+```sql
+UPDATE VD_PRE_MODEL SET STATUS='01';
+```
+### ④ 还原为模板默认状态：
+```sql
+UPDATE VD_PRE_MODEL a SET STATUS='00' WHERE a.model_id IN (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19);
+```
+
+
+
+
+
+
+
+
+
 ## [如果工具不识别脚本中的特殊字符，可以尝试自动执行]
 ### ① 清空 vd_pre_model；
 ### ② 删除flyway脚本执行记录；
