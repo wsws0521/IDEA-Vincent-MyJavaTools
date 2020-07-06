@@ -13,7 +13,11 @@ BUSINESS(VAT15%)
 MANGAUNGNON PROFIT(VAT15%)
 
 
-## ② 手动创建：费率方案、版本、审核，并添加对应的VAT，版本生效时间一个为当前，一个为2020.6.1。
+## ② 手动创建：费率方案、版本、审核，并添加对应的VAT
+2020.7.1-2020.8.31 = 2021winter(本来应该是6.1发布的，迟了)
+2020.9.1-2021.5.31 = 2021summer
+**新建版本之后（如果不是第一个版本），最好手动生效+手动将TI置为1**
+------------------------MANGAUNG & NALEDI-------------------------------
 * 01 MANGAUNG-TG1(FBE)
 > "0~50：1.13640         MANGAUNG-TG1(FBE)-summer
   50~350：1.20940
@@ -21,6 +25,12 @@ MANGAUNGNON PROFIT(VAT15%)
 > "0~50：1.44350         MANGAUNG-TG1(FBE)-winter
   50~350：1.54130
   350~无穷：1.82830"
+> "0~50：1.2070         MANGAUNG-TG1(FBE)-2021-summer
+   50~350：1.2846
+   350~无穷：1.7529"
+> "0~50：1.5332         MANGAUNG-TG1(FBE)-2021-winter
+  50~350：1.6371
+  350~无穷：1.9421"
 >> INDIGENT(VAT15%)
 
 * 02 MANGAUNG-TG1
@@ -28,8 +38,103 @@ MANGAUNGNON PROFIT(VAT15%)
   350~无穷：1.68240"
 "0~350：1.80170          MANGAUNG-TG1-winter
   350~无穷：2.18590"
+"0~350：1.5479          MANGAUNG-TG1-2021-summer
+  350~无穷：1.7871"
+"0~350：1.9137          MANGAUNG-TG1-2021-winter
+  350~无穷：2.3219"
 >> COMMON(VAT15%)
 
+* 11 MANGAUNG-TG1(BUS)
+0~无穷：2.17240            MANGAUNG-TG1(BUS)-summer
+0~无穷：2.27140            MANGAUNG-TG1(BUS)-winter
+0~无穷：2.3075            MANGAUNG-TG1(BUS)-2021-summer
+0~无穷：2.4126            MANGAUNG-TG1(BUS)-2021-winter
+>> BUSINESS(VAT15%)
+
+* 05 NALEDI-TG3(FBE)
+>                       NALEDI-TG3(FBE)-2021-summer
+>                       NALEDI-TG3(FBE)-2021-winter
+>> INDIGENT(VAT15%)
+
+* 06 NALEDI-TG3
+                        NALEDI-TG3-2021-summer
+                        NALEDI-TG3-2021-winter
+>> COMMON(VAT15%)
+
+* 13 NALEDI-TG3(BUS)
+                          NALEDI-TG3(BUS)-2021-summer
+                          NALEDI-TG3(BUS)-2021-winter
+>> BUSINESS(VAT15%)
+
+-----------------------KOPANONG-------------------------------
+* 09 KOPANONG-TG5(FBE)
+>   "0~50：1.13630       KOPANONG-TG5(FBE)-summer
+    50~350：1.30480
+    350~无穷：1.91540"
+>   "0~50：1.58750       KOPANONG-TG5(FBE)-winter
+    50~350：1.69490
+    350~无穷：2.23090"
+>   "0~50：1.2070       KOPANONG-TG5(FBE)-2021-summer
+    50~350：1.3860
+    350~无穷：2.0345"
+>   "0~50：1.6862       KOPANONG-TG5(FBE)-2021-winter
+    50~350：1.8003
+    350~无穷：2.3696"
+>> INDIGENT(VAT15%)
+
+* 10 KOPANONG-TG5
+"0~350：1.91990          KOPANONG-TG5-summer
+350~无穷：1.91990"
+"0~350：2.12910          KOPANONG-TG5-winter
+350~无穷：2.12910"
+"0~350：2.0082          KOPANONG-TG5-2021-summer
+350~无穷：2.0082"
+"0~350：2.2270          KOPANONG-TG5-2021-winter
+350~无穷：2.2270"
+>> COMMON(VAT15%)
+
+* 15 KOPANONG-TG5(BUS)
+0~无穷：2.31020            KOPANONG-TG5(BUS)-summer
+0~无穷：2.37440            KOPANONG-TG5(BUS)-winter
+0~无穷：2.4539            KOPANONG-TG5(BUS)-2021-summer
+0~无穷：2.5220            KOPANONG-TG5(BUS)-2021-winter
+>> BUSINESS(VAT15%)
+
+---------------------------MOHOKARE---------------------------
+* 07 MOHOKARE-TG4(FBE)
+>   "0~50：1.13630       MOHOKARE-TG4(FBE)-summer
+    50~350：1.30480
+    350~无穷：1.91540"
+>   "0~50：1.58750       MOHOKARE-TG4(FBE)-winter
+    50~350：1.69490
+    350~无穷：2.23090"
+>   "0~50：1.2070       MOHOKARE-TG4(FBE)-2021-summer
+    50~350：1.3860
+    350~无穷：2.0345"
+>   "0~50：1.6862       MOHOKARE-TG4(FBE)-2021-winter
+    50~350：1.8003
+    350~无穷：2.3696"
+>> INDIGENT(VAT15%)
+
+* 08 MOHOKARE-TG4
+"0~350：1.91990          MOHOKARE-TG4-summer
+350~无穷：1.91990"
+"0~350：2.12910          MOHOKARE-TG4-winter
+350~无穷：2.12910"
+"0~350：2.0082          MOHOKARE-TG4-2021-summer
+350~无穷：2.0082"
+"0~350：2.2270          MOHOKARE-TG4-2021-winter
+350~无穷：2.2270"
+>> COMMON(VAT15%)
+
+* 14 MOHOKARE-TG4(BUS)
+0~无穷：2.31020            MOHOKARE-TG4(BUS)-summer
+0~无穷：2.37440            MOHOKARE-TG4(BUS)-winter
+0~无穷：2.4539            MOHOKARE-TG4(BUS)-2021-summer
+0~无穷：2.5220            MOHOKARE-TG4(BUS)-2021-winter
+>> BUSINESS(VAT15%)
+
+---------------------------MANTSOPA---------------------------
 * 03 MANTSOPA-TG2(FBE)
 > "0~50：1.02570         MANTSOPA-TG2(FBE)-summer
   50~350：1.28140
@@ -39,6 +144,14 @@ MANGAUNGNON PROFIT(VAT15%)
   50~350：1.28760
   350~600：1.88830
   600~无穷：2.22370"
+> "0~50：1.0895         MANTSOPA-TG2(FBE)-2021-summer
+  50~350：1.3611
+  350~600：1.9500
+  600~无穷：2.2973"
+> "0~50：1.0998         MANTSOPA-TG2(FBE)-2021-winter
+  50~350：1.3677
+  350~600：2.0057
+  600~无穷：2.3621"
 >> INDIGENT(VAT15%)
 
 * 04 MANTSOPA-TG2
@@ -48,81 +161,22 @@ MANGAUNGNON PROFIT(VAT15%)
 "0~350：1.36660          MANTSOPA-TG2-winter
 350~600：1.92330
 600~无穷：2.22370"
+"0~350：1.3987          MANTSOPA-TG2-2021-summer
+350~600：1.9685
+600~无穷：2.2973"
+"0~350：1.4516          MANTSOPA-TG2-2021-winter
+350~600：2.0430
+600~无穷：2.3631"
 >> COMMON(VAT15%)
-
-* 05 NALEDI-TG3(FBE)
->   "0~50：1.13640       NALEDI-TG3(FBE)-summer
-    50~350：1.20940
-    350~无穷：1.65030"
->   "0~50：1.44350       NALEDI-TG3(FBE)-winter
-    50~350：1.54130
-    350~无穷：1.82830"
->> INDIGENT(VAT15%)
-
-* 06 NALEDI-TG3
-"0~350：1.45730          NALEDI-TG3-summer
-350~无穷：1.68240"
-"0~350：1.80170          NALEDI-TG3-winter
-350~无穷：2.18590"
->> COMMON(VAT15%)
-
-* 07 MOHOKARE-TG4(FBE)
->   "0~50：1.13630       MOHOKARE-TG4(FBE)-summer
-    50~350：1.30480
-    350~无穷：1.91540"
->   "0~50：1.58750       MOHOKARE-TG4(FBE)-winter
-    50~350：1.69490
-    350~无穷：2.23090"
->> INDIGENT(VAT15%)
-
-* 08 MOHOKARE-TG4
-"0~350：1.91990          MOHOKARE-TG4-summer
-350~无穷：1.91990"
-"0~350：2.12910          MOHOKARE-TG4-winter
-350~无穷：2.12910"
->> COMMON(VAT15%)
-
-* 09 KOPANONG-TG5(FBE)
->   "0~50：1.13630       KOPANONG-TG5(FBE)-summer
-    50~350：1.30480
-    350~无穷：1.91540"
->   "0~50：1.58750       KOPANONG-TG5(FBE)-winter
-    50~350：1.69490
-    350~无穷：2.23090"
->> INDIGENT(VAT15%)
-
-* 10 KOPANONG-TG5
-"0~350：1.91990          KOPANONG-TG5-summer
-350~无穷：1.91990"
-"0~350：2.12910          KOPANONG-TG5-winter
-350~无穷：2.12910"
->> COMMON(VAT15%)
-
-* 11 MANGAUNG-TG1(BUS)
-0~无穷：2.17240            MANGAUNG-TG1(BUS)-summer
-0~无穷：2.27140            MANGAUNG-TG1(BUS)-winter
->> BUSINESS(VAT15%)
 
 * 12 MANTSOPA-TG2(BUS)
 0~无穷：2.17440            MANTSOPA-TG2(BUS)-summer
 0~无穷：2.23550            MANTSOPA-TG2(BUS)-winter
+0~无穷：2.3097            MANTSOPA-TG2(BUS)-2021-summer
+0~无穷：2.3746            MANTSOPA-TG2(BUS)-2021-winter
 >> BUSINESS(VAT15%)
 
-* 13 NALEDI-TG3(BUS)
-0~无穷：2.17240            NALEDI-TG3(BUS)-summer
-0~无穷：2.27140            NALEDI-TG3(BUS)-winter
->> BUSINESS(VAT15%)
-
-* 14 MOHOKARE-TG4(BUS)
-0~无穷：2.31020            MOHOKARE-TG4(BUS)-summer
-0~无穷：2.37440            MOHOKARE-TG4(BUS)-winter
->> BUSINESS(VAT15%)
-
-* 15 KOPANONG-TG5(BUS)
-0~无穷：2.31020            KOPANONG-TG5(BUS)-summer
-0~无穷：2.37440            KOPANONG-TG5(BUS)-winter
->> BUSINESS(VAT15%)
-
+---------------------------Unguess说这块不迁，没有表绑定这种费率-------------------------------
 * 16 MANGAUNG-NON PROFIT
 "0~350：1.50000          MANGAUNG-NON PROFIT
 350~无穷：1.55000"
