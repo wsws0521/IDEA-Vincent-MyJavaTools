@@ -38,12 +38,12 @@ public class LjzSynSqlServerServiceImpl implements LjzSynSqlServerService {
         if(insNum != listSize)
             throw new RuntimeException("免费累计值记录：取到的与插入的不相等");
         int p0 = sqlserverDao.updateIparaMtrPoint0();
-        logger.info("开始执行同步更新:updateIparaMtrPoint0:" + p0);
+        logger.info("开始执行同步更新（售电累计值）:updateIparaMtrPoint0:" + p0);
         int t0 = sqlserverDao.updateTmpLjz0();
-        logger.info("开始执行同步更新:updateTmpLjz0:" + t0);
+        logger.info("开始执行同步更新（售电累计值标记为已使用）:updateTmpLjz0:" + t0);
         int p1 = sqlserverDao.updateIparaMtrPoint1();
-        logger.info("开始执行同步更新:updateIparaMtrPoint1:" + p1);
+        logger.info("开始执行同步更新（FBE累计值）:updateIparaMtrPoint1:" + p1);
         int t1 = sqlserverDao.updateTmpLjz1();
-        logger.info("开始执行同步更新:updateTmpLjz1:" + t1);
+        logger.info("开始执行同步更新（FBE累计值标记为已使用）:updateTmpLjz1:" + t1);
     }
 }

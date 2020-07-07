@@ -572,8 +572,8 @@ public class DbServiceImpl implements DbService {
             List<TmpLjz> tmpljzList = mysqlDao.queryVdPtokenAsLjz(cumuDate);
             logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
             if(tmpljzList.size() > 0){
-                logger.info("执行往新库同步..............暂时不动");
-//                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
+                logger.info("执行往老库同步..............暂时不动");
+                ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
             }
             logger.info("--------------------------------------------" + StepConstant.STEP_008 + "同步完成");
         }else{
