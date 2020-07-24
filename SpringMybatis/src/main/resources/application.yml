@@ -34,9 +34,9 @@ spring:
     time-zone: GMT+5
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.80.36:3306/ctlctest?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: Ctlcuat1
-    password: Hex123@0
+    url: jdbc:mysql://localhost:3306/vending20200303?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
 mybatis:
   type-aliases-package: com.vincent.pojo
   mapper-locations: classpath:com/vincent/dao/*.xml
