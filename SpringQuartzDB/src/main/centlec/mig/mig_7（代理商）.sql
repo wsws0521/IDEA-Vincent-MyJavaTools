@@ -42,8 +42,12 @@ BEGIN
                                               'SL51 K K General Dealer',
                                               'SL27 Hi-Way Electricity',
                                               'SL78 SOVS Motors',
-                                              'POWS Power Station'
-                                             );
+                                              'POWS Power Station',
+                                              'SL98 Hostel 1',
+                                              'SL02 Naledi Municipality Dewetsdorp',
+                                              'SL03 Naledi Municipality VSRUS',
+                                              'CS10 Central Park'
+                                             ); -- 后面4个是Ogezwa遗漏，但是出现在CDU-操作员.xlsx里面的
 	# 定义循环结束done值改变逻辑
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 	# 定义SQL异常时将t_error置为1
