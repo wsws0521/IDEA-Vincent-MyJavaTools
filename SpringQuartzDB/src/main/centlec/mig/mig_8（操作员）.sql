@@ -16,7 +16,7 @@ BEGIN
 
     # 增大email字段长度（后期由王良柏修改ddl脚本）（后来发现又他妈变成32了，而且明明是字段长度溢出，存储过程居然报：）新版本已扩容至512
     # (`centlec`.`uap_user_role`, CONSTRAINT `FK23h1n90aop6lve4n7wyxnrupx` FOREIGN KEY (`user_id`) REFERENCES `uap_user` (`id`))
-	CALL PR_MOD_COL('UAP_USER','MODIFY','EMAIL','VARCHAR(512)','','','');
+	# CALL PR_MOD_COL('UAP_USER','MODIFY','EMAIL','VARCHAR(512)','','','');
 
 	# 开启事务
 	START TRANSACTION;

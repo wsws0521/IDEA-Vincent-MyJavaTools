@@ -12,6 +12,10 @@
 -----Expire Date: NULL
 -----File: 201-50
 
+```sql
+update VD_OFFER_SET set EFFECTIVE_DATE = current_date();
+```
+
 ## 关闭主站，先检查表型，再进行一次Navicat备份（mig_5_1.psc）（忽略tmp表）
 
 ----------------------------------------------------------------

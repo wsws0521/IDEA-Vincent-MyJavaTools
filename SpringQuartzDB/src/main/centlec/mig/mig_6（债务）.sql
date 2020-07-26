@@ -14,8 +14,8 @@ BEGIN
 	end;
 
 	# 增大debt_amount、remain_debt小数位
-	CALL PR_MOD_COL('vd_a_user_debt','MODIFY','debt_amount','decimal(20,6)','','','');
-	CALL PR_MOD_COL('vd_a_user_debt','MODIFY','remain_debt','decimal(20,6)','','','');
+	# CALL PR_MOD_COL('vd_a_user_debt','MODIFY','debt_amount','decimal(20,6)','','','');
+	# CALL PR_MOD_COL('vd_a_user_debt','MODIFY','remain_debt','decimal(20,6)','','','');
 
 	# 开启事务
 	START TRANSACTION;

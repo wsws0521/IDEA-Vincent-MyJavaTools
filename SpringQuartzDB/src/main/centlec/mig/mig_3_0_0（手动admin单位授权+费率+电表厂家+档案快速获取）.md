@@ -363,6 +363,110 @@ group by m.MT_COMM_ADDR,o.ISFREE
 ```
 
 
+-------------------------------------tmp_zw  自动建表语句-----------------------------------------
+```sql
+CREATE TABLE `tmp_zw` (
+  `DEBTID` varchar(128) NOT NULL,
+  `CUSTOMER_ID` varchar(128) DEFAULT NULL,
+  `DEBTNM` varchar(128) DEFAULT NULL,
+  `Debt_total` varchar(128) DEFAULT NULL,
+  `Balance` varchar(128) DEFAULT NULL,
+  `DTYPE` varchar(128) DEFAULT NULL,
+  `MINPAY` varchar(128) DEFAULT NULL,
+  `PMONEYPCT` varchar(128) DEFAULT NULL,
+  `AMOUNTPCT` varchar(128) DEFAULT NULL,
+  `CREATE_DATE` datetime DEFAULT NULL,
+  `LASTDATE` varchar(128) DEFAULT NULL,
+  `DebtType` varchar(128) DEFAULT NULL,
+  `PAYCTS` varchar(128) DEFAULT NULL,
+  `AGREE_ID` varchar(128) DEFAULT NULL,
+  `DebtStatus` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`DEBTID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+```
+------------------------------------sqlserver数据源获取 4569--4573-------------------------------------------
+> 刷新导入【192.168.108.11,1433】
+ ```sql
+select d.DEBTID,
+        d.CUSTOMER_ID,
+        DEBTNM,
+        AMOUNT Debt_total,
+        Isnull(CURENTBLC,0) Balance,
+        DTYPE,MINPAY,
+        PMONEYPCT,AMOUNTPCT,
+        DEBT_DATE CREATE_DATE,
+        case when isnull(d.LASTDATE,'')='' then ''
+            else isnull(CONVERT(VARCHAR(19), d.LASTDATE, 120),'')
+            end LASTDATE,
+        (case when DEBTNM in ('Preloaded Credit','preload debt') then 1
+            when DEBTNM in ('Tamer','Tamper','tampering') then 2
+            else 3 end) as DebtType,
+        isnull(d.PAYCTS,0) PAYCTS, ISNULL(d.AGREE_ID,'') as AGREE_ID,
+        0 AS DebtStatus
+from IPARA_DEBT d
+where isnull(d.OKFLAG,0)=0 and 0<>CURENTBLC
+union all
+select  d.DEBTID,
+        d.CUSTOMER_ID,
+        DEBTNM,
+        AMOUNT Debt_total,
+        0 Balance,
+        DTYPE,
+        MINPAY,
+        PMONEYPCT,
+        AMOUNTPCT,
+        DEBT_DATE CREATE_DATE,
+        case when isnull(d.LASTDATE,'')='' then ''
+            else isnull(CONVERT(VARCHAR(19), d.LASTDATE, 120),'')
+            end LASTDATE,
+        (case when DEBTNM in ('Preloaded Credit','preload debt') then 1
+            when DEBTNM in ('Tamer','Tamper','tampering') then 2
+            else 3 end) as DebtType,
+        (isnull(d.PAYCTS,0)+(case when CURENTBLC=0 then 0 else 1 end)) PAYCTS,
+        ISNULL(d.AGREE_ID,'') as AGREE_ID,
+        (case when CURENTBLC=0 then 1 else 2 end) AS DebtStatus
+from IPARA_DEBT d
+where isnull(d.OKFLAG,0)>0
+```
+
+-------------------------------------tmp_dls  自动建表语句-----------------------------------------
+```sql
+CREATE TABLE `tmp_dls` (
+  `TE_NAME` varchar(128) NOT NULL,
+  `TE_ADDRESS` varchar(128) DEFAULT NULL,
+  `TE_MINVAL` varchar(128) DEFAULT NULL,
+  `TE_MAXVAL` varchar(128) DEFAULT NULL,
+  `CDUArea` varchar(128) DEFAULT NULL,
+  `TE_CREDIT` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`TE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+------------------------------------sqlserver数据源获取  66-------------------------------------------
+> 刷新导入【192.168.108.11,1433】
+```sql
+select  ltrim(rtrim(c.TE_NAME)) TE_NAME,
+        ltrim(rtrim(c.TE_ADDRESS)) TE_ADDRESS,
+        c.TE_MINVAL,
+        c.TE_MAXVAL,
+        r.REGIONNAME as CDUArea,
+        c.TE_CREDIT
+from IPARA_CDUSTATION c
+left join IPARA_CDUREGION r on c.REGIOINID=r.REGION_ID
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 关闭主站，先检查表型，再进行一次Navicat备份（mig_3_0.psc）（带tmp表）
 
 
