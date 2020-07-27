@@ -58,7 +58,7 @@ BEGIN
     LEFT JOIN a_equip_meter m ON r.EQUIPMENTID = m.METER_ID
     LEFT JOIN a_grid_transformer tf ON u.TF_ID = tf.TF_ID
     LEFT JOIN a_grid_line line ON u.LINE_ID = line.LINE_ID
-    WHERE m.METER_ID IS NOT NULL -- 对于已经解绑计量点-表计的就不再插入了
+    WHERE m.METER_ID IS NOT NULL -- 对于已经解绑计量点-表计的就不再插入了(插入a，条件a，这种写法大概率造成死锁)
         AND NOT EXISTS
         (select 1 from a_data_catalogue cata
         where cata.METER_ID is not null and m.METER_ID = cata.METER_ID -- 以 METER_ID 为基准

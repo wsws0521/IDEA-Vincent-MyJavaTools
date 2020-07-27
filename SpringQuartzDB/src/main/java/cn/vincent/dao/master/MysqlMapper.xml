@@ -258,6 +258,12 @@
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
     </select>
+    <select id="executeScript7" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
+        {CALL syn_7(
+            #{error_code,mode=OUT,jdbcType=INTEGER},
+            #{error_msg,mode=OUT,jdbcType=VARCHAR}
+        )}
+    </select>
 
 
     <update id="updateTmpWithNewIds">
@@ -544,6 +550,9 @@
             #{error_code,mode=OUT,jdbcType=INTEGER},
             #{error_msg,mode=OUT,jdbcType=VARCHAR}
         )}
+    </select>
+    <select id="queryCumuAmt" resultType="java.lang.Integer">
+        SELECT COUNT(CUMU_ID) FROM vd_c_cumu_value WHERE CUMU_ITEM = #{cumuItem} AND START_TIME = #{startDate};
     </select>
 
 </mapper>

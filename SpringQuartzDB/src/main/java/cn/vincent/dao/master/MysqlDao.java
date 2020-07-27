@@ -66,6 +66,8 @@ public interface MysqlDao {
 
     ProcessParam executeScript6(ProcessParam processParam);
 
+    ProcessParam executeScript7(ProcessParam processParam);
+
     int updateTmpWithNewIds();
     int updateTmpWithOldTmp();
     int updateEnergyByOldRows();
@@ -121,4 +123,6 @@ public interface MysqlDao {
     ProcessParam executeScript_zz_3_11(ProcessParam processParam);
     ProcessParam executeScript_zz_3_12(ProcessParam processParam);
     ProcessParam executeScript_zz_3_13(ProcessParam processParam);
+
+    int queryCumuAmt(@Param(value = "startDate") String startDate, @Param(value = "cumuItem") String cumuItem);
 }

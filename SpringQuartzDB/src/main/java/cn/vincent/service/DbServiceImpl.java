@@ -572,7 +572,7 @@ public class DbServiceImpl implements DbService {
             List<TmpLjz> tmpljzList = mysqlDao.queryVdPtokenAsLjz(cumuDate);
             logger.info("取到新库指定日期的[累计值]记录个数：" + tmpljzList.size());
             if(tmpljzList.size() > 0){
-                logger.info("执行往老库同步..............暂时不动");
+                logger.info("执行往老库同步...+...+...+...+..");
                 ljzSynSqlServerService.synVdCcumuValueIntoLjz(tmpljzList);
             }
             logger.info("--------------------------------------------" + StepConstant.STEP_008 + "同步完成");
@@ -590,6 +590,20 @@ public class DbServiceImpl implements DbService {
             toolService.truncateTmpTables();
             int terminatNum =  mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_999);
             logger.info("本次同步过程正常结束，将tmp_centlec表的执行状态置为999，共更新：" + terminatNum);
+
+            // --------------------累计值多条
+            logger.info("预先插入新表0301/0101累计值，开始" );
+            logger.info("插入前当月0301个数: " + mysqlDao.queryCumuAmt("2020-07-01 00:00:00", "0301") );
+            logger.info("插入前当月0101个数: " + mysqlDao.queryCumuAmt("2020-07-01 00:00:00", "0101") );
+            ProcessParam processParam = new ProcessParam();
+            mysqlDao.executeScript7(processParam);
+            if(processParam.getError_code() != 0){
+                throw new RuntimeException(processParam.getError_msg());
+            }
+            logger.info("插入后当月0301个数: " + mysqlDao.queryCumuAmt("2020-07-01 00:00:00", "0301") );
+            logger.info("插入后当月0101个数: " + mysqlDao.queryCumuAmt("2020-07-01 00:00:00", "0101") );
+            logger.info("预先插入新表0301/0101累计值，结束");
+            // --------------------累计值多条
         }else{
             throw new RuntimeException(SYS_DATE_STR + "状态记录数不正确");
         }
