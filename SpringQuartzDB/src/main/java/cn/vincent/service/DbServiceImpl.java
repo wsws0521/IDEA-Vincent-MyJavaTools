@@ -514,18 +514,17 @@ public class DbServiceImpl implements DbService {
                 String nameWithDate = toolService.getTmpLjz1DateName();
                 if(nameWithDate != null){
                     mysqlToolDao.updateAlterTableByName("tmp_ljz1", "tmp_ljz" + nameWithDate);
-
-                    // 将现有的tmp_ljz改名为tmp_ljz1
-                    mysqlToolDao.updateAlterTableByName("tmp_ljz", "tmp_ljz1");
-                    // 重新创建新的tmp_ljz
-                    mysqlToolDao.updateCreateTmpLjz();
-                    indexService.addIndexWithCheck("tmp_ljz","index_ljz_meterId","meterId");
-                    indexService.addIndexWithCheck("tmp_ljz","index_ljz_consId","consId");
-                    // 导入tmp_ljz
-                    importTmpLjzByDateStr(targetSynDateStr);
-                    // --------------------同步
-                    ljzSynMySqlService.synLjzIntoVdCcumuValue();
                 }
+                // 将现有的tmp_ljz改名为tmp_ljz1
+                mysqlToolDao.updateAlterTableByName("tmp_ljz", "tmp_ljz1");
+                // 重新创建新的tmp_ljz
+                mysqlToolDao.updateCreateTmpLjz();
+                indexService.addIndexWithCheck("tmp_ljz","index_ljz_meterId","meterId");
+                indexService.addIndexWithCheck("tmp_ljz","index_ljz_consId","consId");
+                // 导入tmp_ljz
+                importTmpLjzByDateStr(targetSynDateStr);
+                // --------------------同步
+                ljzSynMySqlService.synLjzIntoVdCcumuValue();
             }
             indexService.deleteIndexWithCheck("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid");
             logger.info("--------------------------------------------" + StepConstant.STEP_007 + "同步完成");
