@@ -55,6 +55,9 @@
     <select id="queryMaxSynTvFromPayFlow" resultType="java.lang.String">
         SELECT MAX(tv) FROM vd_a_pay_flow WHERE charge_remark LIKE 'migrate%'
     </select>
+    <select id="queryInTmpBj" resultType="java.lang.Integer">
+        select count(1) from tmp_bj where MT_COMM_ADDR = #{meterNo}
+    </select>
     <update id="updateCreateTmpSdjl">
         CREATE TABLE `tmp_sdjl` (
           `ORDERSID` varchar(32) NOT NULL,

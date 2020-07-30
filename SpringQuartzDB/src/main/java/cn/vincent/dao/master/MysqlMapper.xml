@@ -473,6 +473,220 @@
             )
         </foreach>
     </insert>
+    <insert id="insertAconsumerSingle">
+        INSERT INTO a_consumer
+            (cons_id, cons_no, cons_name, cons_sort_code, org_no, reg_no, elec_addr, trade_code, elec_type_code, contract_cap, build_date, cancel_date,
+            STATUS, jfh, zjfbz, single_limit, free_charge, free_tax, premises_no, arrears, account_balance, mdc_id, id_no, erf_stand)
+        SELECT
+            AMI_GET_SEQUENCE('S_AMI_FILE'),
+            CONCAT('CN_',a.customer_id), a.customer_name,
+            (CASE
+                WHEN a.tariffname LIKE '%(BUS)' THEN '02' -- 工商业用户
+                ELSE '04' -- 低压居民
+            END),
+            c.NO,
+            a.BUSINESS_REGISTRATION_NUMBER, -- 商业注册号（新增）
+            a.address, NULL,
+            IF(a.tariffname IN ('MANGAUNG-TG1(FBE)','MANTSOPA-TG2(FBE)', 'NALEDI-TG3(FBE)','MOHOKARE-TG4(FBE)', 'KOPANONG-TG5(FBE)'), '201', NULL), -- 201-乡村居民生活用电  代表可以享受免费额度50kwh
+            NULL, a.openaccount_date, NULL,
+            (CASE
+                WHEN a.status = 0 THEN '03' -- 已销户
+                WHEN a.status = 1 AND (SELECT COUNT(MT_COMM_ADDR) FROM tmp_bj bj WHERE bj.customer_id=a.customer_id)>0 THEN '02' -- 已投运
+                WHEN a.status IN (1, 2, 5, 6, 8) AND (SELECT COUNT(MT_COMM_ADDR) FROM tmp_bj bj WHERE bj.customer_id=a.customer_id)=0 THEN '01' -- 新开户
+                WHEN a.status IN (2, 5, 6, 8) AND (SELECT COUNT(MT_COMM_ADDR) FROM tmp_bj bj WHERE bj.customer_id=a.customer_id)>0 THEN '04' -- 已装表
+                ELSE '03'
+            END), -- 用户状态，依赖于于表计临时表
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2,
+            a.US_IDNUM, -- 身份证号（新增）
+            a.StandNumber -- 地址资产编号（新增）
+        FROM tmp_yh a
+        LEFT JOIN uap_organization c ON CONCAT('ORG_',a.station_id) = c.CODE
+        WHERE a.CUSTOMER_ID = #{customerId}
+    </insert>
+    <insert id="insertAconsumerContactsSingle">
+        INSERT INTO a_consumer_contacts
+            (contactsid, contacts_name, contacts_type, phone_number, telephonenumber, email, cons_id, status, is_recieve_mail, gender)
+        SELECT
+            AMI_GET_SEQUENCE('S_AMI_FILE'), b.customer_name, '03',
+            replace(b.LINKMAN_PHONE, ' ', ''), replace(b.LINKMAN_PHONE, ' ', ''), b.US_EMAIL,
+            a.cons_id, 'Y', 'Y', IF(b.us_sex = 0,'01','02')
+        FROM a_consumer a, tmp_yh b
+        WHERE a.cons_no = CONCAT('CN_', b.CUSTOMER_ID)
+        and b.CUSTOMER_ID = #{customerId}
+    </insert>
+    <insert id="insertAequipMeterSingle">
+        INSERT INTO a_equip_meter
+            (meter_id, org_no, devicetype_id, assetno, com_address, protocol, TYPE, meter_model, derection, rateself, installationdate, removaldate, longitude, latitude,
+            STATUS, manufacturer, out_no, version_serial_no, meter_mode, meter_no, wiringmode, is_bluetooth, bluetooth_name, sim_no, m_position, tariff_type, access_type,
+            m_meterbox, socket_server_model, is_solar, install_address, unit_id, ed_no, mgt_status)
+        SELECT
+            AMI_GET_SEQUENCE('S_AMI_FILE'),					-- 表计ID
+            (SELECT NO FROM uap_organization WHERE CODE = CONCAT('ORG_',b.station_id)), -- 单位编号
+            'meter', 										-- 设备类型标识
+            b.mt_comm_addr, 								-- 资产编号
+            NULL, 											-- 通讯地址
+            '03',											-- DLMS规约
+            '20', 											-- 离线表
+            (SELECT pc.value
+            FROM p_sys_code pc
+            LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
+            WHERE pc.code_type = 'bjxh' AND lang = 'en_US'
+            AND pcl.text = b.mt_model_desc),			-- bjxh表计型号（PCODE）
+            NULL,											-- 安装方向
+            NULL,											-- 自身倍率
+            CASE
+            WHEN b.customer_id = '' THEN NULL																	-- 未绑用户，则认为‘装表日期’是‘null’
+            WHEN b.customer_id != '' AND b.lastvenddate = '' THEN CURDATE()										-- 绑了用户，最后购电为null，则认为‘装表日期’是‘当前时间’
+            WHEN b.customer_id != '' AND b.lastvenddate != '' AND DATE_FORMAT(b.lastvenddate, '%Y-%m') &lt; DATE_FORMAT(CURDATE(), '%Y-%m')
+            THEN DATE_ADD(DATE_ADD(b.lastvenddate, INTERVAL -DAY(b.lastvenddate)+1 DAY), INTERVAL 1 MONTH)	-- 绑了用户，最后购电为当前月以前，则认为‘装表日期’是‘最后购电时间的下月1号’
+            ELSE b.lastvenddate																					-- 绑了用户，最后购电为当前月，则认为‘装表日期’是‘最后购电时间’
+            END, 											-- 装表日期
+            NULL, 											-- 拆除日期
+            NULL, 											-- 经度
+            NULL, 											-- 纬度
+            '01',                                   -- dbzt状态：离线表统一认为是01入库
+            --	CASE
+            --		WHEN b.customer_id = '' THEN '01'	-- 未绑用户，则认为‘状态’是01入库
+            --		ELSE '02' 							-- 未绑用户，则认为‘状态’是02运行
+            --		END, 								-- dbzt状态：01入库、02运行、03投运、04拆回
+            (SELECT pc.value
+            FROM p_sys_code pc
+            LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
+            WHERE cj.MANUFACTURER_DESC IS NOT NULL
+            AND pc.code_type = 'dbcj' AND lang = 'en_US'
+            AND pcl.text = cj.MANUFACTURER_DESC), 		-- dbcj电表厂家,PCODE 根据表型关联
+            NULL, 											-- 外部标识
+            NULL, 											-- 功能版本流水号
+            '02', 											-- bjms表计模式：01正常模式、02预付费模式
+            b.mt_comm_addr, 								-- 表号，同资产编号
+            NULL, -- 接线方式
+            NULL, -- 是否蓝牙表
+            NULL, -- 蓝牙设备名称
+            NULL, -- SIM卡号
+            NULL, -- v_m_position
+            NULL, -- v_tariff_type
+            NULL, -- v_access_type
+            NULL, -- v_m_meterbox
+            NULL, -- v_socket_server_model
+            NULL, -- v_is_solar
+            NULL, -- v_install_address 安装地址
+            NULL, -- v_unit_id
+            NULL, -- v_ed_no
+            (SELECT pc.value
+            FROM p_sys_code pc
+            LEFT JOIN p_sys_code_language pcl ON pc.name = pcl.text_ID
+            WHERE pc.code_type = 'meter_mgt_status' AND lang = 'en_US'
+            AND pcl.text = b.meterstatus) 					-- v_mgt_status 管理状态
+        FROM tmp_bj b LEFT JOIN tmp_dbcj cj ON b.mt_model_desc = cj.MT_MODEL
+        WHERE b.mt_comm_addr = #{meterNo}
+    </insert>
+    <insert id="insertAequipMeterVendingSingle">
+        INSERT INTO a_equip_meter_vending
+            (meter_id, vk_id, ti, keyno)
+        SELECT
+            a.meter_id, c.vk_id, b.mus_ti, NULL
+        FROM
+            A_EQUIP_METER a
+            INNER JOIN tmp_bj b ON a.assetno = b.mt_comm_addr
+            INNER JOIN vd_p_vk c ON b.mus_sgcid = c.sgc
+                    AND b.mus_keyvision = c.krn
+                    AND b.mus_keyexpiry = c.ken
+                    AND c.ms = '02'
+                    AND c.base_time=1993
+        WHERE a.meter_mode='02' AND a.assetno = #{meterNo}
+    </insert>
+    <insert id="insertAusagePointSingle">
+        INSERT INTO a_usagepoint
+            (mp_id, mp_no, mp_name, location, org_no, type_code, usage_type_code, side_code, cons_id, line_id, tf_id, tf_line_id, mp_grade, is_load_c, is_calc_loss, main_standby, basevoltage, wiringmode, measuremode, ct, pt, STATUS, out_no, load_grade, subs_id, mdc_id, pkg_id)
+        SELECT 	AMI_GET_SEQUENCE('S_AMI_FILE'),			-- 计量点标识
+            CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr), -- 计量点编号
+            CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr), -- 计量点名称
+            a.elec_addr, -- 计量点地址
+            a.org_no, -- 所属单位(取用户单位，默认表计单位同用户单位)
+            '04', -- jldfl计量点分类：02线路关口03配变04用电客户05虚拟计量点
+            NULL, -- zyyt主要用途：01结算02考核
+            NULL, -- ljdssc计量点所属侧：01高压侧02中压侧03低压侧04变电站内05变电站外
+            a.cons_id, -- 所属用户
+            c.line_id, -- 所属线路标识
+            d.tf_id, -- 所属变压器标识
+            NULL, -- 所属变压器分线
+            NULL, -- MP_GRADE计量点级别：10-1,20-2,30-3
+            NULL, -- 是否安装负控
+            NULL, -- 是否参与线损计算
+            NULL, -- 主备标志
+            'AC00101', -- 电压等级：交流10kV...
+            NULL, -- 接线方式：单项、三相三线、三相四线
+            NULL, -- 计量方式
+            '1/1', -- CT
+            '1/1', -- PT
+            '02', -- 状态：01设立02在用03注销
+            NULL, -- 外部标识
+            NULL, -- 负荷等级
+            subs.subs_id, -- subs_id 所属变电站标识
+            2, -- mdc_id ？
+            e.pkg_id -- pkg_id 费率方案标识
+        FROM a_consumer a
+        INNER JOIN tmp_bj b ON a.cons_no = CONCAT('CN_', b.customer_id)
+        LEFT JOIN a_grid_line c ON CONCAT('SLT_',b.line_id) = c.line_no
+        LEFT JOIN a_grid_transformer d ON CONCAT('SLT_',b.suburb_id) = d.tf_no
+        LEFT JOIN a_grid_subs subs ON CONCAT('SLT_',b.station_id) = subs.subs_no
+        LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name
+        WHERE b.MT_COMM_ADDR = #{meterNo}
+    </insert>
+    <insert id="insertMpRelSingle">
+        INSERT INTO a_mp_equipment_rela
+            (mp_id, equipmenttype, equipmentid, change_time, STATUS)
+        SELECT a.mp_id, '02', b.meter_id, SYSDATE(), 'Y'
+        FROM a_usagepoint a
+        INNER JOIN a_equip_meter b ON SUBSTRING_INDEX(a.mp_no,'_',-1) = b.assetno AND  b.meter_mode='02'
+        WHERE b.assetno = #{meterNo}
+    </insert>
+    <insert id="insertCatalogSingle">
+    INSERT INTO `a_data_catalogue`
+        (`DATA_ID`, `ORG_NO`, `CONS_ID`, `CONS_NO`, `CONS_NAME`, `CONS_SORT_TYPE`, `ED_ID`,
+        `DEVICE_C`, `ED_ASSET_NO`, `LOGICAL_ADDRESS`, `METER_ID`, `METER_ASSET_NO`, `MP_ID`, `MP_NO`, `MP_NAME`,
+        `TYPE_CODE`, `RATE`, `PT`, `CT`, `TF_ID`, `TF_NO`, `TF_NAME`, `LINE_ID`, `LINE_NO`, `LINE_NAME`,
+        `EFFECT_TIME`, `DISCARD_TIME`, `STATUS`, `MDC_ID`)
+    SELECT
+        AMI_GET_SEQUENCE('S_AMI_FILE'), -- DATA_ID 数据主表id自增，序列用的是S_AMI_FILE
+        u.org_no, -- ORG_NO
+        c.cons_id, -- CONS_ID
+        c.CONS_NO, -- CONS_NO
+        c.CONS_NAME, -- CONS_NAME
+        c.CONS_SORT_CODE, -- CONS_SORT_TYPE
+        NULL, -- ED_ID 终端ID
+        NULL, -- DEVICE_C
+        NULL, -- ED_ASSET_NO 终端号
+        NULL, -- LOGICAL_ADDRESS 终端逻辑地址对应A_EQUIP_ENDDEVICE的logical_address字段
+        m.METER_ID, -- METER_ID
+        m.ASSETNO, -- METER_ASSET_NO
+        u.MP_ID, -- MP_ID
+        u.MP_NO, -- MP_NO
+        u.MP_NAME, -- MP_NAME
+        u.TYPE_CODE, -- TYPE_CODE jldfl计量点分类：02线路关口03配变04用电客户05虚拟计量点
+        '1.00000', -- RATE，默认是1
+        u.PT, -- PT
+        u.CT, -- CT
+        tf.TF_ID, -- TF_ID
+        tf.TF_NO, -- TF_NO
+        tf.TF_NAME, -- TF_NAME
+        line.LINE_ID, -- LINE_ID
+        line.LINE_NO, -- LINE_NO
+        line.LINE_NAME, -- LINE_NAME
+        m.INSTALLATIONDATE, -- EFFECT_TIME 生效时间,就按电表的安装时间
+        NULL, -- DISCARD_TIME 对应下面状态为0时的废弃时间
+        '1', -- STATUS 状态：1是有效，0是无效，即废弃
+        '2' -- MDC_ID
+    FROM a_usagepoint u
+    LEFT JOIN a_consumer c ON u.CONS_ID = c.CONS_ID
+    LEFT JOIN a_mp_equipment_rela r ON u.MP_ID = r.MP_ID AND r.EQUIPMENTTYPE = '02' AND r.STATUS = 'Y'
+    LEFT JOIN a_equip_meter m ON r.EQUIPMENTID = m.METER_ID
+    LEFT JOIN a_grid_transformer tf ON u.TF_ID = tf.TF_ID
+    LEFT JOIN a_grid_line line ON u.LINE_ID = line.LINE_ID
+    WHERE m.assetno = #{meterNo}
+    </insert>
+
+
     <select id="executeScript_zz_3_1" statementType="CALLABLE" parameterType="cn.vincent.pojo.ProcessParam" resultType="cn.vincent.pojo.ProcessParam">
         {CALL syn_zz_3_1(
             #{error_code,mode=OUT,jdbcType=INTEGER},

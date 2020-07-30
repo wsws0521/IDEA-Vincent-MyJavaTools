@@ -21,4 +21,6 @@ public interface MysqlToolDao {
     String queryMaxSynTvFromPayFlow();
 
     void updateCreateTmpSdjl();
+
+    int queryInTmpBj(@Param(value = "meterNo") String meterNo);
 }

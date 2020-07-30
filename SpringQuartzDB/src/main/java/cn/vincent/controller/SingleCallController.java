@@ -1,6 +1,7 @@
 package cn.vincent.controller;
 
 import cn.vincent.service.SingleCallService;
+import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,18 @@ public class SingleCallController {
     public String ljzSqlServer(){
         int num = singleCallService.callSynLjz2Sqlserver();
         return num + "OK";
+    }
+
+    /**
+     * 电力局忽然又说 有当天老系统开户，新系统售电的情况
+     * 这里单纯同步单个表计/用户档案信息
+     * @param meterNo   要同步的表号
+     * @return
+     */
+    @GetMapping("/archive/{meterNo}")
+    public String returnStringId(@PathVariable String meterNo){
+        System.out.println("单独添加表计-用户档案，表号为:" + meterNo);
+        logger.info("单独添加表计-用户档案，表号为:" + meterNo);
+        return singleCallService.callSynSinleArchive(meterNo);
     }
 }

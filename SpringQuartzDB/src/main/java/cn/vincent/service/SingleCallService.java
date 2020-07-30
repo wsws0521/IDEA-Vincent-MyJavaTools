@@ -22,4 +22,10 @@ public interface SingleCallService {
      * @return 已同步记录数
      */
     int callSynSdjl2Mysql();
+
+    /**
+     * 单独同步1个表计档案（当天老系统新开，新系统售电）
+     * @param meterNo
+     */
+    String callSynSinleArchive(String meterNo);
 }

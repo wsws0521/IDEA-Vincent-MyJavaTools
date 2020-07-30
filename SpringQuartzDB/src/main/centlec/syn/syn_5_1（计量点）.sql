@@ -61,7 +61,7 @@ BEGIN
 	LEFT JOIN a_grid_transformer d ON CONCAT('SLT_',b.suburb_id) = d.tf_no
 	LEFT JOIN a_grid_subs subs ON CONCAT('SLT_',b.station_id) = subs.subs_no
 	LEFT JOIN VD_E_BILL_Package e ON b.tariffname = e.pkg_name
-	WHERE NOT EXISTS(SELECT f.mp_no FROM a_usagepoint f WHERE f.mp_no = CONCAT('mp_',a.cons_id,'_',b.mt_comm_addr));
+	WHERE NOT EXISTS(SELECT f.mp_no FROM a_usagepoint f WHERE f.CONS_ID = a.cons_id);
 
 	IF t_error = 1 THEN
 		ROLLBACK;

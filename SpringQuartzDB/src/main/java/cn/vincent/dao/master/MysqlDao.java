@@ -125,4 +125,18 @@ public interface MysqlDao {
     ProcessParam executeScript_zz_3_13(ProcessParam processParam);
 
     int queryCumuAmt(@Param(value = "startDate") String startDate, @Param(value = "cumuItem") String cumuItem);
+
+    int insertAconsumerSingle(@Param(value = "customerId") String customerId);
+
+    int insertAconsumerContactsSingle(@Param(value = "customerId") String customerId);
+
+    int insertAequipMeterSingle(@Param(value = "meterNo") String meterNo);
+
+    int insertAequipMeterVendingSingle(@Param(value = "meterNo") String meterNo);
+
+    int insertAusagePointSingle(@Param(value = "meterNo") String meterNo);
+
+    int insertMpRelSingle(@Param(value = "meterNo") String meterNo);
+
+    int insertCatalogSingle(@Param(value = "meterNo") String meterNo);
 }

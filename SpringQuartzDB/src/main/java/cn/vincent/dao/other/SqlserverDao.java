@@ -10,6 +10,7 @@ import java.util.List;
 public interface SqlserverDao {
 
     List<TmpBj> queryTmpBj();
+    List<TmpBj> queryTmpBjByMeterNo(@Param(value = "meterNo") String meterNo);
 
     List<TmpYh> queryTmpYh();
 
@@ -33,4 +34,6 @@ public interface SqlserverDao {
      * @return
      */
     List<TmpSdjl> queryTmpSdjlByDateStr(@Param(value = "startDate") String startDate, @Param(value = "endDate") String endDate);
+
+    List<TmpYh> queryTmpYhByCustId(@Param(value = "custId") String custId);
 }

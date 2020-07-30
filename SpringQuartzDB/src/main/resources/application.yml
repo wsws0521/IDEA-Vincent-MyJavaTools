@@ -33,9 +33,10 @@ spring:
   datasource:
     master:
       # url: jdbc:mysql://192.168.80.35:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      url: jdbc:mysql://localhost:3306/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-#      url: jdbc:mysql://192.168.80.36:3306/ctlctest?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      username: Ctlcuat1
+      # username: Ctlcuat1
+      # password: Hex123@0
+      url: jdbc:mysql://192.168.81.3:6446/centlec?serverTimezone=GMT%2B2&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: Centlec
       password: Hex123@0
       # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
@@ -63,7 +64,7 @@ spring:
       max-open-prepared-statements: 20
     other:
       # DB-1
-      url: jdbc:sqlserver://192.168.108.12:1433;DatabaseName=hxdb
+      url: jdbc:sqlserver://192.168.108.11:1433;DatabaseName=hxdb
       username: pns
       password: pnssnp
       # DB-2
