@@ -504,7 +504,7 @@ public class DbServiceImpl implements DbService {
      */
     @Override
     public void startFromScript7() {
-        logger.info("007：执行<程序7：累计值-往新库融合.txt>：往新库");
+        logger.info("007：执行<程序7：累计值-往新库融合.txt>：往新库，月末最后一天会有bug因为筛选enddate没有+1天，导致全插，暂不处理");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_007);
         if(updateNum == 1){
             indexService.addIndexWithCheck("vd_c_cumu_value","index_vd_c_cumu_value_cumuobjid", "cumu_obj_id");
@@ -563,7 +563,7 @@ public class DbServiceImpl implements DbService {
      */
     @Override
     public void startFromScript8() {
-        logger.info("008: 执行<程序8：累计值-往老库融合.txt>：往老库");
+        logger.info("008: 执行<程序8：累计值-往老库融合.txt>：往老库，月末最后一天会有bug因为筛选enddate没有+1天，导致0条插更，暂不处理");
         int updateNum = mysqlDao.updateTmpCentlec(SYS_DATE_STR, StepConstant.STEP_008);
         if(updateNum == 1){
             String cumuDate = MyDateUtils.getSysDateYesterday();

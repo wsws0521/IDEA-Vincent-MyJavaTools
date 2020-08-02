@@ -67,8 +67,9 @@ public class SchedulerConfig {
         factoryBean.setGroup("group1");
         // 周1至周5，每天上午8点至下午18点，每分钟执行一次
 //        factoryBean.setCronExpression("0 0/1 8-20 ? * *");
-        // 每天凌晨一点10分执行一次
-        factoryBean.setCronExpression("0 10 1 ? * *");
+        // 每天凌晨一点10分执行一次 ("0 10 1 ? * *")
+        // 每天凌晨零点10分执行一次
+        factoryBean.setCronExpression("0 10 0 ? * *");
 
         return factoryBean;
     }
