@@ -125,7 +125,7 @@ BEGIN
 		2, AMI_GET_SEQUENCE('seq_vd_a_user_debt_set'), b.cons_id, -- 用户id
 		NULL, -- 限制日期
 		'01' -- 偿还方式:01正常还债 02延期还债 03强制还债
-	FROM tmp_zw a
+	FROM (select distinct zw.CUSTOMER_ID from tmp_zw zw) a
 	inner join a_consumer b on CONCAT('CN_',a.customer_id) = b.CONS_NO
 	WHERE NOT EXISTS(SELECT debt.CONS_ID FROM vd_a_user_debt_set debt WHERE debt.CONS_ID = b.CONS_ID);
 
