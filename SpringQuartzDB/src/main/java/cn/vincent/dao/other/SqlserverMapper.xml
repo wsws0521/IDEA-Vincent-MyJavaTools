@@ -238,4 +238,9 @@
         where t.OD_DATE &gt; #{startDate} and t.OD_DATE &lt;= #{endDate}
         order by t.od_date
     </select>
+    <select id="queryMeterNoByCustomerId" resultType="java.lang.String">
+        select m.MT_COMM_ADDR
+        from IPARA_RESIDENT r inner join IPARA_MTRPOINT m on r.CUSTOMER_ID = m.ACTUAL_CUSTOMER_ID
+        where r.CUSTOMER_ID = #{customerId}
+    </select>
 </mapper>

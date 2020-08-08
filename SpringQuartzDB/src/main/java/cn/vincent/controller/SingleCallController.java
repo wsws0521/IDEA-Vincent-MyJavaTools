@@ -1,7 +1,6 @@
 package cn.vincent.controller;
 
 import cn.vincent.service.SingleCallService;
-import cn.vincent.utils.MyDateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +39,16 @@ public class SingleCallController {
      * @param meterNo   要同步的表号
      * @return
      */
-    @GetMapping("/archive/{meterNo}")
+    @GetMapping("/meter/{meterNo}")
     public String returnStringId(@PathVariable String meterNo){
         System.out.println("单独添加表计-用户档案，表号为:" + meterNo);
         logger.info("单独添加表计-用户档案，表号为:" + meterNo);
-        return singleCallService.callSynSinleArchive(meterNo);
+        return singleCallService.callSynSingleMeter(meterNo);
+    }
+    @GetMapping("/customer/{customerId}")
+    public String syncByCustomerId(@PathVariable String customerId){
+        System.out.println("单独添加表计-用户档案，用户ID为:" + customerId);
+        logger.info("单独添加表计-用户档案，用户ID为:" + customerId);
+        return singleCallService.callSynSingleCustomer(customerId);
     }
 }

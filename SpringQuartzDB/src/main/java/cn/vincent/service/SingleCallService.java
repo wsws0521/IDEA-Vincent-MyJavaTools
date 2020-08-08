@@ -24,8 +24,14 @@ public interface SingleCallService {
     int callSynSdjl2Mysql();
 
     /**
-     * 单独同步1个表计档案（当天老系统新开，新系统售电）
-     * @param meterNo
+     * 通过[表号]单独同步1个档案（当天老系统新开，新系统售电）
+     * @param meterNo 表号
      */
-    String callSynSinleArchive(String meterNo);
+    String callSynSingleMeter(String meterNo);
+
+    /**
+     * 通过[用户ID]单独同步1个档案（当天老系统新开，新系统售电）
+     * @param customerId 表号
+     */
+    String callSynSingleCustomer(String customerId);
 }

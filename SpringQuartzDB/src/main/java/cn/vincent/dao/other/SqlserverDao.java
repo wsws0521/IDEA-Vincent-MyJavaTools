@@ -36,4 +36,6 @@ public interface SqlserverDao {
     List<TmpSdjl> queryTmpSdjlByDateStr(@Param(value = "startDate") String startDate, @Param(value = "endDate") String endDate);
 
     List<TmpYh> queryTmpYhByCustId(@Param(value = "custId") String custId);
+
+    List<String> queryMeterNoByCustomerId(@Param(value = "customerId") String customerId);
 }

@@ -34,7 +34,7 @@ public class SingleCallServiceImpl implements SingleCallService {
     IndexService indexService;
 
     @Override
-    public String callSynSinleArchive(String meterNo) {
+    public String callSynSingleMeter(String meterNo) {
         int checkExistNum = mysqlToolDao.queryInTmpBj(meterNo);
         if(checkExistNum == 0){
             logger.info("最新tmp_bj中不存在该表，开始同步：" + meterNo);
@@ -65,6 +65,17 @@ public class SingleCallServiceImpl implements SingleCallService {
             }
         }else{
             return "！！！最新tmp_bj中已存在该表:" + meterNo;
+        }
+    }
+
+    @Override
+    public String callSynSingleCustomer(String customerId) {
+        List<String> relativeMeterNos = sqlserverDao.queryMeterNoByCustomerId(customerId);
+        if(relativeMeterNos.size() == 1){
+            callSynSingleMeter(relativeMeterNos.get(0));
+            return relativeMeterNos.get(0) + " 插入完成....";
+        }else{
+            return "relative meter no size: " + relativeMeterNos.size();
         }
     }
 
