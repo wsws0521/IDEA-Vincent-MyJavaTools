@@ -72,8 +72,7 @@ public class SingleCallServiceImpl implements SingleCallService {
     public String callSynSingleCustomer(String customerId) {
         List<String> relativeMeterNos = sqlserverDao.queryMeterNoByCustomerId(customerId);
         if(relativeMeterNos.size() == 1){
-            callSynSingleMeter(relativeMeterNos.get(0));
-            return relativeMeterNos.get(0) + " 插入完成....";
+            return callSynSingleMeter(relativeMeterNos.get(0));
         }else{
             return "relative meter no size: " + relativeMeterNos.size();
         }
