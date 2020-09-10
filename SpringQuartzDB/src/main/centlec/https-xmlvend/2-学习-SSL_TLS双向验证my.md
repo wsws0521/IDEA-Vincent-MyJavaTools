@@ -25,7 +25,7 @@ C1A51E515CA15EC1E56A1C56A15C1A5
 -----END CERTIFICATE REQUEST-----
 # 通信双方分别拥有一个[keystore]和一个[truststore]，有人图省事，把前者当成后者来用
 
-## 1-创建server的keystore文件
+## 1-创建server的keystore文件（---服务器集群间可以互相拷贝使用，包括trust_store---）
 生成server的公钥/私钥密钥对;
 需要指定keystore的密码(storepass)和密钥对的密码(keypass)。
 访问keystore需要storepass。访问密钥对需要keypass。

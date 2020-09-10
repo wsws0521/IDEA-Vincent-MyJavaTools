@@ -1,6 +1,6 @@
 ## 预付费报表
 > Finance
->> Sale Report-----------------（销售统计）
+>> Sale Report-----------------（销售统计）SaleSumController.java
 >>> 汇总对象 【销售单位】【代理商】【费率】【表型】【供电单位】：年/月/日
 
 >> Sales Monthly Report--------（月销售报表）
