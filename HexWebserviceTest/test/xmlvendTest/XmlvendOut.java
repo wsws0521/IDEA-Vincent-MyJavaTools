@@ -12,9 +12,19 @@ import java.util.List;
  * 【1-先查看】keytool -list -keystore cacerts
  * 无密码也可以查看/changeit，提示这是jks文件类似trust_store，包含104个条目
  * 【2-导入服务端证书】keytool -import -alias server_cert -keystore cacerts -file D://java//jdk1.8.0_131//jre//lib//security//server_cert.cer
+ * 【2-导入服务端证书】如果jdk同级有完整的jre文件夹，则优先导入jre下面的security！！！！！！！！！！！！！！！！！！！！！！！！！！
  * 输入密码changeit，输入y，将CentlecXMLVend服务器公钥证书添加到cacerts
  * 【3-再查看导入的证书】keytool -list -keystore cacerts -alias server_cert
  * 输入密码changeit
+ *
+ *
+ *
+ * 更新证书时，先删除原来的证书，然后导入新的证书
+ *
+ * keytool -list -keystore cacerts
+ * keytool -delete -alias akazam_email -keystore cacerts
+ * keytool -import -alias akazam_email -file akazam_email.cer -keystore cacerts -trustcacerts
+ *
  */
 public class XmlvendOut {
     // xmlvend服务
