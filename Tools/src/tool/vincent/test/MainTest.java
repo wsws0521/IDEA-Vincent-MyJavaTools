@@ -29,9 +29,15 @@ public class MainTest {
 //        }
 //        System.out.println(num);
 //        System.out.println(date);
-        int a = 12;
 
-        System.out.println(a+=a-=a*a);
+
+//        int a = 12;
+//
+//        System.out.println(a+=a-=a*a);
+
+        Integer oldSgc = 990458;
+        Integer newSgc = 990458;
+        System.out.println(oldSgc.equals(newSgc));
     }
 
 }

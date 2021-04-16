@@ -4,8 +4,9 @@ public class LuhnCheck {
 
     public static void main(String[] args) {
 //        String meterNo = "07055025361";
-//        String meterNo = "20200613113";
-        String meterNo = "12020062202";
+        String meterNo = "20200104006";
+//        String meterNo = "12020062202";
+//        String meterNo = "14367939729";
         System.out.println(check(meterNo));
     }
 
