@@ -60,7 +60,7 @@ BEGIN
 			WHEN a.DebtType = 2 THEN '04'
 			WHEN a.DebtType = 3 THEN '03'
 			ELSE NULL
-		END,			-- debtType债务类型：01历史陈欠电费、02电表初装费preload、03市政服务、04窃电篡改tamper
+		END,			-- debtType债务类型：01-历史陈欠电费、02-电表初装费preload、03-窃电篡改tamper、04-市政服务  （现场当时03 04颠倒了 2021-06-09 出脚本修复）
 		NULL, a.debtid		-- 债务来源（暂存债务ID）
 	FROM tmp_zw a, a_consumer b
 	WHERE CONCAT('CN_',a.customer_id) = b.CONS_NO;

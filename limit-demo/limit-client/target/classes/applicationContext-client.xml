@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+                    http://www.springframework.org/schema/context
+                    http://www.springframework.org/schema/context/spring-context.xsd
+                    http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx.xsd
+                    http://www.springframework.org/schema/aop
+                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--借助 redis 执行-->
+    <bean id="rateLimitLua" class="org.springframework.data.redis.core.script.DefaultRedisScript">
+        <property name="location" value="classpath:limit.lua"></property>
+        <property name="resultType" value="java.lang.Long"></property>
+    </bean>
+
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="100"></property>
+        <property name="maxWaitMillis" value="1000"></property>
+        <property name="testOnBorrow" value="true"></property>
+        <property name="maxTotal" value="300"></property>
+    </bean>
+
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="poolConfig"></property>
+        <property name="port" value="6379"></property>
+        <property name="hostName" value="192.168.1.5"></property>
+    </bean>
+
+    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"></property>
+        <property name="defaultSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="cn.limit.vincent"></context:component-scan>
+
+</beans>

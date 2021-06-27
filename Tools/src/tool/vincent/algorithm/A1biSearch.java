@@ -6,7 +6,7 @@ package tool.vincent.algorithm;
 public class A1biSearch {
     public static void main(String[] args) {
         int [] intArray = {1, 2, 3, 4, 5};
-        int a  = 4;
+        int a  = 3;
         System.out.println(biSearch(intArray, a));
     }
     public static int biSearch(int[] array, int a){

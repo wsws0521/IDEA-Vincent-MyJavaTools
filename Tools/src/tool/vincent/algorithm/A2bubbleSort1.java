@@ -17,7 +17,7 @@ public class A2bubbleSort1 {
      */
     public static void bubbleSort1(int[] a, int n){
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n-i; j++) {
+            for (int j = 1; j < n-i; j++) {
                 if(a[j-1] > a[j]){ // 如果前者>后者，交换
                     int temp = a[j-1];
                     a[j-1] = a[j];
