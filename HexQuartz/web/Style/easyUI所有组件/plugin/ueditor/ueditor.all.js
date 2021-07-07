@@ -7995,10 +7995,10 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          * @param { String } action action名称
          * @example
          * ```javascript
-         * editor.getActionUrl('config'); //返回 "/ueditor/php/controller.php?action=config"
-         * editor.getActionUrl('image'); //返回 "/ueditor/php/controller.php?action=uplaodimage"
-         * editor.getActionUrl('scrawl'); //返回 "/ueditor/php/controller.php?action=uplaodscrawl"
-         * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/controller.php?action=listimage"
+         * editor.getActionUrl('config'); //返回 "/ueditor/php/console.php?action=config"
+         * editor.getActionUrl('image'); //返回 "/ueditor/php/console.php?action=uplaodimage"
+         * editor.getActionUrl('scrawl'); //返回 "/ueditor/php/console.php?action=uplaodscrawl"
+         * editor.getActionUrl('imageManager'); //返回 "/ueditor/php/console.php?action=listimage"
          * ```
          */
         getActionUrl: function(action){

@@ -67,7 +67,7 @@
 
     <!-- 4.扫描controller相关的bean -->
     <!-- ** 匹配任意class文件和包，而 * 只能匹配包，因此无法扫描到包下的类 -->
-    <!-- controller.** （等同于controller）和 controller.*contrller（ 以dao结尾的包通配） -->
+    <!-- console.** （等同于controller）和 console.*contrller（ 以dao结尾的包通配） -->
     <context:component-scan base-package="cn.limit.vincent"/>
 
 

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/vincent-test-20210706?userUnicode=true&characterEncoding=UTF-8
+    username: postgres
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: start
+    max-active: 100
+    initial-size: 10
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
+  mapper-locations: classpath*:cn/vincent/testmybatisplus/console/mapper/*.xml
+
