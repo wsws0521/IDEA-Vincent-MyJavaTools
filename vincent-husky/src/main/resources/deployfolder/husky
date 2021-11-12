@@ -1,0 +1,69 @@
+    #!/bin/bash
+    # 级别
+    # chkconfig: 2345 80 90
+    # 描述
+    # description:husky service
+    # 进程名
+    # processname:husky
+
+    # 我们的 jar 包所在的目录
+    ROOT_PATH=/home/hik/data/husky
+    JAVA_HOME=/tools/java/jdk-11.0.8
+    PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
+    JAVA_OPT="-Xdebug -Xrunjdwp:transport=dt_socket,suspend=n,server=y,address=0.0.0.0:6970 -Dspring.config.location=${ROOT_PATH}/application.properties"
+    # JDK 的根目录
+    # JAVA_HOME=/usr/local/services/jdk/jdk1.8.0_91
+    # PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
+    #    CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+    #    CLASSES=${CLASSPATH}:/usr/work/space1/bin
+
+    #    export JAVA_HOME
+    #    export PATH
+    #    export CLASSPATH
+
+    # source function library
+    #. /etc/rc.d/init.d/functions
+
+    start()
+    {
+        echo -n $"Starting $prog: "
+    # java -jar /usr/local/services/tomcat/apache-tomcat-9.0.0.M9/webapps/joyupx-service-jar-with-dependencies.jar
+        nohup java ${JAVA_OPT} -jar $ROOT_PATH/husky-0.0.1-SNAPSHOT.jar $ROOT_PATH/nohup.out 2>&1 &
+    # java -jar *.jar &
+        echo "husky service"
+    #    java -version
+    #    echo "CLASSPATH: ${CLASSPATH}"
+    #    echo "PATH: ${PATH}"
+    #    java -classpath $CLASSES MyFrame
+    #    /usr/work/space1/bin/MyFrame start
+    }
+
+    stop()
+    {
+        echo -n $"Stopping $prog: "
+        javac -version
+        kill -15 `ps -ef | grep husky-|grep -v grep | awk '{print $2}'`
+     }
+
+    restart()
+    {
+		#echo -n $"Reloading $prog: "
+		kill -15 `ps -ef | grep husky-|grep -v grep | awk '{print $2}'`
+        nohup java ${JAVA_OPT} -jar $ROOT_PATH/husky-0.0.1-SNAPSHOT.jar >  $ROOT_PATH/nohup.out 2>&1 &
+    }
+
+    case "$1" in
+        start)
+        start
+        ;;
+        stop)
+        stop
+        ;;
+        restart)
+        restart
+        ;;
+        *)
+        echo $"Usage: $0 {start|stop|restart}"
+        RETVAL=1
+    esac
+    exit $RETVAL
