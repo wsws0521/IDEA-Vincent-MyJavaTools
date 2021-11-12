@@ -2,9 +2,13 @@ package tool.vincent.java8lambda.test;
 
 
 
+import org.junit.Test;
 import tool.vincent.java8lambda.pojo.Student;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.*;
 
 /**
@@ -42,4 +46,53 @@ public class TestFuncInf {
         String work = worker.work();
         System.out.println(work);
     }
+
+    /* **************** 以上是  单个参数，下面尝试双参 BiFunction *********************** */
+    // 假设要求把两个长度相等的列表合并成一个结果列表
+    @Test
+    public void combine2Lists(){
+        List<String> list1 = Arrays.asList("a", "b", "c");
+        List<Integer> list2 = Arrays.asList(1, 2, 3);
+        List<String> result = new ArrayList<>();
+        for (int i=0; i < list1.size(); i++) {
+            result.add(list1.get(i) + list2.get(i));
+        }
+        System.out.println(result);
+    }
+    private static <T, U, R> List<R> listCombiner(
+            List<T> list1, List<U> list2, BiFunction<T, U, R> combiner) {
+        List<R> result = new ArrayList<>();
+        for (int i = 0; i < list1.size(); i++) {
+            result.add(combiner.apply(list1.get(i), list2.get(i)));
+        }
+        return result;
+    }
+    @Test
+    public void combine2Lists2(){
+        List<String> list1 = Arrays.asList("a", "b", "c");
+        List<Integer> list2 = Arrays.asList(1, 2, 3);
+        System.out.println(listCombiner(list1, list2, (a, b) -> a + b));
+
+        List<Double> list11 = Arrays.asList(1.0d, 2.1d, 3.3d);
+        List<Float> list22 = Arrays.asList(0.1f, 0.2f, 4f);
+        List<Boolean> result1122 = listCombiner(list11, list22, (a, b) -> a > b);
+        List<Boolean> result2211 = listCombiner(list1, list2, (a, b) -> a.equals(b));
+//        List<Boolean> result22110 = listCombiner(list1, list2, (a, b) -> Float::equals);
+//        List<Integer> result = listCombiner(list1, list2, Double::compareTo);
+//        List<Boolean> result = listCombiner(list1, list2, asBiFunction(Double::compareTo).andThen(i -> i > 0));
+        System.out.println(result1122);
+        System.out.println(result2211);
+
+        List<Double> list111 = Arrays.asList(1.0d, 2.1d, 3.3d);
+        List<Float> list222 = Arrays.asList(0.1f, 0.2f, 4f);
+        List<Boolean> result2 = listCombiner(list111, list222, this::firstIsGreaterThanSecond);
+        System.out.println(result2);
+    }
+    private boolean firstIsGreaterThanSecond(Double a, Float b) {
+        return a > b;
+    }
+
+    /* **************** 更多参数，参考 *********************** */
+    // github.com/eugenp/tutorials/tree/master/core-java-modules/core-java-8-2
+
 }
