@@ -13,3 +13,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
   mapper-locations: classpath*:cn/vincent/testmybatisplus/console/mapper/*.xml
 
+userService:
+  canModify: true
+

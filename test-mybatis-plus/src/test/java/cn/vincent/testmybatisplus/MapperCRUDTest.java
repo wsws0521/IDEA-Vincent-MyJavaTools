@@ -313,7 +313,7 @@ public class MapperCRUDTest {
     @Test
     public void insertAr() {
         UserAR user = new UserAR();
-        user.setId(15L);
+        user.setId(17L);
         user.setName("我是AR猪");
         user.setAge(1);
         user.setEmail("ar@baomidou.com");
