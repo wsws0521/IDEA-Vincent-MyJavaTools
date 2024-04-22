@@ -1,0 +1,10 @@
+{
+  "namespace": "demo.avro",
+  "type": "record",
+  "name": "Student",
+  "fields": [
+    {"name": "id", "type": "int"},
+    {"name": "name", "type": "string"},
+    {"name": "courses", "type": {"type": "array", "items": "string"}}
+  ]
+}
