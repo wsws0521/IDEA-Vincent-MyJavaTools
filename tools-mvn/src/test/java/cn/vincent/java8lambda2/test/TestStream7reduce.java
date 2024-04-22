@@ -1,4 +1,4 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
 import java.util.stream.Stream;
 

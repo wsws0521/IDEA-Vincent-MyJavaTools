@@ -1,4 +1,4 @@
-package vincent.Mock;
+package cn.vincent.Mock;
 
 public interface BaseDao {
 	

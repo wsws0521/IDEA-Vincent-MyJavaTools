@@ -1,4 +1,4 @@
-package vincent.extend;
+package cn.vincent.extend;
 
 //import org.junit.Test;
 

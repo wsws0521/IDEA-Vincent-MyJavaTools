@@ -1,4 +1,4 @@
-package vincent.proxy;
+package cn.vincent.proxy;
 
 public class KFC implements IKFC {
 

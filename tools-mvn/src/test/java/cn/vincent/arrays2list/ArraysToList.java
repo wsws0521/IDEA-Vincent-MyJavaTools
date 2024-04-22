@@ -1,4 +1,4 @@
-package vincent.arrays2list;
+package cn.vincent.arrays2list;
 
 import java.util.*;
 

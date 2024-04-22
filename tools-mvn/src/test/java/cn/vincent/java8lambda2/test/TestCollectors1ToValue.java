@@ -1,4 +1,4 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
 /**
  * 收集器，一种通用的、从流生成复杂值的结构。 只要将它传给 collect 方法，所有的流就都可以使用它了。

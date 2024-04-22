@@ -1,4 +1,4 @@
-package vincent.algorithm;
+package cn.vincent.algorithm;
 
 /**
  * 二分查找：其实就是两头-1取中值

@@ -1,4 +1,4 @@
-package vincent.java8lambda2;
+package cn.vincent.java8lambda2;
 
 import java.util.HashMap;
 

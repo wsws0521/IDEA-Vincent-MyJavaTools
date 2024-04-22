@@ -1,4 +1,4 @@
-package vincent.java8stream.Pojo;
+package cn.vincent.java8stream.Pojo;
 
 /**
  * @PackageName: tool.vincent.java8stream.Pojo

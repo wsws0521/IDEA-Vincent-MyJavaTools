@@ -1,4 +1,4 @@
-package vincent.algorithm;
+package cn.vincent.algorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;

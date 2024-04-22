@@ -1,4 +1,4 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
 /**
  * 数据分组是一种更自然的分割数据操作，与将数据分成 ture 和 false 两部分不同，可以使用任意值对数据分组。

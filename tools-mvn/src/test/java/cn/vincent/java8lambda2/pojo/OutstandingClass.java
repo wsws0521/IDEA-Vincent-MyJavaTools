@@ -1,7 +1,8 @@
-package vincent.java8lambda2.pojo;
+package cn.vincent.java8lambda2.pojo;
 
 
-import vincent.java8lambda.pojo.Student;
+
+import cn.vincent.java8lambda.pojo.Student;
 
 import java.util.List;
 

@@ -1,9 +1,10 @@
-package vincent.java8lambda.test;
+package cn.vincent.java8lambda.test;
 
 
 
-//import org.junit.Test;
-import vincent.java8lambda.pojo.Student;
+import org.junit.Test;
+
+import cn.vincent.java8lambda.pojo.Student;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class TestFuncInf {
 
     /* **************** 以上是  单个参数，下面尝试双参 BiFunction *********************** */
     // 假设要求把两个长度相等的列表合并成一个结果列表
-//    @Test
+    @Test
     public void combine2Lists(){
         List<String> list1 = Arrays.asList("a", "b", "c");
         List<Integer> list2 = Arrays.asList(1, 2, 3);
@@ -67,7 +68,7 @@ public class TestFuncInf {
         }
         return result;
     }
-//    @Test
+    @Test
     public void combine2Lists2(){
         List<String> list1 = Arrays.asList("a", "b", "c");
         List<Integer> list2 = Arrays.asList(1, 2, 3);

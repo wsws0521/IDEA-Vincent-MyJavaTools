@@ -1,4 +1,4 @@
-package vincent.algorithm;
+package cn.vincent.algorithm;
 
 /**
  * 牛客：反转链表   输入  {123}  返回  {321}

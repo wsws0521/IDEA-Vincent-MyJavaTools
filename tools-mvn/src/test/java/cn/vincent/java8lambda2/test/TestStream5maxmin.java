@@ -1,8 +1,9 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
 
 
-import vincent.java8lambda.pojo.Student;
+
+import cn.vincent.java8lambda.pojo.Student;
 
 import java.util.ArrayList;
 import java.util.Comparator;

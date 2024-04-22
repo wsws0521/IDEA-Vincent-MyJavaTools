@@ -1,4 +1,4 @@
-package vincent.date.time;
+package cn.vincent.date.time;
 
 /*
 Java 8 推出了全新的日期时间API，在教程中我们将通过一些简单的实例来学习如何使用新API。

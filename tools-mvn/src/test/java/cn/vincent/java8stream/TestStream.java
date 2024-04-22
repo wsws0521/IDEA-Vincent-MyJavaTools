@@ -1,6 +1,6 @@
-package vincent.java8stream;
+package cn.vincent.java8stream;
 
-import vincent.java8stream.Pojo.Person;
+import cn.vincent.java8stream.Pojo.Person;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package vincent.exception;
+package cn.vincent.exception;
 
 public class TestMyException {
     public static void main(String[] args) {

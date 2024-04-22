@@ -1,4 +1,4 @@
-package vincent.java8lambda.pojo;
+package cn.vincent.java8lambda.pojo;
 
 import java.util.List;
 

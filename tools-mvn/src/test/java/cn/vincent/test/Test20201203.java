@@ -1,4 +1,4 @@
-package vincent.test;
+package cn.vincent.test;
 
 /**
  *

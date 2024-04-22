@@ -1,4 +1,4 @@
-package vincent.algorithm;
+package cn.vincent.algorithm;
 
 /**
  * 冒泡排序算法：前者>后者，则主动下沉一位

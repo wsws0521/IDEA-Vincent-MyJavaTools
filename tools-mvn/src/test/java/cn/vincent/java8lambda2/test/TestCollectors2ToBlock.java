@@ -1,4 +1,4 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
 /**
  * 常用的流操作是将其分解成两个集合，Collectors.partitioningBy帮我们实现了，接收一个Predicate函数式接口。

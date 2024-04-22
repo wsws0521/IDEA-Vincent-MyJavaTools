@@ -1,9 +1,7 @@
-package vincent.java8lambda2.test;
+package cn.vincent.java8lambda2.test;
 
-
-
-import vincent.java8lambda.pojo.Student;
-import vincent.java8lambda.pojo.StudentListWrapListWrap1;
+import cn.vincent.java8lambda.pojo.Student;
+import cn.vincent.java8lambda.pojo.StudentListWrapListWrap1;
 
 import java.util.ArrayList;
 import java.util.Arrays;

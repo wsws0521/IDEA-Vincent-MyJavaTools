@@ -1,4 +1,4 @@
-package vincent.enums;
+package cn.vincent.enums;
 
 public enum ShelvesStatus {
 

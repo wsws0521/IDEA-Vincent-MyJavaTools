@@ -1,4 +1,4 @@
-package vincent.date;
+package cn.vincent.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

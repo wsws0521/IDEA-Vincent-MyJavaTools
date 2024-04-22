@@ -1,4 +1,4 @@
-package vincent.exception;
+package cn.vincent.exception;
 
 
 //import com.sun.deploy.util.StringUtils;

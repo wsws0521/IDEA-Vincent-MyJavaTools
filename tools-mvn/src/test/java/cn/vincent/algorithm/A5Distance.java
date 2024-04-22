@@ -1,4 +1,4 @@
-package vincent.algorithm;
+package cn.vincent.algorithm;
 
 /**
  * 计算字符串之间的差异  java吴帅  和  吴帅   之间距离就差4个字符

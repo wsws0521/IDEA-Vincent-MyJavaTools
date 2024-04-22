@@ -1,4 +1,4 @@
-package vincent.date.time;
+package cn.vincent.date.time;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
